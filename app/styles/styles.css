@@ -1089,10 +1089,10 @@ textarea {
   line-height: inherit; }
 
 a {
-  color: #4f99ed;
+  color: #972168;
   text-decoration: none; }
   a:hover, a:focus {
-    color: #1672d9;
+    color: #9721AA;
     text-decoration: underline; }
   a:focus {
     outline: 5px auto -webkit-focus-ring-color;
@@ -2937,16 +2937,16 @@ a.btn.disabled, fieldset[disabled] a.btn {
 
 .btn-primary {
   color: #fff;
-  background-color: #4f99ed;
-  border-color: #388ceb; }
+  background-color: #972168;
+  border-color: #972168; }
   .btn-primary:focus, .btn-primary.focus {
     color: #fff;
     background-color: #217ee8;
     border-color: #0f4d94; }
   .btn-primary:hover {
     color: #fff;
-    background-color: #217ee8;
-    border-color: #156dd0; }
+    background-color: #9721AA;
+    border-color: #9721AA; }
   .btn-primary:active, .btn-primary.active, .open > .btn-primary.dropdown-toggle {
     color: #fff;
     background-color: #217ee8;
@@ -4094,7 +4094,7 @@ tbody.collapse.in {
       padding: 6px 12px;
       line-height: 1.428571429;
       text-decoration: none;
-      color: #4f99ed;
+      color: #972168;
       background-color: #fff;
       border: 1px solid #ddd;
       margin-left: -1px; }
@@ -4111,7 +4111,7 @@ tbody.collapse.in {
   .pagination > li > span:hover,
   .pagination > li > span:focus {
     z-index: 2;
-    color: #1672d9;
+    color: #972168;
     background-color: #eeeeee;
     border-color: #ddd; }
   .pagination > .active > a, .pagination > .active > a:hover, .pagination > .active > a:focus,
@@ -4120,8 +4120,8 @@ tbody.collapse.in {
   .pagination > .active > span:focus {
     z-index: 3;
     color: #fff;
-    background-color: #4f99ed;
-    border-color: #4f99ed;
+    background-color: #972168;
+    border-color: #972168;
     cursor: default; }
   .pagination > .disabled > span,
   .pagination > .disabled > span:hover,
@@ -7862,7 +7862,7 @@ span.required {
     padding: 0 0 0 65px; } }
 
 .navbar-default .navbar-nav .open .dropdown-menu > li > a, .navbar-default .navbar-nav > li > a {
-  color: #4f99ed !important; }
+  color: #972168 !important; }
 
 #mifos-reskin-ui-container {
   position: absolute;
