@@ -59,31 +59,6 @@
                 <td>{{ 'label.heading.notes' | translate}}</td>
                 <td>{{transaction.note}}</td>
             </tr>
-            <tr ng-if="transaction.notes">
-                <td>{{ 'label.heading.notes' | translate}}</td>
-                <td>{{transaction.notes}}</td>
-            </tr>
-            <tr ng-if="transaction.category">
-                <td>{{ 'label.heading.category' | translate}}</td>
-                <td>{{transaction.category}}</td>
-            </tr>
-            <tr ng-if="transaction.remarks">
-                <td>{{ 'label.heading.remarks' | translate}}</td>
-                <td>{{transaction.remarks}}</td>
-            </tr>
-            <tr ng-if="transaction.latitude">
-                <td>{{ 'label.heading.latitude' | translate}}</td>
-                <td>{{transaction.latitude}}</td>
-            </tr>
-            <tr ng-if="transaction.longitude">
-                <td>{{ 'label.heading.longitude' | translate}}</td>
-                <td>{{transaction.longitude}}</td>
-            </tr>
-            <tr ng-if="transaction.transactionBrand">
-                <td>{{ 'label.heading.transactionBrand' | translate}}</td>
-                <td>{{transaction.transactionBrand}}</td>
-            </tr>
-
         </table>
         <table class="width100" ng-show="transaction.paymentDetailData">
             <tr>
@@ -113,6 +88,30 @@
             <tr ng-show="transaction.paymentDetailData.bankNumber">
                 <td>{{ 'label.heading.banknumber' | translate}}</td>
                 <td>{{transaction.paymentDetailData.bankNumber}}</td>
+            </tr>
+            <tr ng-if="transaction.paymentDetailData.notes">
+                <td>{{ 'label.heading.notes' | translate}}</td>
+                <td>{{transaction.paymentDetailData.notes}}</td>
+            </tr>
+            <tr ng-if="transaction.paymentDetailData.category">
+                <td>{{ 'label.heading.category' | translate}}</td>
+                <td>{{transaction.paymentDetailData.category}}</td>
+            </tr>
+            <tr ng-if="transaction.paymentDetailData.remarks">
+                <td>{{ 'label.heading.remarks' | translate}}</td>
+                <td>{{transaction.paymentDetailData.remarks}}</td>
+            </tr>
+            <tr ng-if="transaction.paymentDetailData.latitude">
+                <td>{{ 'label.heading.latitude' | translate}}</td>
+                <td>{{transaction.paymentDetailData.latitude}}</td>
+            </tr>
+            <tr ng-if="transaction.paymentDetailData.longitude">
+                <td>{{ 'label.heading.longitude' | translate}}</td>
+                <td>{{transaction.paymentDetailData.longitude}}</td>
+            </tr>
+            <tr ng-if="transaction.paymentDetailData.transactionBrandName">
+                <td>{{ 'label.heading.transactionBrand' | translate}}</td>
+                <td>{{transaction.paymentDetailData.transactionBrandName}}</td>
             </tr>
         </table>
     </div>
