@@ -312,6 +312,13 @@
                                     <td><span class="padded-td">{{savingaccountdetails.minOverdraftForInterestCalculation| number}}</span>
                                     </td>
                                 </tr>
+                                <tr data-ng-show="savingaccountdetails.allowOverdraft">
+                                    <th class="table-bold-acc fontnormal">
+                                        {{'label.heading.nominalannualinterestrateoverdraft' | translate}}
+                                    </th>
+                                    <td><span class="padded-td">{{savingaccountdetails.nominalAnnualInterestRateOverdraft| number}}</span>
+                                    </td>
+                                </tr>
                                 <tr data-ng-show="savingaccountdetails.minBalanceForInterestCalculation">
                                     <th class="table-bold-acc fontnormal">
                                         {{'label.heading.minbalanceforinterestcalculation' | translate}}
