@@ -3725,6 +3725,7 @@
   "label.heading.overdraftlimit": "Max Overdraft limit",
   "label.heading.nominalannualinterestrateoverdraft": "Nominal annual interest for overdraft",
   "label.heading.minoverdraftforinterestcalculation": "Min Overdraft Required For Interest Calculation",
+  "label.heading.nominalannualinterestrateoverdraft": "Nominal annual interest for overdraft",
   "label.input.incomefrominterest": "Income from Interest",
   "label.input.writeOff": "Write-off",
   "label.input.overdraftportfoliocontrol": "Overdraft Portfolio",
