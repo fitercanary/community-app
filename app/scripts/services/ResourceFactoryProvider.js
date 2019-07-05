@@ -339,6 +339,10 @@
                         get: {method: 'GET', params: {}},
                         update: {method: 'PUT'}
                     }),
+                    savingsOverdraftResource: defineResource(apiVer + "/savingsaccounts/:accountId", {accountId: '@accountId'}, {
+                        get: {method: 'GET', params: {}},
+                        update: {method: 'PUT'}
+                    }),
                     savingsTrxnsTemplateResource: defineResource(apiVer + "/savingsaccounts/:savingsId/transactions/template", {savingsId: '@savingsId'}, {
                         get: {method: 'GET', params: {savingsId: '@savingsId'}}
                     }),
