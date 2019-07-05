@@ -1007,6 +1007,9 @@
             .when('/editadhocquery/:id', {
                 templateUrl: 'views/adhocquery/editadhocquery.html'
             })
+            .when('/savingsAccount/:id/overdraft', {
+                templateUrl: 'views/savings/overdraft.html'
+            })
             .otherwise({
                 templateUrl: "views/errors/404.html"
             })

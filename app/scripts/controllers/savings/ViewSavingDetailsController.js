@@ -123,6 +123,9 @@
                     case "postInterestAsOn":
                         location.path('/savingaccount/' + accountId + '/postInterestAsOn');
                         break;
+                    case "overdraft":
+                        location.path('/savingsAccount/' + accountId + "/overdraft");
+                        break;
 
                 }
             };
@@ -247,6 +250,10 @@
                             {
                                 name: "button.close",
                                 taskPermissionName:"CLOSE_SAVINGSACCOUNT"
+                            },
+                            {
+                              name: "button.overdraft",
+                              taskPermissionName:"APPLYOVERDRAFT_SAVINGSACCOUNT"
                             }
                         ]
 
