@@ -17,8 +17,11 @@
             'allowOverdraft' : this.formData.allowOverdraft,
             'nominalAnnualInterestRateOverdraft': this.formData.nominalAnnualInterestRateOverdraft,
             'minOverdraftForInterestCalculation' : this.formData.minOverdraftForInterestCalculation,
-            'locale' : scope.optlang.code
+            'locale' : scope.optlang.code,
+            'overdraftStartedOnDate' : this.formData.start,
+            'overdraftClosedOnDate' : this.formData.end
             }
+            obj.dateFormat = scope.df;
 
              console.log("OverdraftSavingsController initialized ", this.formData.overdraftLimit, obj);
                resourceFactory.savingsOverdraftResource.save({accountId: routeParams.id, command: 'applyOverdraft'}, obj, function (data) {
