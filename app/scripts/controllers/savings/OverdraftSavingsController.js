@@ -18,8 +18,8 @@
             'nominalAnnualInterestRateOverdraft': this.formData.nominalAnnualInterestRateOverdraft,
             'minOverdraftForInterestCalculation' : this.formData.minOverdraftForInterestCalculation,
             'locale' : scope.optlang.code,
-            'overdraftStartedOnDate' : this.formData.start,
-            'overdraftClosedOnDate' : this.formData.end
+            'overdraftStartedOnDate' :  dateFilter(this.formData.start , scope.df),
+            'overdraftClosedOnDate' :  dateFilter(this.formData.end , scope.df)
             }
             obj.dateFormat = scope.df;
 
