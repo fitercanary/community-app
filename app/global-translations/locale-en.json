@@ -2640,6 +2640,7 @@
   "label.anchor.editschedulerjob": "Edit Scheduler Jobs",
   "label.anchor.viewauditentry": "View Audit Entry",
   "label.anchor.tasks": "Checker Inbox & Tasks",
+  "label.anchor.awaitingApproval": "Awaiting Approval",
   "label.anchor.viewcheckerinbox": "View Checker Inbox",
   "label.anchor.checkeractionperformed": "Checker Action Performed",
   "label.anchor.clickheretogeneratecron": "Click Here To Generate Cron Expression",
