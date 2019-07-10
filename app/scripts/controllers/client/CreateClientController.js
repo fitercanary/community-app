@@ -404,10 +404,14 @@
                     {
                         temp.qualification=scope.familyArray[i].qualification;
                     }
-                    if(scope.familyArray[i].mobileNumber)
+                   if(scope.familyArray[i].mobileNumber)
                     {
                         temp.mobileNumber=scope.familyArray[i].mobileNumber;
                     }
+                  /*  if(scope.familyArray[i].mothersMaidenName)
+                     {
+                        temp.mothersMaidenName=scope.familyArray[i].mothersMaidenName;
+                     }*/
                     if(scope.familyArray[i].age)
                     {
                         temp.age=scope.familyArray[i].age;
