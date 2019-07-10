@@ -139,6 +139,23 @@
                         </span>
                      </div>
                   </div>
+                   <div data-ng-switch on="showNonPersonOptions">
+                       <div data-ng-switch-when="false">
+                           <div class="form-group">
+                               <label class="control-label col-sm-2" for="mothersMaidenName">{{'label.input.mothersmaidenname' | translate}}</label>
+                               <div class="col-sm-3">
+                                   <input type="text" id="mothersMaidenName" name="mothersMaidenName" ng-model="formData.mothersMaidenName"  class="form-control" ng-pattern="/(^[A-z])[A-z.'-]*/"/>
+                               </div>
+                               <div class="col-sm-2">
+                               <span ng-show="createclientform.mothersMaidenName.$invalid && createclientform.mothersMaidenName.$dirty">
+                                   <small class="error required" ng-show="createclientform.mothersMaidenName.$error.pattern">
+                                       {{'validation.msg.client.name.cannot.start.specialchar.ornumber' | translate}}
+                                   </small>
+                               </span>
+                               </div>
+                           </div>
+                       </div>
+                   </div>
                   <div class="form-group">
                      <label class="control-label col-sm-2" ng-hide="showNonPersonOptions">{{'label.input.dateofbirth' | translate}}</label>
                      <label class="control-label col-sm-2" ng-show="showNonPersonOptions">{{'label.input.incorporationdate' | translate}}</label>
@@ -168,18 +185,18 @@
                      </div>
                   </div>
                   <div class="form-group">
-                     <label class="control-label col-sm-2">{{'label.input.clienttype' | translate}}</label>
+                     <label class="control-label col-sm-2">{{'label.input.purposeofaccount' | translate}}</label>
                      <div class="col-sm-3">
                         <select id="clienttypeId" ng-model="formData.clientTypeId"  class="form-control"
                            ng-options="clienttype.id as clienttype.name for clienttype in clienttypeOptions" value="{{clienttype.id}}">
-                           <option value="">--{{'label.menu.clienttype' | translate}}--</option>
+                           <option value="">--{{'label.menu.purposeofaccount' | translate}}--</option>
                         </select>
                      </div>
-                     <label class="control-label col-sm-2">{{'label.input.clientclassification' | translate}}</label>
+                     <label class="control-label col-sm-2">{{'label.input.maritalstatus' | translate}}</label>
                      <div class="col-sm-3">
                         <select id="clientClassificationId" ng-model="formData.clientClassificationId"  class="form-control"
                            ng-options="clientClassification.id as clientClassification.name for clientClassification in clientClassificationOptions" value="{{clientClassification.id}}">
-                           <option value="">--{{'label.menu.clientclassification' | translate}}--</option>
+                           <option value="">--{{'label.menu.maritalstatus' | translate}}--</option>
                         </select>
                      </div>
                   </div>

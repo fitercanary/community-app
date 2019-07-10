@@ -606,6 +606,11 @@
                                         <td><span class="padded-td">{{client.isStaff}}</span>
                                         </td>
                                     </tr>
+									<tr data-ng-show="client.mothersMaidenName">
+										<th class="table-bold">{{ 'label.input.mothersmaidenname' | translate }}</th>
+										<td><span class="padded-td">{{client.mothersMaidenName}}</span>
+										</td>
+									</tr>
 									<tr data-ng-show="client.mobileNo">
 										<th class="table-bold">{{ 'label.input.mobilenumber' | translate }}</th>
 										<td><span class="padded-td">{{client.mobileNo}}</span>
@@ -617,12 +622,12 @@
 										</td>
 									</tr>
 									<tr data-ng-show="client.clientType.name">
-										<th class="table-bold">{{ 'label.input.clienttype' | translate }}</th>
+										<th class="table-bold">{{ 'label.input.purposeofaccount' | translate }}</th>
 										<td><span class="padded-td">{{client.clientType.name}}</span>
 										</td>
 									</tr>
 									<tr data-ng-show="client.clientClassification.name">
-										<th class="table-bold">{{ 'label.input.clientclassification' | translate }}</th>
+										<th class="table-bold">{{ 'label.input.maritalstatus' | translate }}</th>
 										<td><span class="padded-td">{{client.clientClassification.name}}</span>
 										</td>
 									</tr>
