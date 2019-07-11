@@ -7,7 +7,13 @@
 
             resourceFactory.savingsOverdraftResource.get({accountId: routeParams.id}, function (data) {
                 scope.formData = data;
-                console.log("formData ", scope.formData);
+                if(data.overdraftClosedOnDate!=null){
+                scope.formData.overdraftClosedOnDate = new Date(data.overdraftClosedOnDate);
+                }
+                if(data.overdraftStartedOnDate!=null){
+                scope.formData.overdraftStartedOnDate = new Date(data.overdraftStartedOnDate);
+                }
+                console.log("formData ", scope.formData, scope.formData.overdraftClosedOnDate, scope.formData.overdraftStartedOnDate);
             });
 
             scope.submit = function () {
@@ -29,8 +35,8 @@
                         'nominalAnnualInterestRateOverdraft': this.formData.nominalAnnualInterestRateOverdraft,
                         'minOverdraftForInterestCalculation' : this.formData.minOverdraftForInterestCalculation,
                         'locale' : scope.optlang.code,
-                        'overdraftStartedOnDate' :  dateFilter(this.formData.start , scope.df),
-                        'overdraftClosedOnDate' :  dateFilter(this.formData.end , scope.df)
+                        'overdraftStartedOnDate' :  dateFilter(this.formData.overdraftStartedOnDate , 'dd MMMM yyyy'),
+                        'overdraftClosedOnDate' :  dateFilter(this.formData.overdraftClosedOnDate , 'dd MMMM yyyy')
                         }
                          obj.dateFormat = scope.df;
             }
