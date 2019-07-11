@@ -319,6 +319,22 @@
                                     <td><span class="padded-td">{{savingaccountdetails.nominalAnnualInterestRateOverdraft| number}}</span>
                                     </td>
                                 </tr>
+                                <tr data-ng-show="savingaccountdetails.allowOverdraft && savingaccountdetails.overdraftStartedOnDate">
+                                    <th class="table-bold-acc fontnormal">
+                                        {{'label.heading.overdraftStartDate' |
+                                        translate}}
+                                    </th>
+                                    <td><span class="padded-td">{{savingaccountdetails.overdraftStartedOnDate | DateFormat}}</span>
+                                    </td>
+                                </tr>
+                                <tr data-ng-show="savingaccountdetails.allowOverdraft && savingaccountdetails.overdraftClosedOnDate">
+                                    <th class="table-bold-acc fontnormal">
+                                        {{'label.heading.overdraftClosedDate' |
+                                        translate}}
+                                    </th>
+                                    <td><span class="padded-td">{{savingaccountdetails.overdraftClosedOnDate | DateFormat}}</span>
+                                    </td>
+                                </tr>
                                 <tr data-ng-show="savingaccountdetails.minBalanceForInterestCalculation">
                                     <th class="table-bold-acc fontnormal">
                                         {{'label.heading.minbalanceforinterestcalculation' | translate}}
