@@ -4272,5 +4272,7 @@
   "reportRunFrequency.monthly": "Monthly",
   "reportRunFrequency.yearly": "Yearly",
   "reportRunFrequency.custom": "Custom",
+  "label.heading.overdraftStartDate": "Overdraft Start Date",
+  "label.heading.overdraftClosedDate": "Overdraft Stop Date",
   "----End---": "--End of file--- "
 }
