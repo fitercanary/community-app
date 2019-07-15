@@ -2972,6 +2972,8 @@
   "label.heading.items": "Items",
   "label.heading.currencyinmultiplesof": "Currency in Multiples Of",
   "label.heading.nominalannualinterestrate": "Nominal Annual Interest Rate",
+  "label.heading.overdraftStartDate": "Overdraft Start On Date",
+  "label.heading.overdraftClosedDate": "Overdraft Close On Date",
   "label.heading.interestcompoundingperiod": "Interest Compounding Period",
   "label.heading.interestpostingperiod": "Interest Posting Period",
   "label.heading.interestcalculatedusing": "Interest Calculated Using",
