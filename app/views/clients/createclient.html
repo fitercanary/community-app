@@ -125,20 +125,20 @@
                         </div>
                      </div>
                   </div>
-                  <div class="form-group">
-                     <label class="control-label col-sm-2" for="mobileNo">{{'label.input.mobilenumber' | translate}}</label>
-                     <div class="col-sm-3">
-                        <input type="text" id="mobileNo" name="mobileNo" ng-model="formData.mobileNo"
-                           ng-pattern="/^[0-9]+$/"  class="form-control"/>
-                     </div>
-                     <div class="col-sm-2">
-                        <span ng-show="createclientform.mobileNo.$invalid && createclientform.mobileNo.$dirty">
-                        <small class="required" ng-show="createclientform.mobileNo.$error.pattern">
-                        {{'label.mustbenumeric' | translate}}
-                        </small>
-                        </span>
-                     </div>
-                  </div>
+                  <!--<div class="form-group">-->
+                     <!--<label class="control-label col-sm-2" for="mobileNo">{{'label.input.mobilenumber' | translate}}</label>-->
+                     <!--<div class="col-sm-3">-->
+                        <!--<input type="text" id="mobileNo" name="mobileNo" ng-model="formData.mobileNo"-->
+                           <!--ng-pattern="/^[0-9]+$/"  class="form-control"/>-->
+                     <!--</div>-->
+                     <!--<div class="col-sm-2">-->
+                        <!--<span ng-show="createclientform.mobileNo.$invalid && createclientform.mobileNo.$dirty">-->
+                        <!--<small class="required" ng-show="createclientform.mobileNo.$error.pattern">-->
+                        <!--{{'label.mustbenumeric' | translate}}-->
+                        <!--</small>-->
+                        <!--</span>-->
+                     <!--</div>-->
+                  <!--</div>-->
                    <div data-ng-switch on="showNonPersonOptions">
                        <div data-ng-switch-when="false">
                            <div class="form-group">

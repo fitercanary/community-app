@@ -133,7 +133,7 @@
                         </td>
                         <td class="width36 paddedbottom20">
                             <input id="depositAmount" type="text" class="form-control" name="depositAmount" number-format ng-model="formData.depositAmount"
-                                required late-validate>
+                                ng-change="calculateInterestRate()" required late-validate>
                             <form-validate valattributeform="newsavingccountform" valattribute="depositAmount" />
                         </td>
                         <td class="width14">
@@ -143,10 +143,10 @@
 
                         <td class="width36 paddedbottom20">
                             <div class="form-inline">
-                                <input id="depositPeriod" class="form-control" type="text" name="depositPeriod" ng-model="formData.depositPeriod" required
-                                    late-validate>
+                                <input id="depositPeriod" class="form-control" type="text" name="depositPeriod" ng-model="formData.depositPeriod"
+                                       ng-change="calculateInterestRate()" required late-validate>
                                 <select id="depositPeriodFrequencyId" ng-model="formData.depositPeriodFrequencyId" class="form-control width170px" ng-options="type.id as type.value for type in data.periodFrequencyTypeOptions"
-                                    value="{{type.id}}">
+                                    value="{{type.id}}" ng-change="calculateInterestRate()">
                                     <option value="">{{'label.selectone' | translate}}</option>
                                 </select>
                                 <form-validate valattributeform="newsavingccountform" valattribute="depositPeriod" />
@@ -154,6 +154,16 @@
                         </td>
                     </tr>
                     <tr>
+                        <td class="width14">
+                            <label class="control-label col-sm-2">{{ 'label.input.nominalannualinterestrate' | translate }}&nbsp;
+                                <span class="required">*</span>
+                            </label>
+                        </td>
+                        <td class="width36 paddedbottom20">
+                            <input id="nominalAnnualInterestRate" type="text" name="nominalannualinterestrate" ng-model="formData.nominalAnnualInterestRate"
+                                   class="form-control" ng-change="setInterestRate()" number-format required late-Validate/>
+                            <form-validate valattributeform="newsavingccountform" valattribute="nominalannualinterestrate" />
+                        </td>
                         <td class="width14">
                             <label class="control-label">{{ 'label.input.lockinPeriodFrequency' | translate }}</label>
                         </td>
@@ -166,8 +176,6 @@
                                 </select>
                             </div>
                         </td>
-                        <td class="width14"></td>
-                        <td class="width36 paddedbottom20"></td>
                     </tr>
                 </table>
                 <hr data-ng-show="formData.productId" />
