@@ -104,6 +104,17 @@
                 });
             };
 
+			scope.setInterestRate = function() {
+				scope.isUserDefinedInterestRate = true;
+				console.log("User defined interest rate");
+			};
+
+			scope.calculateInterestRate = function() {
+				if (!scope.isUserDefinedInterestRate) {
+					console.log("Gotta calculate the interest rate");
+				}
+			};
+
             scope.addCharge = function (chargeId) {
                 scope.errorchargeevent = false;
                 if (chargeId) {
@@ -127,11 +138,11 @@
                     scope.errorchargeevent = true;
                     scope.labelchargeerror = "selectcharge";
                 }
-            }
+            };
 
             scope.deleteCharge = function (index) {
                 scope.charges.splice(index, 1);
-            }
+            };
 
             scope.submit = function () {
                 if (scope.date) {
@@ -181,7 +192,7 @@
                 } else {
                     location.path('/viewgroup/' + scope.groupId);
                 }
-            }
+            };
 
             /**
              * Add a new row with default values for entering chart details
@@ -212,7 +223,7 @@
                 };
 
                 scope.chart.chartSlabs.push(chartSlab);
-            }
+            };
 
 
             /**
@@ -232,7 +243,7 @@
                     locale: scope.optlang.code,
                     chartSlabs: angular.copy(copyChartSlabs(scope.chart.chartSlabs)),
                     isActiveChart: 'true'
-                }
+                };
 
                 //remove empty values
                 _.each(newChartData, function (v, k) {
@@ -241,7 +252,7 @@
                 });
 
                 return newChartData;
-            }
+            };
 
             /**
              *  copy all chart details to a new Array
@@ -255,7 +266,7 @@
                     detailsArray.push(chartSlabData);
                 });
                 return detailsArray;
-            }
+            };
 
             /**
              * create new chart detail object data from chartSlab
