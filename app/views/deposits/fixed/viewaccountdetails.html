@@ -160,11 +160,19 @@
                         </td>
                     </tr>
                     <tr ng-show="savingaccountdetails.summary.totalInterestEarned >= 0">
-                        <th class="table-bold-acc fontnormal">{{'label.totalinterestearned' |
+                        <th class="table-bold-acc fontnormal">{{'label.totalinterestaccrued' |
                             translate}}
                         </th>
                         <td><span class="padded-td"
                                   ng-class="{statusactiveoverdue : savingaccountdetails.summary.totalInterestEarned < 0}">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestEarned| number}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="(savingaccountdetails.maturityAmount - savingaccountdetails.depositAmount) >= 0">
+                        <th class="table-bold-acc fontnormal">{{'label.totalinterestpayable' |
+                            translate}}
+                        </th>
+                        <td><span class="padded-td"
+                                  ng-class="{statusactiveoverdue : (savingaccountdetails.maturityAmount - savingaccountdetails.depositAmount) < 0}">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{(savingaccountdetails.maturityAmount - savingaccountdetails.depositAmount)| number}}</span>
                         </td>
                     </tr>
                 </table>

@@ -106,12 +106,68 @@
 
 			scope.setInterestRate = function() {
 				scope.isUserDefinedInterestRate = true;
-				console.log("User defined interest rate");
 			};
 
 			scope.calculateInterestRate = function() {
-				if (!scope.isUserDefinedInterestRate) {
-					console.log("Gotta calculate the interest rate");
+				if (!scope.isUserDefinedInterestRate &&
+					(scope.formData.depositAmount && scope.formData.depositPeriod && scope.formData.depositPeriodFrequencyId > -1)) {
+					var amount = parseFloat(scope.formData.depositAmount);
+					var depositPeriod = parseFloat(scope.formData.depositPeriod);
+					var periodFrequency = scope.formData.depositPeriodFrequencyId;
+					var filteredSlabs = scope.chartSlabs.filter(function (x) { return amount >= x.amountRangeFrom && amount <= x.amountRangeTo });
+					filteredSlabs.map(function(x) {
+						var period = scope.computePeriod(depositPeriod, periodFrequency, x.periodType.id);
+						if (period && x.fromPeriod <= period && x.toPeriod >= period) {
+							scope.formData.nominalAnnualInterestRate = x.annualInterestRate;
+						}
+					});
+				}
+			};
+
+			scope.computePeriod = function(depositPeriod, depositPeriodFrequency, filteredPeriod) {
+				if (depositPeriodFrequency == filteredPeriod) {
+					return depositPeriod;
+				}
+				if (filteredPeriod == 0) {
+					if (depositPeriodFrequency == 1) {
+						return depositPeriod * 7;
+					}
+					if (depositPeriodFrequency == 2) {
+						return depositPeriod * 30;
+					}
+					if (depositPeriodFrequency == 3) {
+						return depositPeriod * 365;
+					}
+				} else if (filteredPeriod == 1) {
+					if (depositPeriodFrequency == 0) {
+						return depositPeriod / 7;
+					}
+					if (depositPeriodFrequency == 2) {
+						return depositPeriod * 4;
+					}
+					if (depositPeriodFrequency == 3) {
+						return depositPeriod * 52;
+					}
+				} else if (filteredPeriod == 2) {
+					if (depositPeriodFrequency == 0) {
+						return depositPeriod / 30;
+					}
+					if (depositPeriodFrequency == 1) {
+						return depositPeriod / 4;
+					}
+					if (depositPeriodFrequency == 3) {
+						return depositPeriod * 12;
+					}
+				} else if (filteredPeriod == 3) {
+					if (depositPeriodFrequency == 0) {
+						return depositPeriod / 365;
+					}
+					if (depositPeriodFrequency == 1) {
+						return depositPeriod / 52;
+					}
+					if (depositPeriodFrequency == 2) {
+						return depositPeriod / 12;
+					}
 				}
 			};
 
