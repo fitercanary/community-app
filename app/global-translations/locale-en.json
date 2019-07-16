@@ -1489,6 +1489,8 @@
   "label.input.applicationdate": "Application Date",
   "label.input.isTopup": "Is Topup Loan",
   "label.input.loanIdToClose": "Choose loan to close",
+  "label.input.issuedate": "Issue date",
+  "label.input.expirydate": "Expiry date",
   "#Buttons": "..",
   "label.button.addAddress": "Add Address",
   "label.button.addloancharge": "Add Loan Charge",
