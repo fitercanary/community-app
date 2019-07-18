@@ -40,6 +40,8 @@
   "label.heading.performancehistory": "Performance History",
   "label.heading.settings": "Settings",
   "label.heading.status": "Status",
+  "label.heading.issuedate": "Issue date",
+  "label.heading.expirydate": "Expiry date",
   "label.heading.loanaccount": "Loan Account",
   "label.heading.type": "Type",
   "label.heading.category": "Category",
