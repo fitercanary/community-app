@@ -3249,6 +3249,7 @@
   "chargeTimeType.weeklyFee": "Weekly Fee",
   "chargeTimeType.overdraftFee": "Overdraft Fee",
   "chargeTimeType.savingsNoActivityFee": "Saving No Activity Fee",
+  "chargeTimeType.fdaPreclosureFee": "FDA Pre-closure Fee",
   "chargeTimeType.tranchedisbursement": "Tranche Disbursement",
   "chargeCalculationType.percent.of.amount": "% Approved Amount",
   "chargeCalculationType.percent.of.amount.and.interest": "% Loan Amount + Interest",
