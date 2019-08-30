@@ -78,6 +78,10 @@
                         <th class="active fontnormal"> {{'label.heading.withholdtaxgroup' | translate}}</th>
                         <td><span class="padded-td">{{savingaccountdetails.taxGroup.name}}</span></td>
                     </tr>
+                    <tr>
+                        <td>{{ 'label.input.applywithdrawalfeefortransfers' | translate }}</td>
+                        <td colspan="6">{{savingaccountdetails.withdrawalFeeForTransfers}}</td>
+                    </tr>
                 </table>
                 <br>
                 <table class="table table-bordered table-striped" ng-show="!savingaccountdetails.status.rejected && !savingaccountdetails.status.submittedAndPendingApproval">
@@ -276,6 +280,10 @@
                                 <tr data-ng-show="savingaccountdetails.withHoldTax">
                                     <td class="active fontnormal"> {{'label.heading.withholdtaxgroup' | translate}}</td>
                                     <td><span class="padded-td">{{savingaccountdetails.taxGroup.name}}</span></td>
+                                </tr>
+                                <tr>
+                                    <td>{{ 'label.input.applywithdrawalfeefortransfers' | translate }}</td>
+                                    <td colspan="6">{{savingaccountdetails.withdrawalFeeForTransfers}}</td>
                                 </tr>
                             </table>
                     <hr class="marginbottom"/>
