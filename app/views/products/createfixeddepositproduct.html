@@ -345,6 +345,15 @@
                                 </select>
                             </div>
                         </div>
+                        <label class="control-label col-sm-3">{{ 'label.input.withdrawalfeefortransfers' | translate
+                            }}</label>
+                        <i class="fa fa-question-circle col-sm-1"
+                           uib-tooltip="{{'label.tooltip.withdrawalfeefortransfers' | translate}}"></i>
+                        <div class="col-sm-2">
+                            <input id="withdrawalFeeForTransfers" type="checkbox"
+                                   ng-model="formData.withdrawalFeeForTransfers"
+                                   ng-true-value="true" ng-false-value="false">
+                        </div>
                     </div>
                     <hr>
                     <button class="btn btn-default pull-left" wz-previous><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Previous
