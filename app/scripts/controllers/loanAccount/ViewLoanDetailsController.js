@@ -237,7 +237,7 @@
                     if(data.isVariableInstallmentsAllowed) {
                         scope.buttons.options.push({
                             name: "button.adjustrepaymentschedule",
-                            taskPermissionName: 'ADJUST_REPAYMENT_SCHEDULE'
+                            taskPermissionName: 'CREATESCHEDULEEXCEPTIONS_LOAN'
                         }) ;
                     }
                 }
