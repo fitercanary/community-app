@@ -23,10 +23,9 @@
     <br>
     <h3>{{ 'label.heading.transactiondetails' | translate}}</h3>
     <hr>
-    <div class="pull-right">
+    <div ng-hide="transaction.interestedPostedAsOn==false && (transaction.transactionType.id==17 || transaction.transactionType.id==3)" class="pull-right">
         <div class="btn-group">
             <a ng-show="flag" has-permission='ADJUSTTRANSACTION_SAVINGSACCOUNT'
-               ng-hide="transaction.interestedPostedAsOn==false && (transaction.transactionType.id==17 || transaction.transactionType.id==3)"
                href="#/savingaccount/{{transaction.accountId}}/modifytransaction?transactionId={{transaction.id}}"
                class="btn btn-primary"><i class="fa fa-pencil "></i>{{ 'label.button.edit' | translate}}</a>
             <a ng-click="undo(transaction.accountId, transaction.id)" class="btn btn-danger" has-permission='UNDOTRANSACTION_SAVINGSACCOUNT'><i

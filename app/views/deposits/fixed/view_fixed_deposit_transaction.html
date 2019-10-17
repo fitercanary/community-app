@@ -4,27 +4,10 @@
                 translate}}</a></li>
             <li class="active">{{ 'label.anchor.viewtransaction' | translate}}</li>
         </ul>
-    <script type="text/ng-template" id="undotransaction.html">
-        <div class="modal-header silver">
-            <h3 class="bolder">{{'label.button.undo' | translate}}</h3>
-        </div>
-        <div class="modal-body ">
-            <api-validate></api-validate>
-            <br>
-            <button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
-            <button class="btn btn-primary" ng-click="undoTransaction()">{{'label.button.undo' | translate}}</button>
-        </div>
-    </script>
     <div class="card">
         <div class="content">
             <div class="toolbar">
                 <h3>{{ 'label.heading.transactiondetails' | translate}}</h3>
-            </div>
-            <div class="pull-right">
-                <div class="btn-group">
-                    <a ng-click="undo(transaction.accountId, transaction.id)" class="btn btn-danger" has-permission='UNDOTRANSACTION_SAVINGSACCOUNT'><i
-                            class="fa fa-trash-o "></i>{{ 'label.button.undo' | translate}}</a>
-                </div>
             </div>
             <div>
                 <table width="100%">
