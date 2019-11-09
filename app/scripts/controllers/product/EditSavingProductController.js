@@ -16,6 +16,10 @@
                 scope.liabilityAccountOptions = scope.product.accountingMappingOptions.liabilityAccountOptions || [];
                 scope.incomeAccountOptions = scope.product.accountingMappingOptions.incomeAccountOptions || [];
                 scope.expenseAccountOptions = scope.product.accountingMappingOptions.expenseAccountOptions || [];
+                scope.formData.isDormancyTrackingActive = false;
+                if(data.isDormancyTrackingActive){
+                    scope.formData.isDormancyTrackingActive =  data.isDormancyTrackingActive == true ? 'true':'false';
+                }
                 scope.formData = {
                     name: data.name,
                     shortName: data.shortName,
@@ -40,7 +44,6 @@
                     enforceMinRequiredBalance: data.enforceMinRequiredBalance,
                     minRequiredBalance:data.minRequiredBalance,
                     withHoldTax: data.withHoldTax == true ? 'true' : 'false',
-                    isDormancyTrackingActive: data.isDormancyTrackingActive == true ? 'true':'false',
                     daysToInactive: data.daysToInactive,
                     daysToDormancy: data.daysToDormancy,
                     daysToEscheat: data.daysToEscheat
@@ -57,13 +60,21 @@
                 scope.formData.savingsReferenceAccountId = data.accountingMappings.savingsReferenceAccount.id;
                 scope.formData.savingsControlAccountId = data.accountingMappings.savingsControlAccount.id;
                 scope.formData.transfersInSuspenseAccountId = data.accountingMappings.transfersInSuspenseAccount.id;
-                scope.formData.escheatLiabilityId = data.accountingMappings.escheatLiabilityAccount.id;
+                if(data.accountingMappings.escheatLiabilityAccount) {
+                    scope.formData.escheatLiabilityId = data.accountingMappings.escheatLiabilityAccount.id;
+                }
                 scope.formData.incomeFromFeeAccountId = data.accountingMappings.incomeFromFeeAccount.id;
                 scope.formData.incomeFromPenaltyAccountId = data.accountingMappings.incomeFromPenaltyAccount.id;
                 scope.formData.interestOnSavingsAccountId = data.accountingMappings.interestOnSavingsAccount.id;
                 scope.formData.writeOffAccountId = data.accountingMappings.writeOffAccount.id;
                 scope.formData.overdraftPortfolioControlId = data.accountingMappings.overdraftPortfolioControl.id;
                 scope.formData.incomeFromInterestId = data.accountingMappings.incomeFromInterest.id;
+                scope.formData.receivableInterestAccountId = data.accountingMappings.receivableInterestAccountId.id;
+                scope.formData.receivableFeeAccountId = data.accountingMappings.receivableFeeAccountId.id;
+                scope.formData.receivablePenaltyAccountId = data.accountingMappings.receivablePenaltyAccountId.id;
+                scope.formData.interestPayableAccountId = data.accountingMappings.interestPayableAccountId.id;
+                scope.formData.feesPayableAccountId = data.accountingMappings.feesPayableAccountId.id;
+                scope.formData.penaltiesPayableAccountId = data.accountingMappings.penaltiesPayableAccountId.id;
 
                 _.each(scope.product.paymentChannelToFundSourceMappings, function (fundSource) {
                     scope.configureFundOptions.push({
