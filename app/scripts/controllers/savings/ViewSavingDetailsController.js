@@ -87,6 +87,11 @@
                             route.reload();
                         });
                         break;
+                    case "postAccrualInterest":
+                        resourceFactory.savingsResource.save({accountId: accountId, command: 'postAccrualInterest'}, {}, function (data) {
+                            route.reload();
+                        });
+                        break;
                     case "applyAnnualFees":
                         location.path('/savingaccountcharge/' + accountId + '/applyAnnualFees/' + scope.annualChargeId);
                         break;
@@ -122,6 +127,9 @@
                         break;
                     case "postInterestAsOn":
                         location.path('/savingaccount/' + accountId + '/postInterestAsOn');
+                        break;
+                    case "postAccrualInterestAsOn":
+                        location.path('/savingaccount/' + accountId + '/postAccrualInterestAsOn');
                         break;
                     case "overdraft":
                         location.path('/savingsAccount/' + accountId + "/overdraft");
@@ -223,6 +231,11 @@
                             taskPermissionName:"POSTINTERESTASON_SAVINGSACCOUNT"
                         },
                         {
+                                name: "button.postAccrualInterestAsOn",
+                                icon: "icon-arrow-right",
+                                taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
+                        },
+                        {
                             name: "button.deposit",
                             icon: "fa fa-arrow-up",
                             taskPermissionName:"DEPOSIT_SAVINGSACCOUNT"
@@ -242,6 +255,10 @@
                             {
                                 name: "button.postInterest",
                                 taskPermissionName:"POSTINTEREST_SAVINGSACCOUNT"
+                            },
+                            {
+                                name: "button.postAccrualInterest",
+                                taskPermissionName:"POSTACCRUALINTEREST_SAVINGSACCOUNT"
                             },
                             {
                                 name: "button.addcharge",

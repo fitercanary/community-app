@@ -195,6 +195,15 @@
                     scope.showDateField = true;
                     scope.showAccountNumber=true;
                     break;
+                case "postAccrualInterestAsOn":
+                    resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
+                        scope.accountnumber=data.accountNo;
+                    });
+                    scope.labelName = 'label.input.transactiondate';
+                    scope.modelName = 'transactionDate';
+                    scope.showDateField = true;
+                    scope.showAccountNumber=true;
+                    break;
                 case "withdrawal":
                     resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
                         scope.paymentTypes = data.paymentTypeOptions;
@@ -335,6 +344,12 @@
                 if (scope.action != "undoapproval") {
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
+                }
+                if(scope.action=="postAccrualInterestAsOn"){
+                    if (this.formData.transactionDate) {
+                        this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
+                    }
+                    this.formData.isPostInterestAsOn=true;
                 }
                 if (scope.action == "deposit" || scope.action == "withdrawal" || scope.action == "modifytransaction" || scope.action=="postInterestAsOn") {
                     if (scope.action == "withdrawal") {
