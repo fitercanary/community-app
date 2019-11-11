@@ -209,18 +209,6 @@
                         </td>
                         <td colspan="3">{{savingproduct.accountingMappings.interestPayableAccountId.name}}</td>
                     </tr>
-                    <tr ng-if="savingproduct.accountingMappings.feesPayableAccountId">
-                        <td>{{'label.input.feespayable' | translate}}({{'label.heading.liabilities' |
-                            translate}})
-                        </td>
-                        <td colspan="3">{{savingproduct.accountingMappings.feesPayableAccountId.name}}</td>
-                    </tr>
-                    <tr ng-if="savingproduct.accountingMappings.penaltiesPayableAccountId">
-                        <td>{{'label.input.penaltiespayable' | translate}}({{'label.heading.liabilities' |
-                            translate}})
-                        </td>
-                        <td colspan="3">{{savingproduct.accountingMappings.penaltiesPayableAccountId.name}}</td>
-                    </tr>
                     <tr ng-show="savingproduct.isDormancyTrackingActive">
                         <td>{{'label.heading.escheatLiability' | translate}}({{'label.heading.liabilities' |
                             translate}})
