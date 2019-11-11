@@ -808,34 +808,8 @@
                                         value="{{liabilityAccount.id}}">
                                 </select>
                             </div>
-                            <label class="control-label col-sm-2">{{'label.input.feespayable' | translate}}</label>
-                            <i class="fa fa-question-circle col-sm-1 "
-                               uib-tooltip="{{'label.tooltip.feespayable' | translate}}"></i>
-                            <div class="col-sm-3">
-                                <select id="feesPayableAccountId"
-                                        ng-model="formData.feesPayableAccountId"
-                                        chosen="liabilityAccountOptions"
-                                        ng-options="liabilityAccount.id as liabilityAccount.name for liabilityAccount in liabilityAccountOptions"
-                                        ng-change="savingproduct.accountingMappings.feesPayableAccount.name = formValue(liabilityAccountOptions,formData.feesPayableAccountId,'id','name')"
-                                        value="{{liabilityAccount.id}}">
-                                </select>
-                            </div>
                         </div>
                         <br>
-                        <div class="form-group">
-                            <label class="control-label col-sm-2">{{'label.input.penaltiespayable' | translate}}</label>
-                            <i class="fa fa-question-circle col-sm-1 "
-                               uib-tooltip="{{'label.tooltip.penaltiespayable' | translate}}"></i>
-                            <div class="col-sm-3">
-                                <select id="penaltiesPayableAccountId"
-                                        ng-model="formData.penaltiesPayableAccountId"
-                                        chosen="liabilityAccountOptions"
-                                        ng-options="liabilityAccount.id as liabilityAccount.name for liabilityAccount in liabilityAccountOptions"
-                                        ng-change="savingproduct.accountingMappings.penaltiesPayableAccount.name = formValue(liabilityAccountOptions,formData.penaltiesPayableAccountId,'id','name')"
-                                        value="{{liabilityAccount.id}}">
-                                </select>
-                            </div>
-                        </div>
                         <div class="form-group" ng-show="formData.isDormancyTrackingActive">
                             <label class="control-label col-sm-2">{{ 'label.input.escheatLiability' | translate
                                 }}</label>
