@@ -73,8 +73,6 @@
                 scope.formData.receivableFeeAccountId = data.accountingMappings.receivableFeeAccountId.id;
                 scope.formData.receivablePenaltyAccountId = data.accountingMappings.receivablePenaltyAccountId.id;
                 scope.formData.interestPayableAccountId = data.accountingMappings.interestPayableAccountId.id;
-                scope.formData.feesPayableAccountId = data.accountingMappings.feesPayableAccountId.id;
-                scope.formData.penaltiesPayableAccountId = data.accountingMappings.penaltiesPayableAccountId.id;
 
                 _.each(scope.product.paymentChannelToFundSourceMappings, function (fundSource) {
                     scope.configureFundOptions.push({
