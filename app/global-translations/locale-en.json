@@ -2000,6 +2000,7 @@
   "label.button.modifyapplication": "Modify Application",
   "label.button.withdrawnbyclient": "Withdrawn by client",
   "label.button.addcharge": "Add Charge",
+  "label.button.disablecharge": "Disable Charge",
   "label.button.undoapproval": "Undo Approval",
   "label.button.deposit": "Deposit",
   "label.button.postInterestAsOn": "Post Interest As On",

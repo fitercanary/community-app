@@ -12,6 +12,7 @@
                 }
                 if (routeParams.status == 'Active') {
                     scope.showWaiveButton = true;
+                    scope.showDisableButton = true;
                     if(scope.charge.amountOutstanding == 0){
                         scope.showWaiveButton = false;
                     }
