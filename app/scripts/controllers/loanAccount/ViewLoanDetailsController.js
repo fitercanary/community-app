@@ -7,7 +7,7 @@
             scope.formData = {};
             scope.date = {};
             scope.date.payDate = new Date();
-            scope.hideAccrualTransactions = false;
+            scope.hideAccrualTransactions = true;
             scope.isHideAccrualsCheckboxChecked = true;
             scope.loandetails = [];
             scope.routeTo = function (loanId, transactionId, transactionTypeId) {
