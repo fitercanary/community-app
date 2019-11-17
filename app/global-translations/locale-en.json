@@ -2005,6 +2005,7 @@
   "label.button.deposit": "Deposit",
   "label.button.postInterestAsOn": "Post Interest As On",
   "label.button.postAccrualInterestAsOn": "Post Accrual Interest As On",
+  "label.button.postAccrualInterest": "Post Accrual Interest",
   "label.button.withdraw": "Withdraw",
   "label.button.calculateInterest": "Calculate Interest",
   "label.button.postInterest": "Post Interest",
