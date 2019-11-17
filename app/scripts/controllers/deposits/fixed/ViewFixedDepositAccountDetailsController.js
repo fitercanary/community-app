@@ -57,6 +57,11 @@
                             route.reload();
                         });
                         break;
+                    case "postAccrualInterest":
+                        resourceFactory.fixedDepositAccountResource.save({accountId: accountId, command: 'postAccrualInterest'}, {}, function (data) {
+                            route.reload();
+                        });
+                        break;
                     /*          case "applyAnnualFees":
                      location.path('/savingaccountcharge/' + accountId + '/applyAnnualFees/' + scope.annualChargeId);
                      break;
@@ -171,6 +176,9 @@
                         options: [
                             {
                                 name: "button.postInterest"
+                            },
+                            {
+                                name: "button.postAccrualInterest"
                             },
                             {
                                 name: "button.addcharge"
