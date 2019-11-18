@@ -258,10 +258,6 @@
                                 taskPermissionName:"POSTINTEREST_SAVINGSACCOUNT"
                             },
                             {
-                                name: "button.postAccrualInterest",
-                                taskPermissionName:"POSTACCRUALINTEREST_SAVINGSACCOUNT"
-                            },
-                            {
                                 name: "button.addcharge",
                                 taskPermissionName:"CREATE_SAVINGSACCOUNTCHARGE"
                             },
