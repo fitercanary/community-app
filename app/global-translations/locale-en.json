@@ -3235,6 +3235,7 @@
   "LoanProductValueConditionType.equal": "=",
   "LoanProductValueConditionType.greaterThan": ">",
   "chargeTimeType.disbursement": "Disbursement",
+  "chargeTimeType.disburseToSavings": "Disburse To Savings",
   "chargeTimeType.specifiedDueDate": "Specified due date",
   "chargeTimeType.savingsActivation": "Savings Activation",
   "chargeTimeType.savingsClosure": "Savings Closure",
