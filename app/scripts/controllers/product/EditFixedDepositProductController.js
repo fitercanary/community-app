@@ -129,6 +129,8 @@
                     if(data.accountingMappings.interestPayableAccountId) {
                         scope.formData.interestPayableAccountId = data.accountingMappings.interestPayableAccountId.id;
                     }
+                    scope.formData.receivableFeeAccountId = data.accountingMappings.receivableFeeAccountId.id;
+                    scope.formData.receivablePenaltyAccountId = data.accountingMappings.receivablePenaltyAccountId.id;
                     scope.formData.savingsControlAccountId = data.accountingMappings.savingsControlAccount.id;
                     scope.formData.transfersInSuspenseAccountId = data.accountingMappings.transfersInSuspenseAccount.id;
                     scope.formData.incomeFromFeeAccountId = data.accountingMappings.incomeFromFeeAccount.id;

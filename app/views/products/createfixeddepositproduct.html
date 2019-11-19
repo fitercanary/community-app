@@ -829,20 +829,6 @@
                                         value="{{assetAccount.id}}">
                                 </select>
                             </div>
-                            <div class="form-group">
-                                <label class="control-label col-sm-2">{{'label.input.intrestpayable' | translate}}</label>
-                                <i class="fa fa-question-circle col-sm-1 "
-                                   uib-tooltip="{{'label.tooltip.interestpayable' | translate}}"></i>
-                                <div class="col-sm-3">
-                                    <select id="interestPayableAccountId"
-                                            ng-model="formData.interestPayableAccountId"
-                                            chosen="liabilityAccountOptions"
-                                            ng-options="liabilityAccount.id as liabilityAccount.name for liabilityAccount in liabilityAccountOptions"
-                                            ng-change="savingproduct.accountingMappings.interestPayableAccount.name = formValue(liabilityAccountOptions,formData.interestPayableAccountId,'id','name')"
-                                            value="{{liabilityAccount.id}}">
-                                    </select>
-                                </div>
-                            </div>
                         </div>
                         <hr>
                         <div class="form-group">
@@ -868,6 +854,20 @@
                                         chosen="liabilityAccountOptions"
                                         ng-options="liabilityAccount.id as liabilityAccount.name for liabilityAccount in liabilityAccountOptions"
                                         ng-change="depositproduct.accountingMappings.transfersInSuspenseAccount.name = formValue(liabilityAccountOptions,formData.transfersInSuspenseAccountId,'id','name')"
+                                        value="{{liabilityAccount.id}}">
+                                </select>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-sm-2">{{'label.input.intrestpayable' | translate}}</label>
+                            <i class="fa fa-question-circle col-sm-1 "
+                               uib-tooltip="{{'label.tooltip.interestpayable' | translate}}"></i>
+                            <div class="col-sm-3">
+                                <select id="interestPayableAccountId"
+                                        ng-model="formData.interestPayableAccountId"
+                                        chosen="liabilityAccountOptions"
+                                        ng-options="liabilityAccount.id as liabilityAccount.name for liabilityAccount in liabilityAccountOptions"
+                                        ng-change="savingproduct.accountingMappings.interestPayableAccount.name = formValue(liabilityAccountOptions,formData.interestPayableAccountId,'id','name')"
                                         value="{{liabilityAccount.id}}">
                                 </select>
                             </div>
