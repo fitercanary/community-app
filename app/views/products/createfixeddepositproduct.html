@@ -807,16 +807,6 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-sm-2">{{ 'label.input.receivableinterest' | translate }}</label>
-                            <i class="fa fa-question-circle col-sm-1 "uib-tooltip="{{'label.tooltip.receivableinterest' | translate}}"></i>
-                            <div class="col-sm-3">
-                                <select id="receivableInterestAccountId" ng-model="formData.receivableInterestAccountId"
-                                        chosen="assetAccountOptions"
-                                        ng-options="assetAccount.id as assetAccount.name for assetAccount in assetAccountOptions"
-                                        ng-change="savingproduct.accountingMappings.receivableInterestAccount.name = formValue(assetAccountOptions,formData.receivableInterestAccountId,'id','name')"
-                                        value="{{assetAccount.id}}">
-                                </select>
-                            </div>
                             <label class="control-label col-sm-2">{{ 'label.input.receivablefees' | translate }}</label>
                             <i class="fa fa-question-circle col-sm-1 "uib-tooltip="{{'label.tooltip.receivablefees' | translate}}"></i></a>
                             <div class="col-sm-3">
@@ -838,6 +828,20 @@
                                         ng-change="loanproduct.accountingMappings.receivablePenaltyAccount.name = formValue(assetAccountOptions,formData.receivablePenaltyAccountId,'id','name')"
                                         value="{{assetAccount.id}}">
                                 </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2">{{'label.input.intrestpayable' | translate}}</label>
+                                <i class="fa fa-question-circle col-sm-1 "
+                                   uib-tooltip="{{'label.tooltip.interestpayable' | translate}}"></i>
+                                <div class="col-sm-3">
+                                    <select id="interestPayableAccountId"
+                                            ng-model="formData.interestPayableAccountId"
+                                            chosen="liabilityAccountOptions"
+                                            ng-options="liabilityAccount.id as liabilityAccount.name for liabilityAccount in liabilityAccountOptions"
+                                            ng-change="savingproduct.accountingMappings.interestPayableAccount.name = formValue(liabilityAccountOptions,formData.interestPayableAccountId,'id','name')"
+                                            value="{{liabilityAccount.id}}">
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <hr>

@@ -124,9 +124,11 @@
                 }
                 if (scope.formData.accountingRule == 3) {
                     scope.formData.savingsReferenceAccountId = data.accountingMappings.savingsReferenceAccount.id;
-                    scope.formData.receivableInterestAccountId = data.accountingMappings.receivableInterestAccountId.id;
                     scope.formData.receivableFeeAccountId = data.accountingMappings.receivableFeeAccountId.id;
                     scope.formData.receivablePenaltyAccountId = data.accountingMappings.receivablePenaltyAccountId.id;
+                    if(data.accountingMappings.interestPayableAccountId) {
+                        scope.formData.interestPayableAccountId = data.accountingMappings.interestPayableAccountId.id;
+                    }
                     scope.formData.savingsControlAccountId = data.accountingMappings.savingsControlAccount.id;
                     scope.formData.transfersInSuspenseAccountId = data.accountingMappings.transfersInSuspenseAccount.id;
                     scope.formData.incomeFromFeeAccountId = data.accountingMappings.incomeFromFeeAccount.id;
