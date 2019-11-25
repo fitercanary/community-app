@@ -6,8 +6,7 @@
 			var temp = "";
 			var i = 0;
 			resourceFactory.provisioningcriteria.get({criteriaId: routeParams.criteriaId}, function (data) {
-				scope.products = data.loanProducts.length > 0 ? data.loanProducts : data.savingsProducts;
-				scope.provisioningType = data.loanProducts.length > 0 ? "loan" : "overdraft";
+				scope.products = data.loanProducts.concat(data.savingsProducts);
 				scope.definitions = data.definitions;
 				scope.criterianame = data.criteriaName;
 				scope.criteriaId = data.criteriaId;

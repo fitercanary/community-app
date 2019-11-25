@@ -23,62 +23,25 @@
                     </div>
                 </div>
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="provisioningType">{{'label.input.type' | translate}}</label>
-                    <div class="col-sm-3">
-                        <select id="provisioningType" ng-model="provisioningType" name="provisioningType" class="form-control" data-ng-change="selectProvisioningType()">
-                            <option value="loan">{{'label.input.loanprovisioning' | translate}}</option>
-                            <option value="overdraft">{{'label.input.overdraftprovisioning' | translate}}</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <form-validate valattributeform="createprovisioningcriteriaform" valattribute="name"/>
-                    </div>
-                </div>
-                <div class="form-group" ng-show="provisioningType == 'loan'">
                     <div class="col-sm-3 col-md-3 col-md-offset-1">
-                        <label class="control-label col-sm-9">{{ 'label.input.allloanproducts' | translate }}</label>
+                        <label class="control-label col-sm-9">{{ 'label.input.allproducts' | translate }}</label>
                         <select id="available" ng-model="available" name="available" class="form-control multiselectmin" multiple>
-                            <option ng-repeat="allowedProduct in allloanproducts" value="{{allowedProduct.id}}">
+                            <option ng-repeat="allowedProduct in allProducts" value="{{allowedProduct.id}}">
                                 {{allowedProduct.name}}
                             </option>
                         </select>
                     </div>
                     <div class="col-sm-1 col-md-1 paddedtop25px">
-                        <button type="button" class="btn btn-primary" data-ng-click="addLoanProduct()"><i
+                        <button type="button" class="btn btn-primary" data-ng-click="addProduct()"><i
                                 class="fa fa-angle-double-right"></i></button>
                         <br/>
-                        <button type="button" class="btn btn-primary" data-ng-click="removeLoanProduct()"><i
+                        <button type="button" class="btn btn-primary" data-ng-click="removeProduct()"><i
                                 class="fa fa-angle-double-left"></i></button>
                     </div>
                     <div class="col-sm-3 col-md-3">
                         <label class="control-label col-sm-9">{{ 'label.input.selectedproducts' | translate }}</label>
                         <select id="selected" ng-model="selected" name="selected" class="form-control multiselectmin" multiple>
-                            <option ng-repeat="selectedproduct in selectedloanproducts" value="{{selectedproduct.id}}">
-                                {{selectedproduct.name}}
-                            </option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group" ng-show="provisioningType == 'overdraft'">
-                    <div class="col-sm-3 col-md-3 col-md-offset-1">
-                        <label class="control-label col-sm-9">{{ 'label.input.allsavingsproducts' | translate }}</label>
-                        <select id="odavailable" ng-model="available" name="available" class="form-control multiselectmin" multiple>
-                            <option ng-repeat="allowedProduct in allsavingsproducts" value="{{allowedProduct.id}}">
-                                {{allowedProduct.name}}
-                            </option>
-                        </select>
-                    </div>
-                    <div class="col-sm-1 col-md-1 paddedtop25px">
-                        <button type="button" class="btn btn-primary" data-ng-click="addSavingsProduct()"><i
-                                class="fa fa-angle-double-right"></i></button>
-                        <br/>
-                        <button type="button" class="btn btn-primary" data-ng-click="removeSavingsProduct()"><i
-                                class="fa fa-angle-double-left"></i></button>
-                    </div>
-                    <div class="col-sm-3 col-md-3">
-                        <label class="control-label col-sm-9">{{ 'label.input.selectedproducts' | translate }}</label>
-                        <select id="odselected" ng-model="selected" name="selected" class="form-control multiselectmin" multiple>
-                            <option ng-repeat="selectedproduct in selectedsavingsproducts" value="{{selectedproduct.id}}">
+                            <option ng-repeat="selectedproduct in selectedProducts" value="{{selectedproduct.id}}">
                                 {{selectedproduct.name}}
                             </option>
                         </select>
