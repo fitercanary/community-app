@@ -69,10 +69,18 @@
                 scope.formData.writeOffAccountId = data.accountingMappings.writeOffAccount.id;
                 scope.formData.overdraftPortfolioControlId = data.accountingMappings.overdraftPortfolioControl.id;
                 scope.formData.incomeFromInterestId = data.accountingMappings.incomeFromInterest.id;
-                scope.formData.receivableInterestAccountId = data.accountingMappings.receivableInterestAccountId.id;
-                scope.formData.receivableFeeAccountId = data.accountingMappings.receivableFeeAccountId.id;
-                scope.formData.receivablePenaltyAccountId = data.accountingMappings.receivablePenaltyAccountId.id;
-                scope.formData.interestPayableAccountId = data.accountingMappings.interestPayableAccountId.id;
+                if(data.accountingMappings.receivableInterestAccountId) {
+                    scope.formData.receivableInterestAccountId = data.accountingMappings.receivableInterestAccountId.id;
+                }
+                if(data.accountingMappings.receivableFeeAccountId) {
+                    scope.formData.receivableFeeAccountId = data.accountingMappings.receivableFeeAccountId.id;
+                }
+                if(data.accountingMappings.receivablePenaltyAccountId) {
+                    scope.formData.receivablePenaltyAccountId = data.accountingMappings.receivablePenaltyAccountId.id;
+                }
+                if(data.accountingMappings.interestPayableAccountId) {
+                    scope.formData.interestPayableAccountId = data.accountingMappings.interestPayableAccountId.id;
+                }
 
                 _.each(scope.product.paymentChannelToFundSourceMappings, function (fundSource) {
                     scope.configureFundOptions.push({
