@@ -317,6 +317,15 @@
                 <uib-tab heading="{{'label.heading.transactions' | translate}}"
                          ng-show="savingaccountdetails.transactions" select="convertDateArrayToObject('date')">
                     <br>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewJournalEntries()" style="margin-right: 8px;">
+                        {{'label.button.viewjournalentries' | translate}}
+                    </button>
+                    <div class="pull-right">
+                        <input type="checkbox" data-ng-model="hideAccrualTransactions" ng-init = "hideAccuralTransactions = true">&nbsp;
+                        <label class="control-label">{{ 'label.input.hide.accrual.transactions' | translate }}</label>&nbsp;&nbsp;
+                    </div>
+                    <br>
                     <table class="table table-bordered">
                         <colgroup span="4"></colgroup>
                         <thead>
@@ -330,7 +339,8 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <tr class="pointer-main" ng-class="{strikeoff : transaction.reversed==true}"
+                        <tr class="pointer-main" ng-hide="transaction.reversed ||  (hideAccrualTransactions && (transaction.transactionType.id == 22 || transaction.transactionType.id == 23 || transaction.transactionType.id == 24 || transaction.transactionType.id == 25))"
+                            ng-class="{strikeoff : transaction.reversed==true}"
                             ng-repeat="transaction in savingaccountdetails.transactions">
                             <td class="pointer"
                                 data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">

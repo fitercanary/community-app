@@ -4,7 +4,7 @@
             scope.isDebit = function (savingsTransactionType) {
                 return savingsTransactionType.withdrawal == true || savingsTransactionType.feeDeduction == true || savingsTransactionType.withholdTax == true;
             };
-
+            scope.hideAccrualTransactions = true;
             /***
              * we are using orderBy(https://docs.angularjs.org/api/ng/filter/orderBy) filter to sort fields in ui
              * api returns dates in array format[yyyy, mm, dd], converting the array of dates to date object
@@ -14,6 +14,26 @@
                 for(var i in scope.savingaccountdetails.transactions){
                     scope.savingaccountdetails.transactions[i][dateFieldName] = new Date(scope.savingaccountdetails.transactions[i].date);
                 }
+            };
+
+            scope.export = function () {
+                scope.report = true;
+                scope.printbtn = false;
+                scope.viewReport = false;
+                scope.viewSavingReport = true;
+                scope.viewTransactionReport = false;
+            };
+
+            scope.checkStatus = function(){
+                if(scope.status == 'Active' || scope.status == 'Closed' || scope.status == 'Transfer in progress' ||
+                    scope.status == 'Transfer on hold' || scope.status == 'Premature Closed' || scope.status == 'Matured'){
+                    return true;
+                }
+                return false;
+            };
+
+            scope.viewJournalEntries = function(){
+                location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id,fixedDepositId: scope.savingaccountdetails.id});
             };
 
             scope.clickEvent = function (eventName, accountId) {
