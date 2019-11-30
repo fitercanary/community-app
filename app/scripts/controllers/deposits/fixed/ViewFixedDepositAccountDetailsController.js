@@ -112,6 +112,9 @@
                             route.reload();
                         });
                         break;
+                    case "postAccrualInterestAsOn":
+                        location.path('/fixeddepositaccount/' + accountId + '/postAccrualInterestAsOn');
+                        break;
                 }
             };
 
@@ -191,6 +194,11 @@
                         {
                             name: "button.calculateInterest",
                             icon: "fa fa-table"
+                        },
+                        {
+                            name: "button.postAccrualInterestAsOn",
+                            icon: "icon-arrow-right",
+                            taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
                         }
                     ],
                         options: [
