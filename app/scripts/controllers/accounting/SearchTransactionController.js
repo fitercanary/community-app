@@ -19,10 +19,10 @@
             };
 
             resourceFactory.accountCoaResource.getAllAccountCoas({
-                manualEntriesAllowed: true,
                 usage: 1,
                 disabled: false
             }, function (data) {
+                console.log("data of gl account ", data);
                 scope.glAccounts = data;
             });
 
