@@ -663,6 +663,10 @@
 										<th>{{ 'label.numofactivesavings' | translate }}</th>
 										<td><span class="padded-td">{{client.ClientSummary.activeSavings}}</span></td>
 									</tr>
+									<tr ng-show="client.referredBy">
+										<th>{{ 'label.heading.referredBy' | translate }}</th>
+										<td><span class="padded-td"><a href="#/viewclient/{{client.referredById}}">{{client.referredBy}}</a></span></td>
+									</tr>
 								</table>
 							</div>
 						</div>
@@ -1032,6 +1036,30 @@
 					<div style="padding-left: 25%;">
 					  <object height="60%" width="70%" ng-show="preview" data="{{fileUrl}}" type="{{fileType}}"></object>
 				  </div>
+				</uib-tab>
+				<uib-tab heading="{{'label.heading.referrals' | translate}}" ng-show="client.referrals">
+					<br>
+					<table class="table">
+						<thead>
+						<tr class="graybg">
+							<th>{{'label.heading.name' | translate}}</th>
+							<th>{{'label.heading.phoneNo' | translate}}</th>
+							<th>{{'label.heading.email' | translate}}</th>
+							<th>{{'label.heading.deviceId' | translate}}</th>
+							<th>{{'label.heading.status' | translate}}</th>
+						</tr>
+						</thead>
+						<tbody>
+						<tr ng-repeat="referral in client.referrals">
+							<td ng-show="referral.referredClientId"><a href="#/viewclient/{{referral.referredClientId}}">{{referral.referredClient}}</a></td>
+							<td ng-hide="referral.referredClientId">{{referral.referredClient}}</td>
+							<td>{{referral.phoneNo}}</td>
+							<td>{{referral.email}}</td>
+							<td>{{referral.deviceId}}</td>
+							<td>{{referral.status}}</td>
+						</tr>
+						</tbody>
+					</table>
 				</uib-tab>
 				<uib-tab heading="{{clientdatatable.registeredTableName}}" ng-repeat="clientdatatable in clientdatatables"
 						 select="dataTableChange(clientdatatable)" has-permission='READ_{{clientdatatable.registeredTableName}}'>

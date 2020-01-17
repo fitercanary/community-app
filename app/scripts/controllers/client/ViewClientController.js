@@ -13,7 +13,6 @@
             scope.updateDefaultSavings = false;
             scope.charges = [];
 
-
             // address
             scope.addresses=[];
             scope.view={};
