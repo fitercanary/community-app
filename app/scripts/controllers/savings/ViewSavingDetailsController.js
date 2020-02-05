@@ -10,6 +10,9 @@
             scope.fieldOfficers = [];
             scope.savingaccountdetails = [];
             scope.hideAccrualTransactions = true;
+
+            scope.transactionsPerPage = 15;
+
             scope.isDebit = function (savingsTransactionType) {
                 return savingsTransactionType.withdrawal == true || savingsTransactionType.feeDeduction == true
                     || savingsTransactionType.overdraftInterest == true || savingsTransactionType.withholdTax == true;
@@ -138,12 +141,196 @@
 
                 }
             };
+            scope.getResultsPage = function(pageNumber){
+            var items =  resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all',
+                       pageNumber :pageNumber, pageSize: scope.transactionsPerPage}, function (data) {
+                            scope.savingaccountdetails = data;
+                            scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance?(scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance):scope.savingaccountdetails.summary.accountBalance;
+                            scope.convertDateArrayToObject('date');
 
+                            if(scope.savingaccountdetails.groupId) {
+                                resourceFactory.groupResource.get({groupId: scope.savingaccountdetails.groupId}, function (data) {
+                                    scope.groupLevel = data.groupLevel;
+                                });
+                            }
+                            scope.showonhold = true;
+                            if(angular.isUndefined(data.onHoldFunds)){
+                                scope.showonhold = false;
+                            }
+                            scope.staffData.staffId = data.staffId;
+                            scope.date.toDate = new Date();
+                            scope.date.fromDate = new Date(data.timeline.activatedOnDate);
 
-            resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all'}, function (data) {
+                            scope.status = data.status.value;
+                            if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved") {
+                                scope.choice = true;
+                            }
+                            scope.chargeAction = data.status.value == "Submitted and pending approval" ? true : false;
+                            scope.chargePayAction = data.status.value == "Active" ? true : false;
+                            if (scope.savingaccountdetails.charges) {
+                                scope.charges = scope.savingaccountdetails.charges;
+                                scope.chargeTableShow = true;
+                            } else {
+                                scope.chargeTableShow = false;
+                            }
+                            if (data.status.value == "Submitted and pending approval") {
+                                scope.buttons = { singlebuttons: [
+                                    {
+                                        name: "button.modifyapplication",
+                                        icon: "fa fa-pencil ",
+                                        taskPermissionName:"UPDATE_SAVINGSACCOUNT"
+                                    },
+                                    {
+                                        name: "button.approve",
+                                        icon: "fa fa-check",
+                                        taskPermissionName:"APPROVE_SAVINGSACCOUNT"
+                                    }
+                                ],
+                                    options: [
+                                        {
+                                            name: "button.reject",
+                                            taskPermissionName:"REJECT_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                            name: "button.withdrawnbyclient",
+                                            taskPermissionName:"WITHDRAW_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                            name: "button.addcharge",
+                                            taskPermissionName:"CREATE_SAVINGSACCOUNTCHARGE"
+                                        },
+                                        {
+                                            name: "button.delete",
+                                            taskPermissionName:"DELETE_SAVINGSACCOUNT"
+                                        }
+                                    ]
+                                };
+                            }
+
+                            if (data.status.value == "Approved") {
+                                scope.buttons = { singlebuttons: [
+                                    {
+                                        name: "button.undoapproval",
+                                        icon: "fa faf-undo",
+                                        taskPermissionName:"APPROVALUNDO_SAVINGSACCOUNT"
+                                    },
+                                    {
+                                        name: "button.activate",
+                                        icon: "fa fa-check",
+                                        taskPermissionName:"ACTIVATE_SAVINGSACCOUNT"
+                                    },
+                                    {
+                                        name: "button.addcharge",
+                                        icon: "fa fa-plus",
+                                        taskPermissionName:"CREATE_SAVINGSACCOUNTCHARGE"
+                                    }
+                                ]
+                                };
+                            }
+
+                            if (data.status.value == "Active") {
+                                scope.buttons = { singlebuttons: [
+                                    {
+                                        name: "button.postInterestAsOn",
+                                        icon: "icon-arrow-right",
+                                        taskPermissionName:"POSTINTERESTASON_SAVINGSACCOUNT"
+                                    },
+                                    {
+                                            name: "button.postAccrualInterestAsOn",
+                                            icon: "icon-arrow-right",
+                                            taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
+                                    },
+                                    {
+                                        name: "button.deposit",
+                                        icon: "fa fa-arrow-up",
+                                        taskPermissionName:"DEPOSIT_SAVINGSACCOUNT"
+                                    },
+                                    {
+                                        name: "button.withdraw",
+                                        icon: "fa fa-arrow-down",
+                                        taskPermissionName:"WITHDRAW_SAVINGSACCOUNT"
+                                    },
+                                    {
+                                        name: "button.calculateInterest",
+                                        icon: "fa fa-table",
+                                        taskPermissionName:"CALCULATEINTEREST_SAVINGSACCOUNT"
+                                    }
+                                ],
+                                    options: [
+                                        {
+                                            name: "button.postInterest",
+                                            taskPermissionName:"POSTINTEREST_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                            name: "button.addcharge",
+                                            taskPermissionName:"CREATE_SAVINGSACCOUNTCHARGE"
+                                        },
+                                        {
+                                            name: "button.close",
+                                            taskPermissionName:"CLOSE_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                          name: "button.overdraft",
+                                          taskPermissionName:"APPLYOVERDRAFT_SAVINGSACCOUNT"
+                                        }
+                                    ]
+
+                                };
+                                if (data.clientId) {
+                                    scope.buttons.options.push({
+                                        name: "button.transferFunds",
+                                        taskPermissionName:"CREATE_ACCOUNTTRANSFER"
+                                    });
+                                }
+                                if (data.charges) {
+                                    for (var i in scope.charges) {
+                                        if (scope.charges[i].name == "Annual fee - INR") {
+                                            scope.buttons.options.push({
+                                                name: "button.applyAnnualFees",
+                                                taskPermissionName:"APPLYANNUALFEE_SAVINGSACCOUNT"
+                                            });
+                                            scope.annualChargeId = scope.charges[i].id;
+                                        }
+                                    }
+                                }
+                                if(data.taxGroup){
+                                    if(data.withHoldTax){
+                                        scope.buttons.options.push({
+                                            name: "button.disableWithHoldTax",
+                                            taskPermissionName:"UPDATEWITHHOLDTAX_SAVINGSACCOUNT"
+                                        });
+                                    }else{
+                                        scope.buttons.options.push({
+                                            name: "button.enableWithHoldTax",
+                                            taskPermissionName:"UPDATEWITHHOLDTAX_SAVINGSACCOUNT"
+                                        });
+                                    }
+                                }
+                            }
+                            if (data.annualFee) {
+                                var annualdueDate = [];
+                                annualdueDate = data.annualFee.feeOnMonthDay;
+                                annualdueDate.push(new Date().getFullYear());
+                                scope.annualdueDate = new Date(annualdueDate);
+                            };
+
+                            resourceFactory.standingInstructionTemplateResource.get({fromClientId: scope.savingaccountdetails.clientId,fromAccountType: 2,fromAccountId: routeParams.id},function (response) {
+                                scope.standinginstruction = response;
+                                scope.searchTransaction();
+                            });
+                        });
+            }
+           scope.initPage = function () {
+
+           var items =  resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all',
+           pageNumber :1, pageSize: scope.transactionsPerPage}, function (data) {
                 scope.savingaccountdetails = data;
                 scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance?(scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance):scope.savingaccountdetails.summary.accountBalance;
                 scope.convertDateArrayToObject('date');
+                if(scope.savingaccountdetails.transactions){
+                console.log("tr", scope.savingaccountdetails.transactions);
+                 scope.totalTransactions = data.transactionCount;
+                }
                 if(scope.savingaccountdetails.groupId) {
                     resourceFactory.groupResource.get({groupId: scope.savingaccountdetails.groupId}, function (data) {
                         scope.groupLevel = data.groupLevel;
@@ -315,6 +502,8 @@
                     scope.searchTransaction();
                 });
             });
+          }
+          scope.initPage();
 
             var fetchFunction = function (offset, limit, callback) {
                 var params = {};

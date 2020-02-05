@@ -495,8 +495,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr class="pointer-main" ng-hide="transaction.reversed ||  (hideAccrualTransactions && (transaction.transactionType.id == 22 || transaction.transactionType.id == 23 || transaction.transactionType.id == 24 || transaction.transactionType.id == 25))"
-                                ng-repeat="transaction in savingaccountdetails.transactions">
+                            <tr dir-paginate="transaction in savingaccountdetails.transactions | itemsPerPage: transactionsPerPage" total-items="totalTransactions" pagination-id="transactions"
+                                class="pointer-main" ng-hide="transaction.reversed ||  (hideAccrualTransactions && (transaction.transactionType.id == 22 || transaction.transactionType.id == 23 || transaction.transactionType.id == 24 || transaction.transactionType.id == 25))"
+                                >
                                 <td class="pointer"
                                     data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">
                                     {{transaction.id}}
@@ -533,6 +534,10 @@
                             </tr>
                             </tbody>
                         </table>
+                        <dir-pagination-controls align="center" boundary-links="true"
+                                                 template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                                 on-page-change="getResultsPage(newPageNumber)" pagination-id="transactions">
+                        </dir-pagination-controls>
                         <div>
                             <button ng-show="printbtn" ng-click="printReport()" class="btn btn-primary"><i
                                     class="fa fa-print ">{{'label.button.print' |
