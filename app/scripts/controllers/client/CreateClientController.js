@@ -57,6 +57,14 @@
                 scope.clientNonPersonMainBusinessLineOptions = data.clientNonPersonMainBusinessLineOptions;
                 scope.clientLegalFormOptions = data.clientLegalFormOptions;
                 scope.datatables = data.datatables;
+                scope.existingClients = data.existingClients || [];
+                scope.existingClients.sort((a, b) => {
+                        let aName = a.displayName.toLocaleLowerCase();
+                        let bName = b.displayName.toLocaleLowerCase();
+                        if (aName < bName) return -1;
+                        if (aName > bName) return 1;
+                        return 0;
+                    });
                 if (!_.isUndefined(scope.datatables) && scope.datatables.length > 0) {
                     scope.noOfTabs = scope.datatables.length + 1;
                     angular.forEach(scope.datatables, function (datatable, index) {

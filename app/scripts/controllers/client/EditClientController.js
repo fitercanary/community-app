@@ -21,6 +21,14 @@
                 scope.clientNonPersonMainBusinessLineOptions = data.clientNonPersonMainBusinessLineOptions;
                 scope.clientLegalFormOptions = data.clientLegalFormOptions;
                 scope.officeId = data.officeId;
+                scope.existingClients = data.existingClients || [];
+                scope.existingClients.sort((a, b) => {
+                    let aName = a.displayName.toLocaleLowerCase();
+                    let bName = b.displayName.toLocaleLowerCase();
+                    if (aName < bName) return -1;
+                    if (aName > bName) return 1;
+                    return 0;
+                });
                 scope.formData = {
                     firstname: data.firstname,
                     lastname: data.lastname,
@@ -29,6 +37,7 @@
                     accountNo: data.accountNo,
                     staffId: data.staffId,
                     externalId: data.externalId,
+                    referralClientId: data.referredById,
                     isStaff:data.isStaff,
                     mobileNo: data.mobileNo,
                     savingsProductId: data.savingsProductId,
