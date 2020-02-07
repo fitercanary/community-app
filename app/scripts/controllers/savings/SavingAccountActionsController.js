@@ -1,9 +1,10 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        SavingAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter) {
+        SavingAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter, $timeout) {
 
             scope.action = routeParams.action || "";
             scope.accountId = routeParams.id;
+            scope.subStatus =  routeParams.subStatus;
             scope.savingAccountId = routeParams.id;
             scope.formData = {};
             scope.entityformData = {};
@@ -17,6 +18,8 @@
             scope.submittedDatatables = [];
             scope.tf = "HH:mm";
             var submitStatus = [];
+            scope.savingsDetails = [];
+            scope.textDetails = [];
 
             rootScope.RequestEntities = function(entity,status,productId){
                 resourceFactory.entityDatatableChecksResource.getAll({limit:-1},function (response) {
@@ -255,6 +258,54 @@
                     scope.taskPermissionName = 'CLOSE_SAVINGSACCOUNT';
                     scope.fetchEntities('m_savings_account','CLOSE');
                     break;
+                case "freeze":
+                scope.showBlock = true;
+                resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all'
+                                       }, function (data) {
+                 scope.savingsDetails = data;
+                 console.log(data);
+                    if(!data.subStatus.block){
+                     if(data.subStatus.blockDebit ){
+                      if(rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                      scope.debitStatus = true;
+                       scope.buttonTextDebit = "label.button.unblockDebit";
+                       scope.taskPermissionNameDebit = 'UNBLOCKDEBIT_SAVINGSACCOUNT';
+                      }
+                     }else{
+                      if(rootScope.hasPermission("BLOCKDEBIT_SAVINGSACCOUNT")){
+                       scope.debitStatus = true;
+                       scope.buttonTextDebit = "label.button.blockDebit";
+                       scope.taskPermissionNameDebit = 'BLOCKDEBIT_SAVINGSACCOUNT';
+                       }
+                      }
+                     if(data.subStatus.blockCredit){
+                     if(rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                      scope.creditStatus = true;
+                       scope.buttonTextCredit = "label.button.unblockCredit";
+                      scope.taskPermissionNameCredit = 'UNBLOCKCREDIT_SAVINGSACCOUNT';}
+                     }else{
+                     if(rootScope.hasPermission("BLOCKCREDIT_SAVINGSACCOUNT")){
+                     scope.creditStatus = true;
+                        scope.buttonTextCredit = "label.button.blockCredit";
+                        scope.taskPermissionNameCredit = 'BLOCKCREDIT_SAVINGSACCOUNT';
+                        }
+                     }}
+                     else{
+                     if(rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                          scope.debitStatus = true;
+                           scope.buttonTextDebit = "label.button.unblockDebit";
+                           scope.taskPermissionNameDebit = 'UNBLOCKDEBIT_SAVINGSACCOUNT';
+                       }
+                     if(rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                           scope.creditStatus = true;
+                           scope.buttonTextCredit = "label.button.unblockCredit";
+                           scope.taskPermissionNameCredit = 'UNBLOCKCREDIT_SAVINGSACCOUNT';
+                     }
+                   }
+
+                });
+                break;
+
                 case "modifytransaction":
                     resourceFactory.savingsTrxnsResource.get({savingsId: scope.accountId, transactionId: routeParams.transactionId, template: 'true'},
                         function (data) {
@@ -339,7 +390,8 @@
                 location.path('/viewsavingaccount/' + routeParams.id);
             };
 
-            scope.submit = function () {
+            scope.submit = function (element) {
+
                 var params = {command: scope.action};
                 if (scope.action != "undoapproval") {
                     this.formData.locale = scope.optlang.code;
@@ -374,6 +426,9 @@
                         }
                         this.formData.isPostInterestAsOn=true;
                     }
+
+
+
                     params.savingsId = scope.accountId;
 
                     resourceFactory.savingsTrxnsResource.save(params, this.formData, function (data) {
@@ -441,6 +496,40 @@
                 }
             };
 
+           scope.blockUnblockDebit = function(permission){
+                console.log(permission);
+                if(scope.action == "freeze"){
+                     if (permission == "BLOCKDEBIT_SAVINGSACCOUNT") {
+                                console.log(permission, "1");
+                                  this.formData = {}
+                                  scope.action = "blockDebit";
+                       }
+                     if (permission == "UNBLOCKDEBIT_SAVINGSACCOUNT"){
+                      console.log(permission, "2");
+                                      this.formData = {}
+                                      scope.action = "unblockDebit";
+                     }
+                     if (permission == "BLOCKCREDIT_SAVINGSACCOUNT") {
+                      console.log(permission, "3");
+                                                       this.formData = {}
+                                                       scope.action = "blockCredit";
+                                            }
+                     if (permission == "UNBLOCKCREDIT_SAVINGSACCOUNT"){
+                      console.log(permission, "4");
+                                                           this.formData = {}
+                                                           scope.action = "unblockCredit";
+                     }
+
+
+                }
+                var params = {command: scope.action, accountId : scope.accountId};
+
+                 resourceFactory.savingsResource.save(params, this.formData, function (data) {
+                 console.log(data);
+                                        location.path('/viewsavingaccount/' + data.savingsId);
+                 });
+           }
+
             scope.submitDatatable = function(){
                 if(scope.datatables) {
                     asyncLoop(Object.keys(scope.entityformData.datatables).length,function(loop){
@@ -486,8 +575,9 @@
                 }
             };
         }
+
     });
-    mifosX.ng.application.controller('SavingAccountActionsController', ['$scope','$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.SavingAccountActionsController]).run(function ($log) {
+    mifosX.ng.application.controller('SavingAccountActionsController', ['$scope','$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', '$timeout', mifosX.controllers.SavingAccountActionsController]).run(function ($log) {
         $log.info("SavingAccountActionsController initialized");
     });
 }(mifosX.controllers || {}));

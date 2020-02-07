@@ -10,6 +10,7 @@
             scope.fieldOfficers = [];
             scope.savingaccountdetails = [];
             scope.hideAccrualTransactions = true;
+            scope.subStatus = false;
 
             scope.transactionsPerPage = 15;
 
@@ -106,6 +107,9 @@
                         break;
                     case "close":
                         location.path('/savingaccount/' + accountId + '/close');
+                        break;
+                    case "freeze" :
+                        location.path('/savingaccount/' + accountId + '/freeze');
                         break;
                     case "assignSavingsOfficer":
                         location.path('/assignsavingsofficer/' + accountId);
@@ -255,8 +259,8 @@
                                         icon: "fa fa-table",
                                         taskPermissionName:"CALCULATEINTEREST_SAVINGSACCOUNT"
                                     }
-                                ],
-                                    options: [
+                                ] };
+                                 var buttonOptions = [
                                         {
                                             name: "button.postInterest",
                                             taskPermissionName:"POSTINTEREST_SAVINGSACCOUNT"
@@ -272,10 +276,46 @@
                                         {
                                           name: "button.overdraft",
                                           taskPermissionName:"APPLYOVERDRAFT_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                          name: "button.freeze",
+                                          taskPermissionName : ""
                                         }
+
                                     ]
 
+
+                    if($rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                       buttonOptions.forEach(function(v) {
+                         if(v.name == "button.freeze") {
+                         v.taskPermissionName = 'UNBLOCKDEBIT_SAVINGSACCOUNT';}
+                       });
+                    }
+                    if($rootScope.hasPermission("BLOCKDEBIT_SAVINGSACCOUNT")) {
+                         buttonOptions.forEach(function(v) {
+                           if(v.name == "button.freeze") {
+                           v.taskPermissionName = 'BLOCKDEBIT_SAVINGSACCOUNT';}
+                         });
+                    }
+                    if ($rootScope.hasPermission("BLOCKCREDIT_SAVINGSACCOUNT")) {
+                         buttonOptions.forEach(function(v) {
+                          if(v.name == "button.freeze") {
+                          v.taskPermissionName = 'BLOCKCREDIT_SAVINGSACCOUNT';}
+                         });
+                    }
+                    if($rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                       var hasPermission = $rootScope.hasPermission(value);
+                       buttonOptions.forEach(function(v) {
+                       if(v.name == "button.freeze") {
+                       v.taskPermissionName = 'UNBLOCKCREDIT_SAVINGSACCOUNT';}
+                    });
+                    }
+
+                                scope.buttons = {
+                                   singlebuttons: scope.buttons.singlebuttons,
+                                   options: buttonOptions
                                 };
+
                                 if (data.clientId) {
                                     scope.buttons.options.push({
                                         name: "button.transferFunds",
@@ -325,6 +365,7 @@
            var items =  resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all',
            pageNumber :1, pageSize: scope.transactionsPerPage}, function (data) {
                 scope.savingaccountdetails = data;
+
                 scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance?(scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance):scope.savingaccountdetails.summary.accountBalance;
                 scope.convertDateArrayToObject('date');
                 if(scope.savingaccountdetails.transactions){
@@ -438,8 +479,8 @@
                             icon: "fa fa-table",
                             taskPermissionName:"CALCULATEINTEREST_SAVINGSACCOUNT"
                         }
-                    ],
-                        options: [
+                    ]};
+                    var  buttonOptions = [
                             {
                                 name: "button.postInterest",
                                 taskPermissionName:"POSTINTEREST_SAVINGSACCOUNT"
@@ -455,10 +496,47 @@
                             {
                               name: "button.overdraft",
                               taskPermissionName:"APPLYOVERDRAFT_SAVINGSACCOUNT"
+                            },
+                            {
+                              name: "button.overdraft",
+                              taskPermissionName:"APPLYOVERDRAFT_SAVINGSACCOUNT"
+                            },
+                            {
+                            name: "button.freeze",
+                            taskPermissionName : ""
                             }
                         ]
 
+                    if($rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                       buttonOptions.forEach(function(v) {
+                         if(v.name == "button.freeze") {
+                         v.taskPermissionName = 'UNBLOCKDEBIT_SAVINGSACCOUNT';}
+                       });
+                    }
+                    if($rootScope.hasPermission("BLOCKDEBIT_SAVINGSACCOUNT")) {
+                         buttonOptions.forEach(function(v) {
+                           if(v.name == "button.freeze") {
+                           v.taskPermissionName = 'BLOCKDEBIT_SAVINGSACCOUNT';}
+                         });
+                    }
+                    if ($rootScope.hasPermission("BLOCKCREDIT_SAVINGSACCOUNT")) {
+                         buttonOptions.forEach(function(v) {
+                          if(v.name == "button.freeze") {
+                          v.taskPermissionName = 'BLOCKCREDIT_SAVINGSACCOUNT';}
+                         });
+                    }
+                    if($rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                       buttonOptions.forEach(function(v) {
+                       if(v.name == "button.freeze") {
+                       v.taskPermissionName = 'UNBLOCKCREDIT_SAVINGSACCOUNT';}
+                    });
+                    }
+
+                    scope.buttons = {
+                       singlebuttons: scope.buttons.singlebuttons,
+                       options: buttonOptions
                     };
+
                     if (data.clientId) {
                         scope.buttons.options.push({
                             name: "button.transferFunds",
