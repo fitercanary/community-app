@@ -399,23 +399,32 @@
             };
             var UploadSigCtrl = function ($scope, $uibModalInstance) {
                 $scope.upload = function (file) {
-                    if (file) {
-                        Upload.upload({
-                            url: $rootScope.hostUrl + API_VERSION + '/clients/' + routeParams.id + '/documents',
-                            data: {
-                                name: 'clientSignature',
-                                description: 'client signature'
-                            },
-                            file: file
-                        }).then(function (imageData) {
-                            // to fix IE not refreshing the model
-                            if (!scope.$$phase) {
-                                scope.$apply();
+                    if(file){
+                     var ext = file.name.match(/\.(.+)$/)[1];
+                     if(angular.lowercase(ext) ==='jpg' || angular.lowercase(ext) ==='jpeg' || angular.lowercase(ext) ==='png'){
+                            if (file) {
+                               Upload.upload({
+                               url: $rootScope.hostUrl + API_VERSION + '/clients/' + routeParams.id + '/documents',
+                               data: {
+                                    name: 'clientSignature',
+                                    description: 'client signature'
+                                   },
+                               file: file
+                                 }).then(function (imageData) {
+                                 // to fix IE not refreshing the model
+                               if (!scope.$$phase) {
+                                  scope.$apply();
+                               }
+                               $uibModalInstance.close('upload');
+                                route.reload();
+                               });
                             }
-                            $uibModalInstance.close('upload');
-                            route.reload();
-                        });
+                          }
+                          else{
+                             alert("Invalid File Format please select image");
+                          }
                     }
+
                 };
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
@@ -869,12 +878,15 @@
                                 method: 'GET',
                                 url: $rootScope.hostUrl + API_VERSION + '/clients/' + routeParams.id + '/documents/' + $scope.docId + '/attachment?tenantIdentifier=' + $rootScope.tenantIdentifier
                             }).then(function (docsData) {
-                                $scope.largeImage = scope.signature_url;
+                              console.log(docsData);
+                                $scope.largeImage = docsData.config.url;
                             });
                         }
                     });
                 };
                 loadSignature();
+
+
                 $scope.deleteSig = function () {
                     $uibModalInstance.dismiss('cancel');
                     scope.deleteSig();

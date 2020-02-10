@@ -35,7 +35,7 @@
 	</script>
 	<script type="text/ng-template" id="clientSignature.html">
 		<div class="modal-header silver">
-			<img ng-src="{{largeImage}}" alt="Signature">
+			<img id="img" ng-src="{{largeImage}}" alt="Signature" width="860" height="400" accept="image/*" >
 		</div>
 		<div class="modal-body ">
 			<button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
