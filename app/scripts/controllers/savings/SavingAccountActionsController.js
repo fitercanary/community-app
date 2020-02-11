@@ -405,10 +405,12 @@
                 }
                 if (scope.action == "deposit" || scope.action == "withdrawal" || scope.action == "modifytransaction" || scope.action=="postInterestAsOn") {
                     if (scope.action == "withdrawal") {
+                        this.formData.remarks = this.formData.note;
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
                         }
                     } else if (scope.action == "deposit") {
+                        this.formData.remarks = this.formData.note;
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
                         }
@@ -525,8 +527,7 @@
                 var params = {command: scope.action, accountId : scope.accountId};
 
                  resourceFactory.savingsResource.save(params, this.formData, function (data) {
-                 console.log(data);
-                                        location.path('/viewsavingaccount/' + data.savingsId);
+                    location.path('/viewsavingaccount/' + data.savingsId);
                  });
            }
 

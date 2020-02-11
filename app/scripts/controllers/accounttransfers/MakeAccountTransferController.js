@@ -48,6 +48,7 @@
             };
 
             scope.submit = function () {
+                this.formData.remarks = this.formData.transferDescription;
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
                 if (this.formData.transferDate) this.formData.transferDate = dateFilter(this.formData.transferDate, scope.df);
