@@ -10,8 +10,10 @@
             scope.hideAccrualTransactions = true;
             scope.isHideAccrualsCheckboxChecked = true;
             scope.loandetails = [];
+            scope.closed = false;
             scope.routeTo = function (loanId, transactionId, transactionTypeId) {
-                if (transactionTypeId == 2 || transactionTypeId == 4 || transactionTypeId == 1) {
+                console.log(transactionTypeId, scope.closed);
+                if ((transactionTypeId == 2 || transactionTypeId == 4 || transactionTypeId == 1) && !scope.closed) {
                     location.path('/viewloantrxn/' + loanId + '/trxnId/' + transactionId);
                 };
             };
@@ -157,8 +159,18 @@
                 scope.date.fromDate = new Date(data.timeline.actualDisbursementDate);
                 scope.date.toDate = new Date();
                 scope.status = data.status.value;
+                console.log(data.status.code);
                 scope.chargeAction = data.status.value == "Submitted and pending approval" ? true : false;
                 scope.decimals = data.currency.decimalPlaces;
+                if (data.status.code === "loanStatusType.closed.written.off" ||
+                                    data.status.code === "loanStatusType.closed.obligations.met" ||
+                                    data.status.code === "loanStatusType.closed.reschedule.outstanding.amount" ||
+                                    data.status.code === "loanStatusType.withdrawn.by.client" ||
+                                    data.status.code === "loanStatusType.rejected") {
+                                    scope.closed = true;
+                                } else {
+                                     scope.closed = false;
+                                }
                 if (scope.loandetails.charges) {
                     scope.charges = scope.loandetails.charges;
                     for (var i in scope.charges) {

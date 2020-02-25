@@ -3,6 +3,7 @@
         LoanAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter) {
 
             scope.action = routeParams.action || "";
+            scope.prePayAction = false;
             scope.accountId = routeParams.id;
             scope.formData = {};
             scope.entityformData = {datatables:{}};
@@ -21,6 +22,7 @@
             scope.processDate = false;
             scope.submittedDatatables = [];
             var submitStatus = [];
+
 
             rootScope.RequestEntities = function(entity,status,productId){
                 resourceFactory.entityDatatableChecksResource.getAll({limit:-1},function (response) {
@@ -111,6 +113,7 @@
             }
 
             switch (scope.action) {
+
                 case "approve":
                     scope.taskPermissionName = 'APPROVE_LOAN';
                     resourceFactory.loanTemplateResource.get({loanId: scope.accountId, templateType: 'approval'}, function (data) {
@@ -241,6 +244,7 @@
                     scope.isTransaction = true;
                     scope.showAmountField = true;
                     scope.taskPermissionName = 'REPAYMENT_LOAN';
+                    scope.prePayAction = scope.action;
                     scope.action = 'repayment';
                     break;
                 case "waiveinterest":
@@ -521,6 +525,10 @@
                     if (scope.action == "modifytransaction") {
                         params.command = 'modify';
                         params.transactionId = routeParams.transactionId;
+                    }
+                    console.log(scope.prePayAction);
+                    if(scope.prePayAction == "prepayloan"){
+                    this.formData.isPrepay = true;
                     }
                     params.loanId = scope.accountId;
                     resourceFactory.loanTrxnsResource.save(params, this.formData, function (data) {

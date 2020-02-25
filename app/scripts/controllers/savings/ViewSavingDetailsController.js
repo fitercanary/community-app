@@ -498,10 +498,6 @@
                               taskPermissionName:"APPLYOVERDRAFT_SAVINGSACCOUNT"
                             },
                             {
-                              name: "button.overdraft",
-                              taskPermissionName:"APPLYOVERDRAFT_SAVINGSACCOUNT"
-                            },
-                            {
                             name: "button.freeze",
                             taskPermissionName : ""
                             }
