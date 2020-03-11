@@ -270,6 +270,13 @@
                     <input id="submittedOnDate" type="text" name="submittedOnDate" datepicker-pop="dd MMMM yyyy"
                            ng-model="date.submittedOnDate" is-open="opened1" max="restrictDate"  class="form-control"/>
                 </div>
+
+				<label class="control-label col-sm-2">{{'label.input.dailyWithdrawLimit' | translate}}</label>
+				<div class="col-sm-3">
+					<input id="dailyWithdrawLimit" type="text" name="dailyWithdrawLimit" ng-model="formData.dailyWithdrawLimit"
+						   class="form-control"
+						   number-format>
+				</div>
             </div>
 
 	        <div data-ng-switch on="choice">

@@ -1496,6 +1496,7 @@
   "label.input.approvedOnDate": "Approval On",
   "label.input.rejectedOnDate": "Rejected On",
   "label.input.submittedOnDate": "Submitted On",
+  "label.input.dailyWithdrawLimit": "Daily withdraw Limit",
   "label.input.installmentOn": "Reschedule from Installment On",
   "label.input.applicationdate": "Application Date",
   "label.input.isTopup": "Is Topup Loan",

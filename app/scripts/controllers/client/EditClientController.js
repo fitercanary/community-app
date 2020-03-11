@@ -47,7 +47,8 @@
                     clientNonPersonDetails : {
                         incorpNumber: data.clientNonPersonDetails.incorpNumber,
                         remarks: data.clientNonPersonDetails.remarks
-                    }
+                    },
+                    dailyWithdrawLimit : data.dailyWithdrawLimit
                 };
 
                 if(data.gender){
