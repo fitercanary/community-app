@@ -205,6 +205,9 @@
             .when('/charges', {
                 templateUrl: 'views/products/charges.html'
             })
+            .when('/validationlimit', {
+                 templateUrl: 'views/products/validationsLimit.html'
+             })
             .when('/viewcharge/:id', {
                 templateUrl: 'views/products/viewcharge.html'
             })
@@ -673,6 +676,12 @@
             })
             .when('/editcharge/:id', {
                 templateUrl: 'views/products/editcharge.html'
+            })
+            .when('/createvalidationlimit', {
+                templateUrl: 'views/products/createValidationLimit.html'
+            })
+            .when('/editvalidationlimit/:id', {
+                 templateUrl: 'views/products/editvalidationlimit.html'
             })
             .when('/productivesheet/:officeId/:officeName/:meetingDate/:staffId', {
                 templateUrl: 'views/collection/productivecollectionsheet.html'

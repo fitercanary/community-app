@@ -2,6 +2,7 @@
     mifosX.controllers = _.extend(module, {
         EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope) {
             scope.offices = [];
+            scope.clientLevelOptions = [];
             scope.date = {};
             scope.restrictDate = new Date();
             scope.savingproducts = [];
@@ -13,6 +14,7 @@
             resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
+                scope.clientLevelOptions = data.clientLevelOptions;
                 scope.savingproducts = data.savingProductOptions;
                 scope.genderOptions = data.genderOptions;
                 scope.clienttypeOptions = data.clientTypeOptions;
@@ -66,6 +68,9 @@
                 if(data.legalForm){
                     scope.displayPersonOrNonPersonOptions(data.legalForm.id);
                     scope.formData.legalFormId = data.legalForm.id;
+                }
+                if(data.clientLevel){
+                 scope.formData.clientLevelId = data.clientLevel.id;
                 }
 
                 if(data.clientNonPersonDetails.constitution){

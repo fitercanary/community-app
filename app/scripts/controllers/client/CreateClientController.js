@@ -3,6 +3,7 @@
         CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope, routeParams, WizardHandler) {
 
             scope.offices = [];
+            scope.clientLevelOptions = [];
             scope.staffs = [];
             scope.savingproducts = [];
             scope.first = {};
@@ -46,6 +47,7 @@
                 requestParams.officeId = routeParams.officeId;
             }
             resourceFactory.clientTemplateResource.get(requestParams, function (data) {
+
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.formData.officeId = scope.offices[0].id;
@@ -56,8 +58,10 @@
                 scope.clientNonPersonConstitutionOptions = data.clientNonPersonConstitutionOptions;
                 scope.clientNonPersonMainBusinessLineOptions = data.clientNonPersonMainBusinessLineOptions;
                 scope.clientLegalFormOptions = data.clientLegalFormOptions;
+                scope.clientLevelOptions = data.clientLevelOptions;
                 scope.datatables = data.datatables;
                 scope.existingClients = data.existingClients || [];
+                scope.formData.clientLevelId = 1;
                 scope.existingClients.sort((a, b) => {
                         let aName = a.displayName.toLocaleLowerCase();
                         let bName = b.displayName.toLocaleLowerCase();

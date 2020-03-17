@@ -158,6 +158,15 @@
                         get: {method: 'GET', params: {}, isArray: true},
                         getChargeTemplates: {method: 'GET', params: {}}
                     }),
+                    validationLimitResource: defineResource(apiVer + "/validationlimit/:validationLimitId", {validationLimitId: '@validationLimitId'}, {
+                                            getAllValidationLimit: {method: 'GET', params: {}, isArray: true},
+                                            getValidationLimit: {method: 'GET', params: {}},
+                                            update: {method: 'PUT', params: {}}
+                     }),
+                    validationLimitTemplateResource: defineResource(apiVer + "/validationlimit/template", {
+                                             get: {method: 'GET', params: {}, isArray: true}
+
+                    }),
                     savingProductResource: defineResource(apiVer + "/savingsproducts/:savingProductId/:resourceType", {savingProductId: '@savingProductId', resourceType: '@resourceType'}, {
                         getAllSavingProducts: {method: 'GET', params: {}, isArray: true},
                         update: {method: 'PUT', params: {}}
