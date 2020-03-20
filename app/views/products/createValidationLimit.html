@@ -14,7 +14,7 @@
 
                     <div class="col-sm-3">
                         <select id="clientLevelId" name="clientLevelId" ng-model="formData.clientLevelId"
-                                ng-options="clientLevel.id as clientLevel.value for clientLevel in template.clientLevelOptions"
+                                ng-options="clientLevel.id as clientLevel.name for clientLevel in template.clientLevelOptions"
                                 value="{{clientLevel.id}}" class="form-control" required>
                             <option value="">{{'label.selectone' | translate}}</option>
                         </select>

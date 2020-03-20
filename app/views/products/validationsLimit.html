@@ -27,11 +27,11 @@
             </thead>
             <tbody>
             <tr class="pointer-main" data-ng-repeat="limit in validationLimits">
-                <td class="pointer" >{{limit.clientLevelId}}</td>
-                <td class="pointer" >{{limit.maximumSingleDepositAmount | translate }}</td>
-                <td class="pointer" >{{limit.maximumCumulativeBalance}}</td>
-                <td class="pointer" >{{limit.maximumTransactionLimit}}</td>
-                <td class="pointer" >{{limit.maximumDailyTransactionAmountLimit}}</td>
+                <td class="pointer" >{{limit.clientLevel.name}}</td>
+                <td class="pointer" >{{limit.maximumSingleDepositAmount|number }}</td>
+                <td class="pointer" >{{limit.maximumCumulativeBalance|number}}</td>
+                <td class="pointer" >{{limit.maximumTransactionLimit|number}}</td>
+                <td class="pointer" >{{limit.maximumDailyTransactionAmountLimit|number}}</td>
                 <td class="pointer"><a href="#/editvalidationlimit/{{limit.id}}" class="btn btn-primary pull-right"
                                        has-permission='UPDATE_VALIDATIONLIMIT'>&nbsp;&nbsp{{'label.button.edit' | translate}}</a></td>
             </tr>

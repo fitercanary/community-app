@@ -8,7 +8,7 @@
                 scope.template = data;
 
                 scope.formData = {
-                    clientLevelId  : data.clientLevelId,
+                    clientLevelId  : data.clientLevel.id,
                     maximumSingleDepositAmount : data.maximumSingleDepositAmount,
                     maximumCumulativeBalance : data.maximumCumulativeBalance,
                     maximumTransactionLimit : data.maximumTransactionLimit,

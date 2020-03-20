@@ -45,7 +45,7 @@
 				<label class="control-label col-sm-2">{{'label.heading.clientLevel' | translate}}</label>
 				<div class="col-sm-3">
 					<select id="clientLevelId" ng-model="formData.clientLevelId"  class="form-control"
-							ng-options="clientLevel.id as clientLevel.value for clientLevel in clientLevelOptions" value="{{clientLevel.id}}" required>
+							ng-options="clientLevel.id as clientLevel.name for clientLevel in clientLevelOptions" value="{{clientLevel.id}}" required>
 
 					</select>
 				</div>

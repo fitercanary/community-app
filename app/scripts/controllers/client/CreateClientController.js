@@ -61,7 +61,7 @@
                 scope.clientLevelOptions = data.clientLevelOptions;
                 scope.datatables = data.datatables;
                 scope.existingClients = data.existingClients || [];
-                scope.formData.clientLevelId = 1;
+                scope.formData.clientLevelId = scope.clientLevelOptions[0].id;
                 scope.existingClients.sort((a, b) => {
                         let aName = a.displayName.toLocaleLowerCase();
                         let bName = b.displayName.toLocaleLowerCase();
