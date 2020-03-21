@@ -4345,5 +4345,15 @@
   "reportRunFrequency.custom": "Custom",
   "label.heading.overdraftStartDate": "Overdraft Start Date",
   "label.heading.overdraftClosedDate": "Overdraft Stop Date",
+  "label.heading.classification": "Classification",
+  "label.heading.operatorName": "Operator Name",
+  "label.input.searchTransactionClassification": "Search Transaction Classification",
+  "label.button.createtransactionclassification": "Create Transaction Classification",
+  "label.managetransactionclassification": "Manage Transaction Classification",
+  "label.heading.transactionclassification": "List of All Transaction Classification",
+  "label.anchor.transactionclassification": "Transaction Classification",
+  "label.heading.createtransactionclassification": "Create Transaction Classification",
+  "label.heading.classification": "Classification",
+  "label.heading.operator": "Operator",
   "----End---": "--End of file--- "
 }

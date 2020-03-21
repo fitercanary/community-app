@@ -1019,6 +1019,12 @@
             .when('/savingsAccount/:id/overdraft', {
                 templateUrl: 'views/savings/overdraft.html'
             })
+            .when('/transactionclassification',{
+                templateUrl: 'views/transactionclassification/transactionclassification.html'
+            })
+            .when('/transactionclassification/add',{
+                templateUrl: 'views/transactionclassification/createtransactionclassification.html'
+            })
             .otherwise({
                 templateUrl: "views/errors/404.html"
             })

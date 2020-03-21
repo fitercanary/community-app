@@ -716,6 +716,10 @@
                     twoFactorConfigResource: defineResource(apiVer+"/twofactor/configure", {}, {
                         getAllConfigs: {method: 'GET', params: {}},
                         put: {method: 'PUT', params: {}}
+                    }),
+                    transactionClassificationResource: defineResource(apiVer+"/transactionclassification",{},{
+                        getAllTransactionClassifications: {method: 'GET', params: {}, isArray: true},
+                        delete: {method: 'DELETE', params: {}}
                     })
                 };
             }];
