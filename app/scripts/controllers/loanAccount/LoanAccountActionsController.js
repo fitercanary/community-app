@@ -599,43 +599,50 @@
                     console.log("else");
                     params.loanId = scope.accountId;
                     var allCharges = [];
-                    if(scope.action == "disbursetosavings"){
+                if(scope.action == "disbursetosavings"){
+                    var count = 0;
+                    var increasedCount = 0;
+                    var amount = 0;
+                    var fundTransferData = {};
                     var actualDisbursementDateForTransaction = this.formData.actualDisbursementDate;
                     resourceFactory.LoanAccountResource.save(params, this.formData, function (data) {
                     resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: data.loanId, associations: 'all',
                        exclude: 'guarantors,futureSchedule'}, function (loanData) {
-                       angular.forEach(loanData.charges, function (charge) {
-                              if (charge.chargeTimeType.code == "chargeTimeType.disburseToSavings" && charge.amountPaid == 0){
-                              allCharges.push(charge);
-                               }
-                        });
-                       angular.forEach(allCharges, function (charge) {
+                       console.log(loanData.charges);
+                       if(angular.isDefined(loanData.charges)){
+                       for (let i = 0; i < loanData.charges.length; i++) {
+                           var charge = loanData.charges[i];
                            if (charge.chargeTimeType.code == "chargeTimeType.disburseToSavings" && charge.amountPaid == 0){
-                           console.log(charge, "charge");
-                             var fundTransferData = {
-                                                     dateFormat: scope.df,
-                                                     fromAccountId: loanData.linkedAccount.id,
-                                                     fromAccountType: 2,
-                                                     fromClientId: loanData.clientId,
-                                                     fromOfficeId: data.officeId,
-                                                     locale: scope.optlang.code,
-                                                     toAccountId: loanData.id,
-                                                     toAccountType: 1,
-                                                     toClientId: loanData.clientId,
-                                                     toOfficeId: data.officeId,
-                                                     transferAmount: charge.amount,
-                                                     transferDate: actualDisbursementDateForTransaction,
-                                                     transferDescription: "Charges"
-                              };
-                              console.log(fundTransferData, "fundtransfer");
-                              resourceFactory.accountTransferResource.save(fundTransferData, function (accData) {
-                              console.log(data, "data of fund transfer");
-                                 location.path('/viewloanaccount/' + data.loanId);
-                            });
-                           }else{
-                           location.path('/viewloanaccount/' + data.loanId);
-                           }
+                                   amount  = amount + charge.amount;
+                                  fundTransferData = {
+                                   dateFormat: scope.df,
+                                   fromAccountId: loanData.linkedAccount.id,
+                                   fromAccountType: 2,
+                                   fromClientId: loanData.clientId,
+                                                            fromOfficeId: data.officeId,
+                                                            locale: scope.optlang.code,
+                                                            toAccountId: loanData.id,
+                                                            toAccountType: 1,
+                                                            toClientId: loanData.clientId,
+                                                            toOfficeId: data.officeId,
+                                                            transferAmount: amount,
+                                                            transferDate: actualDisbursementDateForTransaction,
+                                                            transferDescription: "DisBurseToSavingsCharges"
+                                 };
+                                 count++;
+                                 }else{
+                                   location.path('/viewloanaccount/' + data.loanId);
+                                 }
+                                 console.log(fundTransferData, "fundtransfer");
+
+                       }
+                       fundTransferData.transferAmount = amount;
+                       resourceFactory.accountTransferResource.save(fundTransferData, function (accData) {
+                          if(count == loanData.charges.length){
+                          location.path('/viewloanaccount/' + data.loanId);
+                          }
                        });
+                       }else{ location.path('/viewloanaccount/' + data.loanId);} ;
                       });
                     });
                     }else{
