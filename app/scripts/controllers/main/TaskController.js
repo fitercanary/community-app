@@ -30,9 +30,19 @@
             resourceFactory.checkerInboxResource.get({templateResource: 'searchtemplate'}, function (data) {
                 scope.checkerTemplate = data;
             });
-            resourceFactory.checkerInboxResource.search(function (data) {
+            resourceFactory.checkerInboxResource.search({includeJson: true},function (data) {
                 scope.searchData = data;
-            });
+                var i;
+                for (i=0;i<scope.searchData.length;i++){
+                    scope.json = scope.searchData[i].commandAsJson;
+                    var obj = JSON.parse(scope.json);
+                    _.each(obj, function (value, key) {
+                        if(key === 'transactionAmount') {
+                            scope.searchData[i].transactionAmount = value;
+                        }
+                    });
+                }
+                });
             scope.viewUser = function (item) {
                 scope.userTypeahead = true;
                 scope.formData.user = item.id;

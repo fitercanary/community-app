@@ -138,7 +138,7 @@
                                                    ng-checked="checkerInboxAllCheckBoxesMet()"/></th>
                                         <th>{{'label.heading.id' | translate}}</th>
                                         <th>{{'label.heading.madeondate' | translate}}</th>
-                                        <th>{{'label.heading.status' | translate}}</th>
+                                        <th>{{'label.heading.transactionamount' | translate}}</th>
                                         <th>{{'label.heading.user' | translate}}</th>
                                         <th>{{'label.heading.action' | translate}}</th>
                                         <th>{{'label.heading.entity' | translate}}</th>
@@ -153,7 +153,7 @@
                                         <td class="pointer" data-ng-click="routeTo(data.id)">{{data.madeOnDate |
                                             DateFormat}}
                                         </td>
-                                        <td class="pointer" data-ng-click="routeTo(data.id)">{{data.processingResult}}
+                                        <td class="pointer" data-ng-click="routeTo(data.id)">{{data.transactionAmount}}
                                         </td>
                                         <td class="pointer" data-ng-click="routeTo(data.id)">{{data.maker}}</td>
                                         <td class="pointer" data-ng-click="routeTo(data.id)">{{data.actionName}}</td>
