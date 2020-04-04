@@ -37,8 +37,16 @@
                     scope.json = scope.searchData[i].commandAsJson;
                     var obj = JSON.parse(scope.json);
                     _.each(obj, function (value, key) {
-                        if(key === 'transactionAmount') {
+                        if(key === 'transactionAmount' || key === 'amount' || key === 'principal') {
                             scope.searchData[i].transactionAmount = value;
+                        }
+                        else if(key === 'credits'){
+                            var j;
+                            var journalAmount = 0.00;
+                            for(j=0;j<obj.credits.length;j++){
+                                journalAmount = journalAmount + Number(obj.credits[j].amount);
+                            }
+                            scope.searchData[i].transactionAmount = journalAmount;
                         }
                     });
                 }

@@ -4355,5 +4355,6 @@
   "label.heading.createtransactionclassification": "Create Transaction Classification",
   "label.heading.classification": "Classification",
   "label.heading.operator": "Operator",
+  "label.input.amount": "amount",
   "----End---": "--End of file--- "
 }
