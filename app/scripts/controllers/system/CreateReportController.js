@@ -7,6 +7,7 @@
             resourceFactory.reportsResource.getReportDetails({resourceType: 'template'}, function (data) {
                 scope.reportdetail = data;
                 scope.formData.reportType = data.allowedReportTypes[0];
+                //scope.formData.reportDatabaseType = data.reportDatabaseTypes[0];
             });
 
             scope.parameterSelected = function (allowedParameterId) {
