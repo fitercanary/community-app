@@ -9,6 +9,8 @@
                 scope.formData.useReport = data.useReport;
                 scope.formData.reportType = data.reportType;
                 scope.disableFields = false;
+                scope.formData.reportDatabaseType = data.reportDatabaseType;
+                //scope.formData.reportDatabaseTypeId = data.reportDatabaseType.id;
 
                 if(scope.reportdetail.coreReport == true){
                     scope.disableFields = true;
@@ -72,7 +74,8 @@
                         useReport: scope.reportdetail.useReport,
                         description: scope.reportdetail.description,
                         reportSql: scope.reportdetail.reportSql,
-                        reportParameters: scope.reportdetail.reportParameters
+                        reportParameters: scope.reportdetail.reportParameters,
+                        reportDatabaseTypeId: scope.reportdetail.reportDatabaseType.id
                     }
                 }
                 resourceFactory.reportsResource.update({id: routeParams.id}, this.formData, function (data) {
