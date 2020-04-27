@@ -6,12 +6,16 @@
             scope.usageTypes = [];
             scope.headerTypes = [];
             scope.accountOptions = [];
+            scope.cbnCategories = [];
+            scope.cbnSubCategories = [];
 
             resourceFactory.accountCoaResource.get({glAccountId: routeParams.id, template: 'true'}, function (data) {
                 scope.coadata = data;
                 scope.glAccountId = data.id;
                 scope.accountTypes = data.accountTypeOptions;
                 scope.usageTypes = data.usageOptions;
+                scope.cbnCategories = data.cbnCategories;
+                scope.cbnSubCategories = data.cbnSubCategories;
                 scope.formData = {
                     name: data.name,
                     glCode: data.glCode,
@@ -20,7 +24,11 @@
                     type: data.type.id,
                     tagId: data.tagId.id,
                     usage: data.usage.id,
-                    parentId: data.parentId
+                    parentId: data.parentId,
+                    bankCode: data.bankCode,
+                    bankName: data.bankName,
+                    cbnCategoryId: data.cbnCategory.id,
+                    cbnSubCategoryId: data.cbnSubCategory.id
                 };
                 scope.changeType() ;
             });
