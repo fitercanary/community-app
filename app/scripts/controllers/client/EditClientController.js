@@ -50,7 +50,8 @@
                         incorpNumber: data.clientNonPersonDetails.incorpNumber,
                         remarks: data.clientNonPersonDetails.remarks
                     },
-                    dailyWithdrawLimit : data.dailyWithdrawLimit
+                    dailyWithdrawLimit : data.dailyWithdrawLimit,
+                    maximumTransactionLimit: data.maximumTransactionLimit
                 };
 
                 if(data.gender){
@@ -104,6 +105,8 @@
                     scope.choice = 1;
                     scope.showSavingOptions = 'false';
                     scope.opensavingsproduct = 'false';
+                } else {
+                    scope.choice = 0;
                 }
 
                 if (data.timeline.submittedOnDate) {
