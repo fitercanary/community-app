@@ -678,7 +678,7 @@
                 templateUrl: 'views/products/editcharge.html'
             })
             .when('/createvalidationlimit', {
-                templateUrl: 'views/products/createValidationLimit.html'
+                templateUrl: 'views/products/createvalidationlimit.html'
             })
             .when('/editvalidationlimit/:id', {
                  templateUrl: 'views/products/editvalidationlimit.html'
