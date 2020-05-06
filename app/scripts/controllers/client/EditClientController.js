@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope) {
+        EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope, $q) {
             scope.offices = [];
             scope.clientLevelOptions = [];
             scope.date = {};
@@ -11,7 +11,7 @@
             scope.opensavingsproduct = 'false';
             scope.showNonPersonOptions = false;
             scope.clientPersonId = 1;
-            resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
+            resourceFactory.clientResource.get({clientId: routeParams.id, template:'false', staffInSelectedOfficeOnly:true}, function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.clientLevelOptions = data.clientLevelOptions;
@@ -113,6 +113,15 @@
 
             });
 
+            scope.clientOptions = function(value){
+                var deferred = $q.defer();
+                resourceFactory.clientResource.getAllClientsWithoutLimit({displayName: value, orderBy : 'displayName', officeId : scope.officeId,
+                sortOrder : 'ASC', orphansOnly : true}, function (data) {
+                    deferred.resolve(data.pageItems);
+                });
+                return deferred.promise;
+            };
+
             scope.displayPersonOrNonPersonOptions = function (legalFormId) {
                 if(legalFormId == scope.clientPersonId || legalFormId == null) {
                     scope.showNonPersonOptions = false;
@@ -157,7 +166,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('EditClientController', ['$scope', '$routeParams', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', mifosX.controllers.EditClientController]).run(function ($log) {
+    mifosX.ng.application.controller('EditClientController', ['$scope', '$routeParams', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', '$q', mifosX.controllers.EditClientController]).run(function ($log) {
         $log.info("EditClientController initialized");
     });
 }(mifosX.controllers || {}));
