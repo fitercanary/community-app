@@ -8,7 +8,6 @@
                 scope.template = data;
             });
 
-
             scope.submit = function () {
                 this.formData.locale = scope.optlang.code;
                 resourceFactory.validationLimitResource.save(this.formData, function (data) {

@@ -3,16 +3,19 @@
         EditValidationLimitController: function (scope, resourceFactory, location, routeParams, dateFilter) {
             scope.template = [];
 
-
-            resourceFactory.validationLimitResource.getValidationLimit({validationLimitId: routeParams.id, template :true}, function (data) {
+            resourceFactory.validationLimitResource.getValidationLimit({
+                validationLimitId: routeParams.id,
+                template: true
+            }, function (data) {
                 scope.template = data;
 
                 scope.formData = {
-                    clientLevelId  : data.clientLevel.id,
-                    maximumSingleDepositAmount : data.maximumSingleDepositAmount,
-                    maximumCumulativeBalance : data.maximumCumulativeBalance,
-                    maximumTransactionLimit : data.maximumTransactionLimit,
-                    maximumDailyTransactionAmountLimit : data.maximumDailyTransactionAmountLimit
+                    clientLevelId: data.clientLevel.id,
+                    maximumSingleDepositAmount: data.maximumSingleDepositAmount,
+                    maximumCumulativeBalance: data.maximumCumulativeBalance,
+                    maximumTransactionLimit: data.maximumTransactionLimit,
+                    maximumDailyTransactionAmountLimit: data.maximumDailyTransactionAmountLimit,
+                    overridable: data.overridable
                 };
             });
             scope.submit = function () {

@@ -11,7 +11,7 @@
             scope.opensavingsproduct = 'false';
             scope.showNonPersonOptions = false;
             scope.clientPersonId = 1;
-            resourceFactory.clientResource.get({clientId: routeParams.id, template:'false', staffInSelectedOfficeOnly:true}, function (data) {
+            resourceFactory.clientResource.get({clientId: routeParams.id, template:'true', staffInSelectedOfficeOnly:true}, function (data) {
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
                 scope.clientLevelOptions = data.clientLevelOptions;
@@ -50,8 +50,15 @@
                         incorpNumber: data.clientNonPersonDetails.incorpNumber,
                         remarks: data.clientNonPersonDetails.remarks
                     },
-                    dailyWithdrawLimit : data.dailyWithdrawLimit
+                    dailyWithdrawLimit : data.dailyWithdrawLimit,
+                    maximumTransactionLimit: data.maximumTransactionLimit
                 };
+
+                if (data.referredById != null) {
+                    resourceFactory.clientResource.get({clientId: data.referredById}, function (data) {
+                        scope.formData.referralClientId = data.displayName;
+                    });
+                }
 
                 if(data.gender){
                     scope.formData.genderId = data.gender.id;
@@ -104,6 +111,8 @@
                     scope.choice = 1;
                     scope.showSavingOptions = 'false';
                     scope.opensavingsproduct = 'false';
+                } else {
+                    scope.choice = 0;
                 }
 
                 if (data.timeline.submittedOnDate) {
@@ -130,9 +139,18 @@
                 }
             };
 
+            scope.viewClient = function($item, $model, $label) {
+                scope.referralClient = $item;
+            }
+
             scope.submit = function () {
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+
+                if (scope.formData.referralClientId != null) {
+                    scope.formData.referralClientId = scope.referralClient.id;
+                }
+
                 if (scope.choice === 1) {
                     if (scope.date.activationDate) {
                         this.formData.activationDate = dateFilter(scope.date.activationDate, scope.df);
