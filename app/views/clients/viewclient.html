@@ -804,12 +804,12 @@
 										<td><span class="padded-td">{{client.clientLevel.name}}</span></td>
 									</tr>
 									<tr>
-										<th>{{ 'label.input.maximumTransactionLimit' | translate }}</th>
-										<td><span class="padded-td">{{client.maximumTransactionLimit}}</span></td>
+										<th>{{ 'label.input.dailyWithdrawLimit' | translate }}</th>
+										<td><span class="padded-td">{{client.dailyWithdrawLimit |number}}</span></td>
 									</tr>
 									<tr>
-										<th>{{ 'label.input.dailyWithdrawLimit' | translate }}</th>
-										<td><span class="padded-td">{{client.dailyWithdrawLimit}}</span></td>
+										<th>{{ 'label.input.maximumTransactionLimit' | translate }}</th>
+										<td><span class="padded-td">{{client.maximumTransactionLimit |number}}</span></td>
 									</tr>
 									<tr ng-show="client.referredBy">
 										<th>{{ 'label.heading.referredBy' | translate }}</th>
