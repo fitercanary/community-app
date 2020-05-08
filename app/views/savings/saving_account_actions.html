@@ -190,7 +190,7 @@
     </form>
             <form name="savingccountactionform" novalidate="" class="form-horizontal">
                 <div class="col-md-offset-3" ng-show="showBlock">
-                    
+                    <label class="control-label col-sm-2">{{ 'label.blockNarration' | translate }}</label>
                     <select id="narrationId" ng-model="formData.narrationId"
                         ng-options="narrationType.id as narrationType.name for narrationType in blockNarrationTypes"
                         value="{{narrationType.id}}" class="form-control">
