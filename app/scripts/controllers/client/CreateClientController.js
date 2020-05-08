@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope, routeParams, WizardHandler) {
+        CreateClientController: function (scope, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope, routeParams, WizardHandler, $q) {
 
             scope.offices = [];
             scope.clientLevelOptions = [];
@@ -148,6 +148,15 @@
 
 
             });
+
+            scope.clientOptions = function(value){
+                var deferred = $q.defer();
+                resourceFactory.clientResource.getAllClientsWithoutLimit({displayName: value, orderBy : 'displayName', officeId : scope.officeId,
+                sortOrder : 'ASC', orphansOnly : true}, function (data) {
+                    deferred.resolve(data.pageItems);
+                });
+                return deferred.promise;
+            };
 
             scope.updateColumnHeaders = function(columnHeaderData) {
                 var colName = columnHeaderData[0].columnName;
@@ -465,7 +474,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', '$routeParams', 'WizardHandler', mifosX.controllers.CreateClientController]).run(function ($log) {
+    mifosX.ng.application.controller('CreateClientController', ['$scope', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', '$routeParams', 'WizardHandler', '$q', mifosX.controllers.CreateClientController]).run(function ($log) {
         $log.info("CreateClientController initialized");
     });
 }(mifosX.controllers || {}));

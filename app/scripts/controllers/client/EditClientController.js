@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope) {
+        EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope, $q) {
             scope.offices = [];
             scope.clientLevelOptions = [];
             scope.date = {};
@@ -53,6 +53,12 @@
                     dailyWithdrawLimit : data.dailyWithdrawLimit,
                     maximumTransactionLimit: data.maximumTransactionLimit
                 };
+
+                if (data.referredById != null) {
+                    resourceFactory.clientResource.get({clientId: data.referredById}, function (data) {
+                        scope.formData.referralClientId = data.displayName;
+                    });
+                }
 
                 if(data.gender){
                     scope.formData.genderId = data.gender.id;
@@ -116,6 +122,15 @@
 
             });
 
+            scope.clientOptions = function(value){
+                var deferred = $q.defer();
+                resourceFactory.clientResource.getAllClientsWithoutLimit({displayName: value, orderBy : 'displayName', officeId : scope.officeId,
+                sortOrder : 'ASC', orphansOnly : true}, function (data) {
+                    deferred.resolve(data.pageItems);
+                });
+                return deferred.promise;
+            };
+
             scope.displayPersonOrNonPersonOptions = function (legalFormId) {
                 if(legalFormId == scope.clientPersonId || legalFormId == null) {
                     scope.showNonPersonOptions = false;
@@ -124,9 +139,18 @@
                 }
             };
 
+            scope.viewClient = function($item, $model, $label) {
+                scope.referralClient = $item;
+            }
+
             scope.submit = function () {
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+
+                if (scope.formData.referralClientId != null) {
+                    scope.formData.referralClientId = scope.referralClient.id;
+                }
+
                 if (scope.choice === 1) {
                     if (scope.date.activationDate) {
                         this.formData.activationDate = dateFilter(scope.date.activationDate, scope.df);
@@ -160,7 +184,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('EditClientController', ['$scope', '$routeParams', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', mifosX.controllers.EditClientController]).run(function ($log) {
+    mifosX.ng.application.controller('EditClientController', ['$scope', '$routeParams', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', '$q', mifosX.controllers.EditClientController]).run(function ($log) {
         $log.info("EditClientController initialized");
     });
 }(mifosX.controllers || {}));
