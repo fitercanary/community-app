@@ -133,17 +133,14 @@
 			    </div>
 				<label class="control-label col-sm-2">{{'label.heading.referredBy' | translate}}</label>
 				<div class="col-sm-3">
-					<!-- <select chosen="existingClients" id="referralClientId" ng-model="formData.referralClientId"  class="form-control"
-							ng-options="client.id as client.displayName for client in existingClients" value="{{client.id}}">
-						<option value="">--{{'label.heading.referredBy' | translate}}--</option>
-					</select> -->
 					{{formdata.referralClientId}}
 					<input id="referralClientId" type="text" ng-model="formData.referralClientId" class="col-md-4 form-control"
 											placeholder="{{formdata.referralClientId}}"
-                                            typeahead-min-length="1"
-                                            typeahead-editable="false"
-                                            uib-typeahead="client.displayName as client.displayName for client in clientOptions($viewValue)"
-                                            typeahead-on-select="viewClient($item, $model, $label)"/>
+						   autocomplete="off"
+						   typeahead-min-length="1"
+						   typeahead-editable="false"
+						   uib-typeahead="client.displayName as client.displayName for client in clientOptions($viewValue)"
+						   typeahead-on-select="viewClient($item, $model, $label)"/>
 				</div>
 			</div>
 	        <!--<div class="form-group">-->
