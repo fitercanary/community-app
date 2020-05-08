@@ -60,15 +60,7 @@
                 scope.clientLegalFormOptions = data.clientLegalFormOptions;
                 scope.clientLevelOptions = data.clientLevelOptions;
                 scope.datatables = data.datatables;
-                scope.existingClients = data.existingClients || [];
                 scope.formData.clientLevelId = scope.clientLevelOptions[0].id;
-                scope.existingClients.sort((a, b) => {
-                        let aName = a.displayName.toLocaleLowerCase();
-                        let bName = b.displayName.toLocaleLowerCase();
-                        if (aName < bName) return -1;
-                        if (aName > bName) return 1;
-                        return 0;
-                    });
                 if (!_.isUndefined(scope.datatables) && scope.datatables.length > 0) {
                     scope.noOfTabs = scope.datatables.length + 1;
                     angular.forEach(scope.datatables, function (datatable, index) {
@@ -266,6 +258,10 @@
                 return scope.df;
             };
 
+            scope.viewClient = function($item, $model, $label) {
+                scope.referralClient = $item;
+            }
+
             scope.submit = function () {
                 var reqDate = dateFilter(scope.first.date, scope.df);
 
@@ -273,6 +269,10 @@
                 this.formData.active = this.formData.active || false;
                 this.formData.dateFormat = scope.df;
                 this.formData.activationDate = reqDate;
+
+                if (scope.formData.referralClientId && scope.referralClient) {
+                    scope.formData.referralClientId = scope.referralClient.id;
+                }
 
                 if (!_.isUndefined(scope.datatables) && scope.datatables.length > 0) {
                     angular.forEach(scope.datatables, function (datatable, index) {

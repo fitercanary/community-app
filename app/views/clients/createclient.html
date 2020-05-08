@@ -290,8 +290,8 @@
                               autocomplete="off"
                               typeahead-min-length="1"
                               typeahead-editable="false"
-                              uib-typeahead="client.id as client.displayName for client in clientOptions($viewValue)"
-                              typeahead-on-select="viewClient(available)"/>
+                              uib-typeahead="client.displayName as client.displayName for client in clientOptions($viewValue)"
+                              typeahead-on-select="viewClient($item, $model, $label)"/>
                       </div>
                   </div>
                   <div class="form-group" has-permission="ACTIVATE_CLIENT">
@@ -413,16 +413,6 @@
                               </div>
 
                           </div>
-
-
-                          <!--<div class="form-group" >-->
-                              <!--<label class="control-label col-sm-2" for="mobileNumber">{{ 'label.input.mobileNumber' | translate }}</label>-->
-
-                              <!--<div class="col-sm-3">-->
-                                  <!--<input type="text" id="mobileNumber" name="mobileNumber" ng-model="familyArray[$index].mobileNumber"  class="form-control">-->
-                              <!--</div>-->
-
-                          <!--</div>-->
 
                           <div class="form-group" >
                               <label class="control-label col-sm-2" for="age">{{ 'label.input.age' | translate }}</label>

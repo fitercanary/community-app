@@ -23,14 +23,6 @@
                 scope.clientNonPersonMainBusinessLineOptions = data.clientNonPersonMainBusinessLineOptions;
                 scope.clientLegalFormOptions = data.clientLegalFormOptions;
                 scope.officeId = data.officeId;
-                scope.existingClients = data.existingClients || [];
-                scope.existingClients.sort((a, b) => {
-                    let aName = a.displayName.toLocaleLowerCase();
-                    let bName = b.displayName.toLocaleLowerCase();
-                    if (aName < bName) return -1;
-                    if (aName > bName) return 1;
-                    return 0;
-                });
                 scope.formData = {
                     firstname: data.firstname,
                     lastname: data.lastname,
@@ -147,8 +139,10 @@
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
 
-                if (scope.formData.referralClientId != null) {
+                if (scope.formData.referralClientId && scope.referralClient) {
                     scope.formData.referralClientId = scope.referralClient.id;
+                } else {
+                    delete scope.formData.referralClientId;
                 }
 
                 if (scope.choice === 1) {
