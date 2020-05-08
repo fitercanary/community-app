@@ -2081,6 +2081,7 @@
   "label.withdrawalfee": "Withdrawal fee",
   "label.lastActiveTransactionDate": "Last Active Transaction Date",
   "label.subStatus": "Sub Status",
+  "label.blockNarration": "Block/Unblock Narration",
   "label.daysToInactive": "Days to Inactive",
   "label.daysToDormancy": "Days to Dormancy",
   "label.daysToEscheat": "Days to Escheat",

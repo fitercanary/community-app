@@ -190,8 +190,16 @@
     </form>
             <form name="savingccountactionform" novalidate="" class="form-horizontal">
                 <div class="col-md-offset-3" ng-show="showBlock">
+                    
+                    <select id="narrationId" ng-model="formData.narrationId"
+                        ng-options="narrationType.id as narrationType.name for narrationType in blockNarrationTypes"
+                        value="{{narrationType.id}}" class="form-control">
+                        <option value="{{blockNarration.id}}">{{blockNarration.name | translate}}</option>
+                    </select>
+                    <br/>
                     <button id="cancel" ng-click="cancel()"
                             class="btn btn-default">{{ 'label.button.cancel' | translate }}</button>
+                    
                     <button id="debit"  type="submit" ng-click = "blockUnblockDebit(taskPermissionNameDebit)" ng-show = "debitStatus"
                             class="btn btn-primary">{{buttonTextDebit | translate}}</button>
                     <button id="credit"  type="submit" ng-click = "blockUnblockDebit(taskPermissionNameCredit)" ng-show = "creditStatus"
