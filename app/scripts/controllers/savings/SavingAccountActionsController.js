@@ -20,6 +20,7 @@
             var submitStatus = [];
             scope.savingsDetails = [];
             scope.textDetails = [];
+            scope.blockNarrationTypes = [];
 
             rootScope.RequestEntities = function(entity,status,productId){
                 resourceFactory.entityDatatableChecksResource.getAll({limit:-1},function (response) {
@@ -263,6 +264,8 @@
                 resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all'
                                        }, function (data) {
                  scope.savingsDetails = data;
+                 scope.blockNarrationTypes = data.blockNarrationOptions;
+                 scope.blockNarration = data.blockNarration;
                  console.log(data);
                     if(!data.subStatus.block){
                      if(data.subStatus.blockDebit ){
@@ -503,22 +506,30 @@
                 if(scope.action == "freeze"){
                      if (permission == "BLOCKDEBIT_SAVINGSACCOUNT") {
                                 console.log(permission, "1");
-                                  this.formData = {}
+                                  this.formData = {
+                                    narrationId: this.formData.narrationId
+                                  }
                                   scope.action = "blockDebit";
                        }
                      if (permission == "UNBLOCKDEBIT_SAVINGSACCOUNT"){
                       console.log(permission, "2");
-                                      this.formData = {}
+                                      this.formData = {
+                                        narrationId: this.formData.narrationId
+                                      }
                                       scope.action = "unblockDebit";
                      }
                      if (permission == "BLOCKCREDIT_SAVINGSACCOUNT") {
                       console.log(permission, "3");
-                                                       this.formData = {}
+                                                       this.formData = {
+                                                        narrationId: this.formData.narrationId
+                                                       }
                                                        scope.action = "blockCredit";
                                             }
                      if (permission == "UNBLOCKCREDIT_SAVINGSACCOUNT"){
                       console.log(permission, "4");
-                                                           this.formData = {}
+                                                           this.formData = {
+                                                            narrationId: this.formData.narrationId
+                                                           }
                                                            scope.action = "unblockCredit";
                      }
 
