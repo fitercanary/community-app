@@ -53,9 +53,12 @@
                                 class="required">*</span></label>
 
                         <div class="col-sm-3">
-                            <input id="toClientId" ng-model="toClientData" name="client" class="form-control" type="text"
-                                    uib-typeahead="(toClient.id + ' ' + toClient.displayName) as (toClient.id + ' ' + toClient.displayName) for toClient in toClients | filter:$viewValue | limitTo:8"
-                                    typeahead-on-select="changeClient($item)" required autocomplete="off">
+                            <input id="toClientId" type="text" ng-model="toClientData" class="col-md-4 form-control"
+                                   autocomplete="off"
+                                   typeahead-min-length="3"
+                                   typeahead-editable="false"
+                                   uib-typeahead="client.displayName as client.displayName for client in clientOptions($viewValue)"
+                                   typeahead-on-select="changeClient($item)" required/>
                             <form-validate valattributeform="accounttransferform" valattribute="client"/>
                         </div>
                     </div>
