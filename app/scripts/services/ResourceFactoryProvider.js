@@ -54,6 +54,9 @@
                         getAllClientDocuments: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT'}
                     }),
+                    clientSearchSummaryResource: defineResource(apiVer + "/clients/summaries", {clientId: '@clientId', anotherresource: '@anotherresource', sqlSearch: '@sqlSearch'}, {
+                        get: {method: 'GET', params: {}}
+                    }),
                     clientChargesResource: defineResource(apiVer + "/clients/:clientId/charges/:resourceType", {clientId: '@clientId', resourceType: '@resourceType'}, {
                         getCharges: {method: 'GET'},
                         waive:{method:'POST' , params:{command : 'waive'}}

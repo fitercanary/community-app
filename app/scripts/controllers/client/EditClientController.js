@@ -116,8 +116,8 @@
 
             scope.clientOptions = function(value){
                 var deferred = $q.defer();
-                resourceFactory.clientResource.getAllClientsWithoutLimit({displayName: value, orderBy : 'displayName', officeId : scope.officeId,
-                sortOrder : 'ASC', orphansOnly : true}, function (data) {
+                resourceFactory.clientSearchSummaryResource.get({displayName: value, orderBy : 'displayName', officeId : scope.formData.toOfficeId,
+                    sortOrder : 'ASC', orphansOnly : true}, function (data) {
                     deferred.resolve(data.pageItems);
                 });
                 return deferred.promise;
