@@ -13,8 +13,8 @@
                     clientLevelId: data.clientLevel.id,
                     maximumSingleDepositAmount: data.maximumSingleDepositAmount,
                     maximumCumulativeBalance: data.maximumCumulativeBalance,
-                    maximumTransactionLimit: data.maximumTransactionLimit,
-                    maximumDailyTransactionAmountLimit: data.maximumDailyTransactionAmountLimit,
+                    maximumSingleWithdrawLimit: data.maximumSingleWithdrawLimit,
+                    maximumDailyWithdrawLimit: data.maximumDailyWithdrawLimit,
                     overridable: data.overridable
                 };
             });

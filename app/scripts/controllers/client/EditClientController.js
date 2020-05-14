@@ -43,7 +43,7 @@
                         remarks: data.clientNonPersonDetails.remarks
                     },
                     dailyWithdrawLimit : data.dailyWithdrawLimit,
-                    maximumTransactionLimit: data.maximumTransactionLimit
+                    singleWithdrawLimit: data.singleWithdrawLimit
                 };
 
                 if (data.referredById != null) {
