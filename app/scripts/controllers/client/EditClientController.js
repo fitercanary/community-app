@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope) {
+        EditClientController: function (scope, routeParams, resourceFactory, location, http, dateFilter, API_VERSION, Upload, $rootScope, $q) {
             scope.offices = [];
             scope.clientLevelOptions = [];
             scope.date = {};
@@ -23,14 +23,6 @@
                 scope.clientNonPersonMainBusinessLineOptions = data.clientNonPersonMainBusinessLineOptions;
                 scope.clientLegalFormOptions = data.clientLegalFormOptions;
                 scope.officeId = data.officeId;
-                scope.existingClients = data.existingClients || [];
-                scope.existingClients.sort((a, b) => {
-                    let aName = a.displayName.toLocaleLowerCase();
-                    let bName = b.displayName.toLocaleLowerCase();
-                    if (aName < bName) return -1;
-                    if (aName > bName) return 1;
-                    return 0;
-                });
                 scope.formData = {
                     firstname: data.firstname,
                     lastname: data.lastname,
@@ -53,6 +45,12 @@
                     dailyWithdrawLimit : data.dailyWithdrawLimit,
                     maximumTransactionLimit: data.maximumTransactionLimit
                 };
+
+                if (data.referredById != null) {
+                    resourceFactory.clientResource.get({clientId: data.referredById}, function (data) {
+                        scope.formData.referralClientId = data.displayName;
+                    });
+                }
 
                 if(data.gender){
                     scope.formData.genderId = data.gender.id;
@@ -116,6 +114,15 @@
 
             });
 
+            scope.clientOptions = function(value){
+                var deferred = $q.defer();
+                resourceFactory.clientSearchSummaryResource.get({displayName: value, orderBy : 'displayName', officeId : scope.formData.toOfficeId,
+                    sortOrder : 'ASC', orphansOnly : true}, function (data) {
+                    deferred.resolve(data.pageItems);
+                });
+                return deferred.promise;
+            };
+
             scope.displayPersonOrNonPersonOptions = function (legalFormId) {
                 if(legalFormId == scope.clientPersonId || legalFormId == null) {
                     scope.showNonPersonOptions = false;
@@ -124,9 +131,20 @@
                 }
             };
 
+            scope.viewClient = function($item, $model, $label) {
+                scope.referralClient = $item;
+            }
+
             scope.submit = function () {
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+
+                if (scope.formData.referralClientId && scope.referralClient) {
+                    scope.formData.referralClientId = scope.referralClient.id;
+                } else {
+                    delete scope.formData.referralClientId;
+                }
+
                 if (scope.choice === 1) {
                     if (scope.date.activationDate) {
                         this.formData.activationDate = dateFilter(scope.date.activationDate, scope.df);
@@ -160,7 +178,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('EditClientController', ['$scope', '$routeParams', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', mifosX.controllers.EditClientController]).run(function ($log) {
+    mifosX.ng.application.controller('EditClientController', ['$scope', '$routeParams', 'ResourceFactory', '$location', '$http', 'dateFilter', 'API_VERSION', 'Upload', '$rootScope', '$q', mifosX.controllers.EditClientController]).run(function ($log) {
         $log.info("EditClientController initialized");
     });
 }(mifosX.controllers || {}));
