@@ -42,6 +42,7 @@
                     scope.formData.submittedOnDate = new Date(submittedOnDate);
                 }
                 scope.formData.externalId = data.externalId;
+                scope.formData.nickname = data.nickname;
                 scope.fieldOfficers = data.fieldOfficerOptions;
                 scope.formData.nominalAnnualInterestRate = data.nominalAnnualInterestRate;
                 scope.formData.minRequiredOpeningBalance = data.minRequiredOpeningBalance;

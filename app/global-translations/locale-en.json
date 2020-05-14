@@ -1052,6 +1052,7 @@
   "label.anchor.viewjournalentries": "View Journal Entries",
   "#Inputs": "..",
   "label.input.accountingrulename": "Accounting rule name",
+  "label.input.nickname": "Nickname",
   "label.input.affectedentries": "Affected entries",
   "label.input.accountingrules": "Accounting rules",
   "label.input.credit": "Credit",
