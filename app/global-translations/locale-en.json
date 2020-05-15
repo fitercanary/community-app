@@ -1518,6 +1518,7 @@
   "label.input.rejectedOnDate": "Rejected On",
   "label.input.submittedOnDate": "Submitted On",
   "label.input.dailyWithdrawLimit": "Daily withdraw limit",
+  "label.input.singleWithdrawLimit": "Single Withdraw Limit",
   "label.input.maximumSingleWithdrawLimit": "Maximum Single Withdraw Limit",
   "label.input.installmentOn": "Reschedule from Installment On",
   "label.input.applicationdate": "Application Date",
