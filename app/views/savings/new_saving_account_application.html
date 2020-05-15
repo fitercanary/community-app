@@ -70,6 +70,17 @@
                                 <input ng-show="formData.productId" id="externalId" ng-model="formData.externalId" class="form-control" />
                             </td>
                         </tr>
+                        <tr ng-show="formData.productId">
+                            <div class="form-group">
+                                <td class="width14">
+                                    <label class="control-label col-sm-2 col-sm-offset-2">{{ 'label.input.nickname' | translate }}
+                                    </label>
+                                </td>
+                                <td class="width36 paddedbottom20">
+                                    <input id="nickname" ng-model="formData.nickname" class="form-control" />
+                                </td>
+                            </div>
+                        </tr>
                     </table>
                     <hr>
                     <button class="btn btn-default pull-left" wz-previous disabled ng-hide="disabled"><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Previous
@@ -405,6 +416,10 @@
                             <td colspan="7">
                                 <strong>{{'label.heading.details' | translate}}</strong>
                             </td>
+                        </tr>
+                        <tr class="toppadding">
+                            <td>{{ 'label.input.nickname' | translate }}</td>
+                            <td colspan="6">{{formData.nickname}}</td>
                         </tr>
                         <tr class="toppadding">
                             <td>{{ 'label.input.product' | translate }}</td>
