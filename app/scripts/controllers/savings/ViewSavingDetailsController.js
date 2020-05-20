@@ -142,6 +142,9 @@
                     case "overdraft":
                         location.path('/savingsAccount/' + accountId + "/overdraft");
                         break;
+                    case "editNickName":
+                        location.path('/savingaccount/' + accountId + '/editNickName');
+                        break;
 
                 }
             };
@@ -280,6 +283,10 @@
                                         {
                                           name: "button.freeze",
                                           taskPermissionName : ""
+                                        },
+                                        {
+                                            name: "button.editNickName",
+                                            taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
                                         }
 
                                     ]
@@ -500,6 +507,10 @@
                             {
                             name: "button.freeze",
                             taskPermissionName : ""
+                            },
+                            {
+                                name: "button.editNickName",
+                                taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
                             }
                         ]
 

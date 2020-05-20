@@ -166,6 +166,14 @@
                            ng-model="formData[modelName]" is-open="opened" class="form-control"/>
                 </div>
             </div>
+            <!-- Nick Name -->
+            <div class="form-group" ng-show="showNickNameField">
+                <label class="control-label col-sm-2" for="nickname">{{ 'label.input.nickname' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <input id="nickname" type="text" ng-model="formData.nickname" class="form-control"/>
+                </div>
+            </div>
             <div class="">
                 <button id="save1"  wz-next class="btn btn-primary pull-right" ng-show="isEntityDatatables">
                     {{'label.button.proceed' | translate}}
