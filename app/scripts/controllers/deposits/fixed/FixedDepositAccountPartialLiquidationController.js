@@ -86,46 +86,12 @@
                 if (depositPeriodFrequency === filteredPeriod) {
                     return depositPeriod;
                 }
-                if (filteredPeriod === 0) {
-                    if (depositPeriodFrequency === 1) {
-                        return depositPeriod * 7;
-                    }
-                    if (depositPeriodFrequency === 2) {
-                        return depositPeriod * 30;
-                    }
-                    if (depositPeriodFrequency === 3) {
-                        return depositPeriod * 365;
-                    }
-                } else if (filteredPeriod === 1) {
-                    if (depositPeriodFrequency === 0) {
-                        return depositPeriod / 7;
-                    }
-                    if (depositPeriodFrequency === 2) {
-                        return depositPeriod * 4;
-                    }
-                    if (depositPeriodFrequency === 3) {
-                        return depositPeriod * 52;
-                    }
+                if (filteredPeriod === 1) {
+                    return depositPeriod / 7;
                 } else if (filteredPeriod === 2) {
-                    if (depositPeriodFrequency === 0) {
-                        return depositPeriod / 30;
-                    }
-                    if (depositPeriodFrequency === 1) {
-                        return depositPeriod / 4;
-                    }
-                    if (depositPeriodFrequency === 3) {
-                        return depositPeriod * 12;
-                    }
+                    return depositPeriod / 30;
                 } else if (filteredPeriod === 3) {
-                    if (depositPeriodFrequency === 0) {
-                        return depositPeriod / 365;
-                    }
-                    if (depositPeriodFrequency === 1) {
-                        return depositPeriod / 52;
-                    }
-                    if (depositPeriodFrequency === 2) {
-                        return depositPeriod / 12;
-                    }
+                    return depositPeriod / 365;
                 }
             };
         }
