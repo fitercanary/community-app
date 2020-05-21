@@ -587,6 +587,9 @@
             .when('/fixeddepositaccount/:id/charges', {
                 templateUrl: 'views/deposits/fixed/add_new_fixed_deposit_charge.html'
             })
+            .when('/fixeddepositaccount/:id/partiallyLiquidate', {
+                templateUrl: 'views/deposits/fixed/fixed_deposit_account_partial_liquidation.html'
+            })
             .when('/fixeddepositaccount/:id/:action', {
                 templateUrl: 'views/deposits/fixed/fixed_deposit_account_actions.html'
             })
