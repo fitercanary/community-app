@@ -386,6 +386,9 @@
                     scope.taskPermissionName = 'WAIVE_SAVINGSACCOUNTCHARGE';
                     break;
                 case "editNickName":
+                    resourceFactory.savingsResource.get({accountId: routeParams.id}, function (data) {    
+                        scope.formData.nickname = data.nickname;
+                    });
                     scope.title = 'label.heading.editnicknamesavingaccount';
                     scope.labelName = 'label.input.nickname';
                     scope.modelName = 'activatedOnDate';
