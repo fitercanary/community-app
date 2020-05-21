@@ -64,8 +64,6 @@
                                 scope.isEntityDatatables = true;
                             }
                         });
-
-
                     });
 
                 });
