@@ -387,6 +387,16 @@
                     scope.waiveCharge = true;
                     scope.taskPermissionName = 'WAIVE_SAVINGSACCOUNTCHARGE';
                     break;
+                case "editNickName":
+                    scope.title = 'label.heading.editnicknamesavingaccount';
+                    scope.labelName = 'label.input.nickname';
+                    scope.modelName = 'activatedOnDate';
+                    scope.showDateField = false;
+                    scope.showNoteField = false;
+                    scope.showNickNameField = true;
+                    scope.taskPermissionName = 'UPDATENICKNAME_SAVINGSACCOUNT';
+                    scope.fetchEntities('m_savings_account','UPDATENICKNAME');
+                    break;
             }
 
             scope.cancel = function () {
@@ -465,7 +475,13 @@
                     resourceFactory.savingsResource.save(params, this.formData, function (data) {
                         location.path('/viewsavingaccount/' + data.savingsId);
                     });
-                } else {
+                } else if (scope.action == "editNickName") {
+                    params = {accountId: routeParams.id, command: 'updateNickName' }
+
+                    resourceFactory.savingsResource.update(params, this.formData, function (data) {
+                        location.path('/viewsavingaccount/' + data.savingsId);
+                    });
+                }else {
                     params.accountId = scope.accountId;
                     if (scope.action == "approve") {
                         if (this.formData.approvedOnDate) {
