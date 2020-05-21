@@ -2,6 +2,7 @@
     mifosX.controllers = _.extend(module, {
         FixedDepositAccountPartialLiquidationController: function (scope, resourceFactory, location, routeParams, dateFilter) {
 
+            scope.data = {};
             scope.accountId = routeParams.id;
             scope.savingAccountId = routeParams.id;
             scope.formData = {liquidationAmount: 0, depositPeriodFrequencyId: 0};
@@ -16,10 +17,22 @@
                 scope.data = data;
                 scope.chart = data.accountChart;
                 scope.chartSlabs = scope.chart.chartSlabs;
-                scope.calculateOutstanding();
+                scope.fetchMaturityAmount();
             });
 
-            scope.calculateRemainingTenure = function () {
+            scope.fetchMaturityAmount = () => {
+                let formData = {
+                    locale: scope.optlang.code,
+                    dateFormat: scope.df,
+                    closedOnDate: dateFilter(scope.date.submittedOnDate, scope.df)
+                };
+                resourceFactory.fixedDepositAccountResource.save({accountId: routeParams.id, command: 'calculatePrematureAmount'}, formData, function (data) {
+                    scope.data.maturityAmount = data.maturityAmount;
+                    scope.calculateOutstanding();
+                });
+            };
+
+            scope.calculateRemainingTenure = () => {
                 if (!scope.changeTenure && scope.date.submittedOnDate) {
                     let today = Array.isArray(scope.date.submittedOnDate) ? dateFilter(scope.date.submittedOnDate, scope.df) : scope.date.submittedOnDate;
                     let maturityDate = new Date(dateFilter(scope.data.maturityDate, scope.df));
@@ -29,28 +42,24 @@
                 scope.calculateInterest();
             };
 
-            scope.calculateOutstanding = function () {
+            scope.calculateOutstanding = () => {
                 scope.balanceAfterLqdn = scope.data.maturityAmount - scope.formData.liquidationAmount;
                 scope.calculateRemainingTenure();
             };
 
-            scope.calculateInterestRate = function () {
+            scope.calculateInterestRate = () => {
                 let amount = parseFloat(scope.balanceAfterLqdn);
                 let depositPeriod = parseFloat(scope.formData.depositPeriod);
                 let periodFrequency = scope.formData.depositPeriodFrequencyId;
                 let filteredSlabs = scope.chartSlabs.filter(function (x) {
                     return amount >= x.amountRangeFrom && amount <= x.amountRangeTo
                 });
-                filteredSlabs.map(function (x) {
+                filteredSlabs.map(x => {
                     let period = scope.computePeriod(depositPeriod, periodFrequency, x.periodType.id);
                     if (period && x.fromPeriod <= period && x.toPeriod >= period) {
                         scope.interestRate = x.annualInterestRate;
                     }
                 });
-            };
-
-            scope.calculateMaturity = function () {
-                scope.calculateRemainingTenure();
             };
 
             scope.calculateInterest = function () {
