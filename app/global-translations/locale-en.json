@@ -3220,6 +3220,7 @@
   "label.input.interestratechart.description": "Description",
   "label.input.interestratechart.valid.from": "Valid From Date",
   "label.input.interestratechart.valid.to": "End Date",
+  "label.input.requireauthorizationtoviewaccount": "Require  Authorization to View Account",
   "label.input.interestratechart.primary.grouping.amount": "Is primary grouping by Amount",
   "label.checkbox.interestfreeperiodapplicable": "Period when interest will not be paid",
   "label.checkbox.applypreclosurepenalinterest": "Apply penal interest (less)",

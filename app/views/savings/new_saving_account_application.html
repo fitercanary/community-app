@@ -219,6 +219,12 @@
                             <input id="minOverdraftForInterestCalculation" type="text" ng-model="formData.minOverdraftForInterestCalculation" number-format>
                         </div>
                     </div>
+                    <div class="form-group">
+                        <div class="col-sm-4">
+                            <input type="checkbox" ng-model="formData.requireAuthorizationToView">&nbsp;
+                            <label class="control-label">{{ 'label.input.requireauthorizationtoviewaccount' | translate }}&nbsp;</label>
+                        </div>
+                    </div>
                     <div class="form-control" ng-hide="formData.allowOverdraft">
                         <div class="col-sm-4">
                             <input type="checkbox" ng-model="formData.enforceMinRequiredBalance"> &nbsp;
