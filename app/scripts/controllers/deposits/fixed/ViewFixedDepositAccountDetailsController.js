@@ -91,6 +91,9 @@
                     case "partiallyLiquidate":
                         location.path('/fixeddepositaccount/' + accountId + '/partiallyLiquidate');
                         break;
+                    case "topUp":
+                        location.path('/fixeddepositaccount/' + accountId + '/topUp');
+                        break;
                     case "enableWithHoldTax":
                         var changes = {
                             withHoldTax:true
@@ -208,6 +211,9 @@
                             },
                             {
                                 name: "button.partiallyLiquidate"
+                            },
+                            {
+                                name: "button.topUp"
                             }
                         ]
 
