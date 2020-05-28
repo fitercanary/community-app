@@ -3222,7 +3222,7 @@
   "label.input.interestratechart.valid.to": "End Date",
   "label.input.requireauthorizationtoviewaccount": "Require  Authorization to View Account",
   "label.input.interestratechart.primary.grouping.amount": "Is primary grouping by Amount",
-  "label.input.requireauthorizationtoview": "Require Authorization to View",
+  "label.input.requireauthorizationtoview": "Require Authorization",
   "label.checkbox.interestfreeperiodapplicable": "Period when interest will not be paid",
   "label.checkbox.applypreclosurepenalinterest": "Apply penal interest (less)",
   "label.input.recurringdepositamount": "Deposit Amount",

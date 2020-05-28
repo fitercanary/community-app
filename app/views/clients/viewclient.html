@@ -811,6 +811,10 @@
 										<th>{{ 'label.input.singleWithdrawLimit' | translate }}</th>
 										<td><span class="padded-td">{{client.singleWithdrawLimit |number}}</span></td>
 									</tr>
+									<tr>
+										<th>{{ 'label.input.requireauthorizationtoview' | translate }}</th>
+										<td><span class="padded-td">{{client.requireAuthorizationToView}}</span></td>
+									</tr>
 									<tr ng-show="client.referredBy">
 										<th>{{ 'label.heading.referredBy' | translate }}</th>
 										<td><span class="padded-td"><a
