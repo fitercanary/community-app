@@ -495,6 +495,25 @@
                     $uibModalInstance.dismiss('cancel');
                 };
             };
+
+            scope.requestAuthorizationToViewClient = function () {
+                $uibModal.open({
+                    templateUrl: 'requestauthorizationtoviewclient.html',
+                    controller: RequestAuthorizationToViewClientCtrl
+                });
+            };
+
+            var RequestAuthorizationToViewClientCtrl = function ($scope, $uibModalInstance) {
+                $scope.requestauthorization = function () {
+                    resourceFactory.userAuthorizationResource.requestAuthorization({userId: scope.currentSession.user.userId}, {clientId: routeParams.id}, function (data) {
+                        $uibModalInstance.close('requestauthorization');
+                        route.reload();
+                    });
+                };
+                $scope.cancel = function () {
+                    $uibModalInstance.dismiss('cancel');
+                };
+            };
             resourceFactory.clientAccountResource.get({clientId: routeParams.id}, function (data) {
                 scope.clientAccounts = data;
                 if (data.savingsAccounts) {

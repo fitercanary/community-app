@@ -4398,5 +4398,15 @@
   "label.heading.classification": "Classification",
   "label.heading.operator": "Operator",
   "label.input.amount": "amount",
+
+  "#New Buttons": "",
+  "label.button.requestauthorizationtoviewaccount": "Request Authorization To View Client",
+  "label.heading.requestauthorizationtoviewaccount": "Request Authorization To View Client",
+
+  "#New Errors": "",
+  "error.msg.user.authorization.request.already.exists": "Request pending approval already exists",
+  "error.msg.user.authorization.request.approved.already.exists": "Approved and running request already exists",
+  "error.msg.user.authorization.request.already.approved": "Authorization Request has already been aproved",
+  "error.msg.user.authorization.request.already.rejected": "Authorization Request has already been rejected",
   "----End---": "--End of file--- "
 }

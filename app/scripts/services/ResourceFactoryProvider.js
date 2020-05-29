@@ -20,7 +20,8 @@
                 return {
                     userResource: defineResource(apiVer + "/users/:userId", {userId: '@userId'}, {
                         getAllUsers: {method: 'GET', params: {fields: "id,firstname,lastname,username,officeName"}, isArray: true},
-                        getUser: {method: 'GET', params: {}}
+                        getUser: {method: 'GET', params: {}},
+                        requestAuthorization: {method: 'POST'}
                     }),
                     roleResource: defineResource(apiVer + "/roles/:roleId", {roleId: '@roleId', command: '@command'}, {
                         getAllRoles: {method: 'GET', params: {}, isArray: true},
@@ -723,7 +724,10 @@
                     transactionClassificationResource: defineResource(apiVer+"/transactionclassification",{},{
                         getAllTransactionClassifications: {method: 'GET', params: {}, isArray: true},
                         delete: {method: 'DELETE', params: {}}
-                    })
+                    }),
+                    userAuthorizationResource: defineResource(apiVer + "/users/:userId/requestauthorization", {userId: "@userId"}, {
+                        requestAuthorization: { method: 'POST'}
+                    }),
                 };
             }];
         }

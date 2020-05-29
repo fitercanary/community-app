@@ -162,6 +162,17 @@
 			</span>
 		</div>
 	</script>
+	<script type="text/ng-template" id="requestauthorizationtoviewclient.html">
+		<div class="modal-header silver">
+			<h3 class="bolder">{{'label.heading.requestauthorizationtoviewaccount' | translate}}</h3>
+		</div>
+		<div class="modal-body">
+			<api-validate></api-validate>
+			<br>
+			<button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+			<button class="btn btn-primary" ng-click="requestauthorization()">{{'label.button.confirm' | translate}}</button>
+		</div>
+	</script>
 	<div class="card">
 		<div class="content">
 			<div class="toolbar">
@@ -257,6 +268,19 @@
 					<br>
 					<br>
 					<br>
+					<!-- Place here button to Request for Authorization -->
+					<div class="center" data-ng-hide="client.id">
+						<span >
+							<button  type="button" class="btn-primary btn btn-sm"
+								data-ng-click="requestAuthorizationToViewClient()">{{
+									'label.button.requestauthorizationtoviewaccount' | translate }}
+							</button>
+						</span>
+					</div>
+					<br>
+					<br>
+					<br>
+					<!-- End Request Authorization -->
 					<div class="row">
 						<div class="col-sm-9 col-md-9">
 							<div data-ng-show="client.status.value=='Closed'">
