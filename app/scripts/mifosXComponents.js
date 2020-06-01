@@ -216,6 +216,8 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'savings/AssignSavingsOfficerController',
             'savings/UnAssignSavingsOfficerController',
             'deposits/fixed/FixedDepositAccountActionsController',
+            'deposits/fixed/FixedDepositAccountPartialLiquidationController',
+            'deposits/fixed/FixedDepositAccountTopUpController',
             'deposits/fixed/ViewFixedDepositAccountDetailsController',
             'deposits/fixed/CreateFixedDepositAccountController',
             'deposits/fixed/EditDepositAccountController',

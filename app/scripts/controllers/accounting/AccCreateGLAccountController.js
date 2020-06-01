@@ -5,11 +5,15 @@
             scope.accountTypes = [];
             scope.usageTypes = [];
             scope.headerTypes = [];
+            scope.cbnCategories = [];
+            scope.cbnSubCategories = [];
 
             resourceFactory.accountCoaTemplateResource.get({type: '0'}, function (data) {
                 scope.coadata = data;
                 scope.accountTypes = data.accountTypeOptions;
                 scope.usageTypes = data.usageOptions;
+                scope.cbnCategories = data.cbnCategories;
+                scope.cbnSubCategories = data.cbnSubCategories;
                 
                 scope.formData = {
                         manualEntriesAllowed: true,

@@ -58,12 +58,21 @@
 	            </tr>
 	
 	            <tr>
-	                <td class="width40">{{ 'label.heading.manualentriesallowed' | translate }}</td>
-	                <td>{{glaccount.manualEntriesAllowed}}</td>
+	                <td class="width40">{{ 'label.heading.bankcode' | translate }}</td>
+	                <td>{{glaccount.bankCode}}</td>
 	            </tr>
 	            <tr>
-	                <td>{{ 'label.heading.description' | translate }}</td>
-	                <td>{{glaccount.description}}</td>
+	                <td>{{ 'label.heading.bankname' | translate }}</td>
+	                <td>{{glaccount.bankName}}</td>
+				</tr>
+				
+				<tr>
+	                <td class="width40">{{ 'label.heading.cbncategory' | translate }}</td>
+	                <td>{{glaccount.cbnCategory.name}}</td>
+	            </tr>
+	            <tr>
+	                <td>{{ 'label.heading.cbnsubcategory' | translate }}</td>
+	                <td>{{glaccount.cbnSubCategory.name}}</td>
 	            </tr>
 	        </table>
 		</div>

@@ -29,6 +29,10 @@
                         <th>{{'label.heading.disabled' | translate}}?</th>
                         <th>{{'label.heading.manualentriesallowed' | translate}}</th>
                         <th>{{'label.heading.usedas' | translate}}</th>
+                        <th>{{'label.heading.bankcode' | translate}}</th>
+                        <th>{{'label.heading.bankname' | translate}}</th>
+                        <th>{{'label.heading.cbncategory' | translate}}</th>
+                        <th>{{'label.heading.cbnsubcategory' | translate}}</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -39,6 +43,10 @@
                         <td class="pointer" data-ng-click="routeTo(coadata.id)">{{coadata.disabled}}</td>
                         <td class="pointer" data-ng-click="routeTo(coadata.id)">{{coadata.manualEntriesAllowed}}</td>
                         <td class="pointer" data-ng-click="routeTo(coadata.id)">{{coadata.usage.value}}</td>
+                        <td class="pointer" data-ng-click="routeTo(coadata.id)">{{coadata.bankCode}}</td>
+                        <td class="pointer" data-ng-click="routeTo(coadata.id)">{{coadata.bankName}}</td>
+                        <td class="pointer" data-ng-click="routeTo(coadata.id)">{{coadata.cbnCategory.name}}</td>
+                        <td class="pointer" data-ng-click="routeTo(coadata.id)">{{coadata.cbnSubCategory.name}}</td>
                         </tr>
                     </tbody>
                 </table>

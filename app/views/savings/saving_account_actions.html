@@ -166,6 +166,14 @@
                            ng-model="formData[modelName]" is-open="opened" class="form-control"/>
                 </div>
             </div>
+            <!-- Nick Name -->
+            <div class="form-group" ng-show="showNickNameField">
+                <label class="control-label col-sm-2" for="nickname">{{ 'label.input.nickname' | translate}}</label>
+
+                <div class="col-sm-3">
+                    <input id="nickname" type="text" ng-model="formData.nickname" class="form-control"/>
+                </div>
+            </div>
             <div class="">
                 <button id="save1"  wz-next class="btn btn-primary pull-right" ng-show="isEntityDatatables">
                     {{'label.button.proceed' | translate}}
@@ -190,8 +198,15 @@
     </form>
             <form name="savingccountactionform" novalidate="" class="form-horizontal">
                 <div class="col-md-offset-3" ng-show="showBlock">
+                    <label class="control-label col-sm-4">{{ 'label.blockNarration.select' | translate }}</label>
+                    <select id="narrationId" ng-model="formData.narrationId"
+                        ng-options="narrationType.id as narrationType.name for narrationType in blockNarrationTypes"
+                        value="{{narrationType.id}}" class="form-control">
+                    </select>
+                    <br/>
                     <button id="cancel" ng-click="cancel()"
                             class="btn btn-default">{{ 'label.button.cancel' | translate }}</button>
+                    
                     <button id="debit"  type="submit" ng-click = "blockUnblockDebit(taskPermissionNameDebit)" ng-show = "debitStatus"
                             class="btn btn-primary">{{buttonTextDebit | translate}}</button>
                     <button id="credit"  type="submit" ng-click = "blockUnblockDebit(taskPermissionNameCredit)" ng-show = "creditStatus"

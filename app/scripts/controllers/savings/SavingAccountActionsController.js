@@ -20,6 +20,7 @@
             var submitStatus = [];
             scope.savingsDetails = [];
             scope.textDetails = [];
+            scope.blockNarrationTypes = [];
 
             rootScope.RequestEntities = function(entity,status,productId){
                 resourceFactory.entityDatatableChecksResource.getAll({limit:-1},function (response) {
@@ -63,8 +64,6 @@
                                 scope.isEntityDatatables = true;
                             }
                         });
-
-
                     });
 
                 });
@@ -263,6 +262,8 @@
                 resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all'
                                        }, function (data) {
                  scope.savingsDetails = data;
+                 scope.blockNarrationTypes = data.blockNarrationOptions;
+                 scope.blockNarration = data.blockNarration;
                  console.log(data);
                     if(!data.subStatus.block){
                      if(data.subStatus.blockDebit ){
@@ -384,6 +385,19 @@
                     scope.waiveCharge = true;
                     scope.taskPermissionName = 'WAIVE_SAVINGSACCOUNTCHARGE';
                     break;
+                case "editNickName":
+                    resourceFactory.savingsResource.get({accountId: routeParams.id}, function (data) {    
+                        scope.formData.nickname = data.nickname;
+                    });
+                    scope.title = 'label.heading.editnicknamesavingaccount';
+                    scope.labelName = 'label.input.nickname';
+                    scope.modelName = 'activatedOnDate';
+                    scope.showDateField = false;
+                    scope.showNoteField = false;
+                    scope.showNickNameField = true;
+                    scope.taskPermissionName = 'UPDATENICKNAME_SAVINGSACCOUNT';
+                    scope.fetchEntities('m_savings_account','UPDATENICKNAME');
+                    break;
             }
 
             scope.cancel = function () {
@@ -462,7 +476,13 @@
                     resourceFactory.savingsResource.save(params, this.formData, function (data) {
                         location.path('/viewsavingaccount/' + data.savingsId);
                     });
-                } else {
+                } else if (scope.action == "editNickName") {
+                    params = {accountId: routeParams.id, command: 'updateNickName' }
+
+                    resourceFactory.savingsResource.update(params, this.formData, function (data) {
+                        location.path('/viewsavingaccount/' + data.savingsId);
+                    });
+                }else {
                     params.accountId = scope.accountId;
                     if (scope.action == "approve") {
                         if (this.formData.approvedOnDate) {
@@ -503,22 +523,30 @@
                 if(scope.action == "freeze"){
                      if (permission == "BLOCKDEBIT_SAVINGSACCOUNT") {
                                 console.log(permission, "1");
-                                  this.formData = {}
+                                  this.formData = {
+                                    narrationId: this.formData.narrationId
+                                  }
                                   scope.action = "blockDebit";
                        }
                      if (permission == "UNBLOCKDEBIT_SAVINGSACCOUNT"){
                       console.log(permission, "2");
-                                      this.formData = {}
+                                      this.formData = {
+                                        narrationId: this.formData.narrationId
+                                      }
                                       scope.action = "unblockDebit";
                      }
                      if (permission == "BLOCKCREDIT_SAVINGSACCOUNT") {
                       console.log(permission, "3");
-                                                       this.formData = {}
+                                                       this.formData = {
+                                                        narrationId: this.formData.narrationId
+                                                       }
                                                        scope.action = "blockCredit";
                                             }
                      if (permission == "UNBLOCKCREDIT_SAVINGSACCOUNT"){
                       console.log(permission, "4");
-                                                           this.formData = {}
+                                                           this.formData = {
+                                                            narrationId: this.formData.narrationId
+                                                           }
                                                            scope.action = "unblockCredit";
                      }
 

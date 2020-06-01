@@ -26,6 +26,7 @@
                     <th>{{'label.heading.reportcategory' | translate}}</th>
                     <th>{{'label.heading.corereport' | translate}}</th>
                     <th>{{'label.heading.userreport' | translate}}</th>
+                    <th>{{'label.heading.reportdatabasetype' | translate}}</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -36,6 +37,7 @@
                     <td class="pointer" data-ng-click="routeTo(report.id)">{{report.reportCategory}}</td>
                     <td class="pointer" data-ng-click="routeTo(report.id)">{{report.coreReport}}</td>
                     <td class="pointer" data-ng-click="routeTo(report.id)">{{report.useReport}}</td>
+                    <td class="pointer" data-ng-click="routeTo(report.id)">{{report.reportDatabaseType.value}}</td>
                 </tr>
                 </tbody>
             </table>

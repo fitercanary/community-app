@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        MakeAccountTransferController: function (scope, resourceFactory, location, routeParams, dateFilter) {
+        MakeAccountTransferController: function (scope, resourceFactory, location, routeParams, dateFilter, $q) {
             scope.restrictDate = new Date();
             var params = {fromAccountId: routeParams.accountId};
             var accountType = routeParams.accountType || '';
@@ -29,6 +29,19 @@
                 scope.formData.toClientId = client.id;
                 scope.changeEvent();
             };
+
+            scope.clientOptions = function(value){
+                var deferred = $q.defer();
+                resourceFactory.clientSearchSummaryResource.get({displayName: value, orderBy : 'displayName', officeId : scope.formData.toOfficeId,
+                    sortOrder : 'ASC', orphansOnly : true}, function (data) {
+                    deferred.resolve(data.pageItems);
+                });
+                return deferred.promise;
+            };
+
+            scope.selectToClient = function($item, $model, $label) {
+                scope.referralClient = $item;
+            }
 
             scope.changeEvent = function () {
 
@@ -64,7 +77,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('MakeAccountTransferController', ['$scope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.MakeAccountTransferController]).run(function ($log) {
+    mifosX.ng.application.controller('MakeAccountTransferController', ['$scope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', '$q', mifosX.controllers.MakeAccountTransferController]).run(function ($log) {
         $log.info("MakeAccountTransferController initialized");
     });
 }(mifosX.controllers || {}));

@@ -82,6 +82,34 @@
 			        <textarea id="description" name="description" ng-model="formData.description" rows="8" class="form-control" cols=""></textarea>
 			    </div>
 			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2 ">{{'label.input.bankcode' | translate}}</label>
+				<div class="col-sm-2">
+					<input type="text" id="bankCode" name="bankCode" ng-autofocus="true" ng-model="formData.bankCode" class="form-control" />
+				</div>
+				<label class="control-label col-sm-2" >{{'label.input.bankname' | translate}}</label>
+				<div class="col-sm-2">
+					<input id="bankName" type="text"  name="bankName"
+						   ng-model="formData.bankName" class="form-control" />
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="control-label col-sm-2 " for="cbnCategoryId">{{'label.input.cbncategory' | translate}}
+				</label>
+				<div class="col-sm-2">
+					<select id="cbnCategoryId" ng-model="formData.cbnCategoryId" class="form-control"
+							ng-options="cbnCategory.id as cbnCategory.name for cbnCategory in cbnCategories" 
+							value="{{cbnCategory.id}}" >
+					</select>
+				</div>
+				<label class="control-label col-sm-4" for="cbnSubCategoryId">{{'label.input.cbnsubcategory' | translate}}</label>
+				<div class="col-sm-2">
+					<select id="cbnSubCategoryId" ng-model="formData.cbnSubCategoryId" class="form-control"
+							ng-options="cbnSubCategory.id as cbnSubCategory.name for cbnSubCategory in cbnSubCategories"
+							value="{{cbnSubCategory.id}}">
+					</select>
+				</div>
+			</div>
             <div class="col-md-offset-5">
                 <a id="cancel" href="#/viewglaccount/{{glAccountId}}" class="btn btn-default">{{'label.button.cancel' | translate}}</a>
                 <button id="save" type="submit" class="btn btn-primary" has-permission='UPDATE_GLACCOUNT'>{{'label.button.save' | translate}}</button>

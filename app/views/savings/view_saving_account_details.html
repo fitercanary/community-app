@@ -89,7 +89,7 @@
                         <strong><i ng-show="savingaccountdetails.subStatus.id==0"
                                    class="fa fa-stop {{savingaccountdetails.status.code | StatusLookup}}"></i><i
                                 ng-hide="savingaccountdetails.subStatus.id==0"
-                                class="fa fa-stop {{savingaccountdetails.status.code+savingaccountdetails.subStatus.value | StatusLookup}}"></i>&nbsp;{{savingaccountdetails.savingsProductName}}(#{{savingaccountdetails.accountNo}})</strong>
+                                class="fa fa-stop {{savingaccountdetails.status.code+savingaccountdetails.subStatus.value | StatusLookup}}"></i>&nbsp;{{savingaccountdetails.savingsProductName}}(#{{savingaccountdetails.accountNo}}) {{savingaccountdetails.nickname}}</strong>
                   </span>
             </div>
             <br>
@@ -269,6 +269,12 @@
                                     <th class="table-bold-acc fontnormal">{{'label.subStatus' | translate}}
                                     </th>
                                     <td><span class="padded-td">{{savingaccountdetails.subStatus.value}}</span>
+                                    </td>
+                                </tr>
+                                <tr >
+                                    <th class="table-bold-acc fontnormal">{{'label.blockNarration' | translate}}
+                                    </th>
+                                    <td><span class="padded-td">{{savingaccountdetails.blockNarration.name}}</span>
                                     </td>
                                 </tr>
                                 <tr data-ng-show="savingaccountdetails.daysToInactive">

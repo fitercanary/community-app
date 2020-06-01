@@ -82,19 +82,17 @@
                             route.reload();
                         });
                         break;
-                    /*          case "applyAnnualFees":
-                     location.path('/savingaccountcharge/' + accountId + '/applyAnnualFees/' + scope.annualChargeId);
-                     break;
-                     case "transferFunds":
-                     if (scope.savingaccountdetails.clientId) {
-                     location.path('/accounttransfers/fromsavings/'+accountId);
-                     }
-                     break;*/
                     case "close":
                         location.path('/fixeddepositaccount/' + accountId + '/close');
                         break;
                     case "prematureClose":
                         location.path('/fixeddepositaccount/' + accountId + '/prematureClose');
+                        break;
+                    case "partiallyLiquidate":
+                        location.path('/fixeddepositaccount/' + accountId + '/partiallyLiquidate');
+                        break;
+                    case "topUp":
+                        location.path('/fixeddepositaccount/' + accountId + '/topUp');
                         break;
                     case "enableWithHoldTax":
                         var changes = {
@@ -210,6 +208,12 @@
                             },
                             {
                                 name: "button.addcharge"
+                            },
+                            {
+                                name: "button.partiallyLiquidate"
+                            },
+                            {
+                                name: "button.topUp"
                             }
                         ]
 
