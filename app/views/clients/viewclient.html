@@ -167,6 +167,9 @@
 			<h3 class="bolder">{{'label.heading.requestauthorizationtoviewaccount' | translate}}</h3>
 		</div>
 		<div class="modal-body">
+			<textarea rows="1" class="form-control marginbottom0px" id="textarea" placeholder="{{'label.input.comments' | translate}}" ng-model="this.authorizationRequestData.comment">  </textarea>
+		</div>
+		<div class="modal-footer">
 			<api-validate></api-validate>
 			<br>
 			<button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>

@@ -504,8 +504,11 @@
             };
 
             var RequestAuthorizationToViewClientCtrl = function ($scope, $uibModalInstance) {
+                scope.authorizationRequestData = {};
+
                 $scope.requestauthorization = function () {
-                    resourceFactory.userAuthorizationResource.requestAuthorization({userId: scope.currentSession.user.userId}, {clientId: routeParams.id}, function (data) {
+                    resourceFactory.userAuthorizationResource.requestAuthorization({userId: scope.currentSession.user.userId}, {clientId: routeParams.id,comment: this.authorizationRequestData.comment}, 
+                        function (data) {
                         $uibModalInstance.close('requestauthorization');
                         route.reload();
                     });

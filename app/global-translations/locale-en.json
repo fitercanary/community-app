@@ -4408,5 +4408,10 @@
   "error.msg.user.authorization.request.approved.already.exists": "Approved and running request already exists",
   "error.msg.user.authorization.request.already.approved": "Authorization Request has already been aproved",
   "error.msg.user.authorization.request.already.rejected": "Authorization Request has already been rejected",
+  "label.heading.comment": "Comment",
+  "label.heading.requestedDate": "Requested Date",
+
+  "#New Menus": "",
+  "label.menu.selectdurationtype": "Select Duration Types",
   "----End---": "--End of file--- "
 }
