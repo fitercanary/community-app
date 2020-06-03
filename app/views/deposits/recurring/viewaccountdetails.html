@@ -147,14 +147,14 @@
                         <th colspan="2"><center>{{'label.heading.performancehistory' | translate}}</center></th>
                     </tr>
                     <tr>
-                        <th class="active fontnormal col-md-3">{{'label.account.deposit.principal.amount' |
+                        <th class="active fontnormal col-md-3">{{'label.account.deposit.target.amount' |
                             translate}}
                         </th>
                         <td class="col-md-3"><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.depositAmount}}</span>
                         </td>
                     </tr>
                     <tr>
-                        <th class="active fontnormal">{{'label.account.maturity.amount' | translate}}
+                        <th class="active fontnormal">{{'label.account.target.maturity.amount' | translate}}
                         </th>
                         <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.maturityAmount | number}}</span>
                         </td>
@@ -170,6 +170,12 @@
                         </th>
                         <td><span class="padded-td" data-ng-show="savingaccountdetails.summary.totalDeposits">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalDeposits | number}}</span>
                             <span class="padded-td" data-ng-hide="savingaccountdetails.summary.totalDeposits">{{savingaccountdetails.currency.displaySymbol}}&nbsp;0</span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th class="active fontnormal">{{'label.account.current.maturity.amount' | translate}}
+                        </th>
+                        <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.currentMaturityAmount | number}}</span>
                         </td>
                     </tr>
                     <tr>
