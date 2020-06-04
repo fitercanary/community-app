@@ -2240,6 +2240,7 @@
   "savingsInterestCalculationDaysInYearType.invalid": "Invalid",
   "savingsInterestCalculationDaysInYearType.days360": "360 Days",
   "savingsInterestCalculationDaysInYearType.days365": "365 Days",
+  "savingsInterestCalculationDaysInYearType.actual": "Actual Days",
   "savingsAccountTransactionType.deposit": "Deposit",
   "savingsAccountTransactionType.withdrawal": "Withdrawal",
   "savingsAccountTransactionType.interestPosting": "Interest posting",
