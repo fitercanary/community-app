@@ -162,6 +162,20 @@
 			</span>
 		</div>
 	</script>
+	<script type="text/ng-template" id="requestauthorizationtoviewclient.html">
+		<div class="modal-header silver">
+			<h3 class="bolder">{{'label.heading.requestauthorizationtoviewaccount' | translate}}</h3>
+		</div>
+		<div class="modal-body">
+			<textarea rows="1" class="form-control marginbottom0px" id="textarea" placeholder="{{'label.input.comments' | translate}}" ng-model="this.authorizationRequestData.comment">  </textarea>
+		</div>
+		<div class="modal-footer">
+			<api-validate></api-validate>
+			<br>
+			<button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+			<button class="btn btn-primary" ng-click="requestauthorization()">{{'label.button.confirm' | translate}}</button>
+		</div>
+	</script>
 	<div class="card">
 		<div class="content">
 			<div class="toolbar">
@@ -257,6 +271,19 @@
 					<br>
 					<br>
 					<br>
+					<!-- Place here button to Request for Authorization -->
+					<div class="center" data-ng-hide="client.id">
+						<span >
+							<button  type="button" class="btn-primary btn btn-sm"
+								data-ng-click="requestAuthorizationToViewClient()">{{
+									'label.button.requestauthorizationtoviewaccount' | translate }}
+							</button>
+						</span>
+					</div>
+					<br>
+					<br>
+					<br>
+					<!-- End Request Authorization -->
 					<div class="row">
 						<div class="col-sm-9 col-md-9">
 							<div data-ng-show="client.status.value=='Closed'">
@@ -810,6 +837,10 @@
 									<tr>
 										<th>{{ 'label.input.singleWithdrawLimit' | translate }}</th>
 										<td><span class="padded-td">{{client.singleWithdrawLimit |number}}</span></td>
+									</tr>
+									<tr>
+										<th>{{ 'label.input.requireauthorizationtoview' | translate }}</th>
+										<td><span class="padded-td">{{client.requireAuthorizationToView}}</span></td>
 									</tr>
 									<tr ng-show="client.referredBy">
 										<th>{{ 'label.heading.referredBy' | translate }}</th>

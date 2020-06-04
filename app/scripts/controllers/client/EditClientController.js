@@ -43,7 +43,8 @@
                         remarks: data.clientNonPersonDetails.remarks
                     },
                     dailyWithdrawLimit : data.dailyWithdrawLimit,
-                    singleWithdrawLimit: data.singleWithdrawLimit
+                    singleWithdrawLimit: data.singleWithdrawLimit,
+                    requireAuthorizationToView: data.requireAuthorizationToView
                 };
 
                 if (data.referredById != null) {

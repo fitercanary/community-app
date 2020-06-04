@@ -3226,7 +3226,9 @@
   "label.input.interestratechart.description": "Description",
   "label.input.interestratechart.valid.from": "Valid From Date",
   "label.input.interestratechart.valid.to": "End Date",
+  "label.input.requireauthorizationtoviewaccount": "Require  Authorization to View Account",
   "label.input.interestratechart.primary.grouping.amount": "Is primary grouping by Amount",
+  "label.input.requireauthorizationtoview": "Require Authorization",
   "label.checkbox.interestfreeperiodapplicable": "Period when interest will not be paid",
   "label.checkbox.applypreclosurepenalinterest": "Apply penal interest (less)",
   "label.input.recurringdepositamount": "Deposit Amount",
@@ -4402,5 +4404,20 @@
   "label.heading.classification": "Classification",
   "label.heading.operator": "Operator",
   "label.input.amount": "amount",
+
+  "#New Buttons": "",
+  "label.button.requestauthorizationtoviewaccount": "Request Authorization To View Client",
+  "label.heading.requestauthorizationtoviewaccount": "Request Authorization To View Client",
+
+  "#New Errors": "",
+  "error.msg.user.authorization.request.already.exists": "Request pending approval already exists",
+  "error.msg.user.authorization.request.approved.already.exists": "Approved and running request already exists",
+  "error.msg.user.authorization.request.already.approved": "Authorization Request has already been aproved",
+  "error.msg.user.authorization.request.already.rejected": "Authorization Request has already been rejected",
+  "label.heading.comment": "Comment",
+  "label.heading.requestedDate": "Requested Date",
+
+  "#New Menus": "",
+  "label.menu.selectdurationtype": "Select Duration Types",
   "----End---": "--End of file--- "
 }

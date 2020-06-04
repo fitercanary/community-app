@@ -16,6 +16,9 @@
             //this value will be changed within each specific tab
             scope.requestIdentifier = "loanId";
 
+            scope.authorizationRequestData = [];
+            scope.authorizationRequestTemplate = {};
+
             scope.itemsPerPage = 15;
 
             scope.loanRescheduleData = [];
@@ -584,6 +587,148 @@
                     }
                   });
                 };
+
+                // Request Authorization
+                scope.approveAuthorizationRequestToViewClient = function () {
+                    if (scope.authorizationRequestTemplate) {
+                        $uibModal.open({
+                            templateUrl: 'authorizationrequesttoviewclient.html',
+                            controller: ApproveAuthorizationRequestToViewClientCtrl
+                        });
+                    }
+                };
+    
+                var ApproveAuthorizationRequestToViewClientCtrl = function ($scope, $uibModalInstance) {
+                    $scope.durationTypes = [ {id: 1, name: 'Hours'}, {id: 2, name: 'Days'}, {id: 3, name: 'Weeks'}, 
+                    {id: 4, name: 'Months'}, {id: 5, name: 'Years'}];
+
+                    $scope.formData = {};
+
+                    $scope.approve = function (durationType, duration, comment) {
+                        scope.bulkRequestToViewClientApproval(durationType, duration, comment);
+                        scope.loadAuthorizationRequestToViewClientData();
+                        $uibModalInstance.close('approve');
+                    };
+                    $scope.reject = function () {
+                        scope.bulkRequestToViewClientReject();
+                        scope.loadAuthorizationRequestToViewClientData();
+                        $uibModalInstance.close('reject');
+                    };
+                    $scope.cancel = function () {
+                        $uibModalInstance.dismiss('cancel');
+                    };
+                }
+
+                scope.bulkRequestToViewClientApproval = function (durationType, duration, comment) {
+                    //scope.formData.durationType = 1;
+                    //scope.formData.duration = 3;
+                    //scope.formData.comment = scope.formData.comment;
+                    scope.params = {};
+                    //scope.formData.locale = ;
+                    scope.params.locale = scope.optlang.code;
+                    scope.params.durationType = durationType;
+                    scope.params.duration = duration;
+                    scope.params.comment = comment;
+                    var selectedAccounts = 0;
+                    var approvedAccounts = 0;
+                    _.each(scope.authorizationRequestTemplate, function (value, key) {
+                        if (value == true) {
+                            selectedAccounts++;
+                        }
+                    });
+    
+                    scope.batchRequests = [];
+                    scope.requestIdentifier = "authorizationRequestId";
+    
+                    var reqId = 1;
+                    _.each(scope.authorizationRequestTemplate, function (value, key) {
+                        if (value == true) {
+                            scope.batchRequests.push({requestId: reqId++, relativeUrl: "users/requestauthorization/"+key+"?command=approve",
+                            method: "POST", body: JSON.stringify(scope.params)});
+                        }
+                    });
+    
+                    resourceFactory.batchResource.post(scope.batchRequests, function (data) {
+                        for(var i = 0; i < data.length; i++) {
+                            if(data[i].statusCode = '200') {
+                                approvedAccounts++;
+                                data[i].body = JSON.parse(data[i].body);
+                                scope.authorizationRequestTemplate[data[i].body.id] = false;
+                                if (selectedAccounts == approvedAccounts) {
+                                    scope.loadAuthorizationRequestToViewClientData();
+                                }
+                            }
+    
+                        }
+                    });
+                };
+
+                // reject
+                scope.bulkRequestToViewClientReject = function () {
+                    var selectedAccounts = 0;
+                    var approvedAccounts = 0;
+                    _.each(scope.authorizationRequestTemplate, function (value, key) {
+                        if (value == true) {
+                            selectedAccounts++;
+                        }
+                    });
+    
+                    scope.batchRequests = [];
+                    scope.requestIdentifier = "authorizationRequestId";
+    
+                    var reqId = 1;
+                    _.each(scope.authorizationRequestTemplate, function (value, key) {
+                        if (value == true) {
+                            scope.batchRequests.push({requestId: reqId++, relativeUrl: "users/requestauthorization/"+key+"?command=reject",
+                            method: "POST", body: JSON.stringify(scope.formData)});
+                        }
+                    });
+    
+                    resourceFactory.batchResource.post(scope.batchRequests, function (data) {
+                        for(var i = 0; i < data.length; i++) {
+                            if(data[i].statusCode = '500') {
+                                approvedAccounts++;
+                                data[i].body = JSON.parse(data[i].body);
+                                scope.authorizationRequestTemplate[data[i].body.id] = false;
+                                if (selectedAccounts == approvedAccounts) {
+                                    scope.loadAuthorizationRequestToViewClientData();
+                                }
+                            }
+    
+                        }
+                    });
+                };
+
+                scope.authorizationRequestApprovalAllCheckBoxesClicked = function() {
+                    var newValue = !scope.authorizationRequestApprovalAllCheckBoxesMet();
+                    if(!angular.isUndefined(scope.authorizationRequestData)) {
+                        for (var i = scope.authorizationRequestData.length - 1; i >= 0; i--) {
+                            scope.authorizationRequestTemplate[scope.authorizationRequestData[i].id] = newValue;
+                        };
+                    }
+                }
+                scope.authorizationRequestApprovalAllCheckBoxesMet = function() {
+                    var checkBoxesMet = 0;
+                    if(!angular.isUndefined(scope.authorizationRequestData)) {
+                        _.each(scope.authorizationRequestData, function(data) {
+                            if(_.has(scope.authorizationRequestTemplate, data.id)) {
+                                if(scope.authorizationRequestTemplate[data.id] == true) {
+                                    checkBoxesMet++;
+                                }
+                            }
+                        });
+                        return (checkBoxesMet===scope.authorizationRequestData.length);
+                    }
+                }
+
+            // authorization request
+            scope.loadAuthorizationRequestToViewClientData = function(){
+              resourceFactory.userAuthorizationListResource.getPending({}, function (data) {
+                scope.authorizationRequestData = data;
+              });
+            };
+
+            scope.loadAuthorizationRequestToViewClientData();
         }
     });
     mifosX.ng.application.controller('TaskController', ['$scope', 'ResourceFactory', '$route', 'dateFilter', '$uibModal', '$location', mifosX.controllers.TaskController]).run(function ($log) {
