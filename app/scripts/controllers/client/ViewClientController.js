@@ -507,11 +507,14 @@
                 scope.authorizationRequestData = {};
 
                 $scope.requestauthorization = function () {
-                    resourceFactory.userAuthorizationResource.requestAuthorization({userId: scope.currentSession.user.userId}, {clientId: routeParams.id,comment: this.authorizationRequestData.comment}, 
-                        function (data) {
-                        $uibModalInstance.close('requestauthorization');
-                        route.reload();
-                    });
+                    resourceFactory.userAuthorizationResource.requestAuthorization({userId: scope.currentSession.user.userId}, {
+                            clientId: routeParams.id,
+                            comment: this.authorizationRequestData.comment
+                        },
+                        function () {
+                            $uibModalInstance.close('requestauthorization');
+                            route.reload();
+                        });
                 };
                 $scope.cancel = function () {
                     $uibModalInstance.dismiss('cancel');
