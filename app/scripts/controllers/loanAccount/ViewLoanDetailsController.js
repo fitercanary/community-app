@@ -121,7 +121,7 @@
                         location.path('/adjustrepaymentschedule/'+accountId) ;
                         break ;
                     case "foreclosure":
-                        location.path('loanforeclosure/' + accountId);
+                        location.path('loanforeclosure/' + accountId + '/' + scope.loandetails.clientId);
                         break;
                 }
             };
