@@ -272,7 +272,10 @@
 					<br>
 					<br>
 					<!-- Place here button to Request for Authorization -->
-					<div class="center" data-ng-hide="client.id">
+					<div data-ng-show="showPendingRequestMessage">
+						<h3>{{'label.heading.user.has.pending.authorization.request' | translate}}</h3>
+					</div>
+					<div class="center" data-ng-show="showRequestAuthorizationToViewClientButton">
 						<span >
 							<button  type="button" class="btn-primary btn btn-sm"
 								data-ng-click="requestAuthorizationToViewClient()">{{

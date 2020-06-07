@@ -728,8 +728,9 @@
                     userAuthorizationResource: defineResource(apiVer + "/users/:userId/requestauthorization", {userId: "@userId"}, {
                         requestAuthorization: { method: 'POST'}
                     }),
-                    userAuthorizationListResource: defineResource(apiVer + "/users/requestauthorization", {status: 100}, {
-                        getPending: {method: 'GET', params: {}, isArray : true}
+                    userAuthorizationListResource: defineResource(apiVer + "/users/requestauthorization/client/:clientId", {clientId: "@clientId",status: 100}, {
+                        getPending: {method: 'GET', params: {}, isArray : true},
+                        getUsersClientAuthorizationRequests: {method: 'GET', params: {}, isArray : true}
                     }),
                 };
             }];

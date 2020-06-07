@@ -20,7 +20,17 @@
            // scope.families=[];
             var entityname="ADDRESS";
             formdata={};
+            scope.showRequestAuthorizationToViewClientButton = true;
+            scope.showPendingRequestMessage = false;
 
+
+            resourceFactory.userAuthorizationListResource.getUsersClientAuthorizationRequests({clientId: routeParams.id, status:100}, function(requestData) {
+                    scope.authorizationRequests = requestData;
+                    if(requestData.length > 0){
+                        scope.showRequestAuthorizationToViewClientButton = false;
+                        scope.showPendingRequestMessage = true;
+                    }
+            });
 
             resourceFactory.clientTemplateResource.get(function(data)
             {
@@ -172,6 +182,11 @@
                 scope.client = data;
                 scope.isClosedClient = scope.client.status.value == 'Closed';
                 scope.staffData.staffId = data.staffId;
+
+                if(data.id){
+                    scope.showRequestAuthorizationToViewClientButton = false;
+                }
+
                 if (data.imagePresent) {
                     http({
                         method: 'GET',
@@ -265,6 +280,7 @@
                     scope.client.ClientSummary = data[0];
                 });
             });
+
             scope.deleteClient = function () {
                 $uibModal.open({
                     templateUrl: 'deleteClient.html',
