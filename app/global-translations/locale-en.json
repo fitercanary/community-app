@@ -4423,6 +4423,6 @@
 
   "#New Menus": "",
   "label.menu.selectdurationtype": "Select Duration Types",
-  "label.heading.user.has.pending.authorization.request": "Authorization Request Pending Approval",
+  "label.heading.user.has.pending.authorization.request": "Your Authorization Request has been sent and is Pending Approval",
   "----End---": "--End of file--- "
 }

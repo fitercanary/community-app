@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        TaskController: function (scope, resourceFactory, route, dateFilter, $uibModal, location) {
+        TaskController: function (scope, resourceFactory, route, dateFilter, $uibModal, location, $rootScope) {
             scope.clients = [];
             scope.loans = [];
             scope.offices = [];
@@ -685,7 +685,7 @@
 
                 resourceFactory.batchResource.post(scope.batchRequests, function (data) {
                     for (var i = 0; i < data.length; i++) {
-                        if (data[i].statusCode === 500) {
+                        if (data[i].statusCode === 200) {
                             approvedAccounts++;
                             data[i].body = JSON.parse(data[i].body);
                             scope.authorizationRequestTemplate[data[i].body.id] = false;
@@ -726,11 +726,13 @@
                     scope.authorizationRequestData = data;
                 });
             };
-
-            scope.loadAuthorizationRequestToViewClientData();
+            
+            if($rootScope.hasPermission("APPROVEREQUESTTOVIEWCLIENT_AUTHORIZATIONREQUEST")){
+                scope.loadAuthorizationRequestToViewClientData();
+            }
         }
     });
-    mifosX.ng.application.controller('TaskController', ['$scope', 'ResourceFactory', '$route', 'dateFilter', '$uibModal', '$location', mifosX.controllers.TaskController]).run(function ($log) {
+    mifosX.ng.application.controller('TaskController', ['$scope', 'ResourceFactory', '$route', 'dateFilter', '$uibModal', '$location', '$rootScope', mifosX.controllers.TaskController]).run(function ($log) {
         $log.info("TaskController initialized");
     });
 }(mifosX.controllers || {}));
