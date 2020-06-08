@@ -911,7 +911,7 @@
             .when('/shareproduct/:productId/:dividendId/:action', {
                 templateUrl: 'views/products/shareproductactions.html'
             })
-            .when('/loanforeclosure/:id', {
+            .when('/loanforeclosure/:id/:clientId', {
                 templateUrl: 'views/loans/loanforeclosure.html'
             })
             .when('/address/:id', {

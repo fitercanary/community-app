@@ -2,16 +2,30 @@
     mifosX.controllers = _.extend(module, {
         LoanForeclosureController: function (scope, routeParams, resourceFactory, location, route, http, $uibModal, dateFilter, $filter) {
             scope.accountId = routeParams.id;
+            scope.clientId = routeParams.clientId;
             scope.formData = {};
             scope.formData.loanId = scope.accountId;
             scope.taskTypeName = 'Foreclosure';
             scope.subTaskTypeName = 'Foreclosure';
             scope.formData.transactionDate = new Date();
             scope.restrictDate = new Date();
+            scope.clientAccounts = [];
+            //scope.loandetails = [];
 
             resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: routeParams.id, associations: 'all'}, function (data) {
                 scope.loandetails = data;
+                scope.formData.savingsAccountId = scope.loandetails.linkedAccount != undefined ? scope.loandetails.linkedAccount.id
+                : 0;
+                console.log(scope.loandetails);
             });
+            resourceFactory.clientAccountResource.get({clientId: scope.clientId}, function (data) {
+                       angular.forEach(data.savingsAccounts, function(value){
+                             if(value.status.active){
+                              scope.clientAccounts.push(value);
+                             }
+                       });
+            });
+
             scope.$watch('formData.transactionDate',function(){
                 scope.retrieveLoanForeclosureTemplate();
             });
@@ -60,15 +74,36 @@
             };
 
             scope.submit = function () {
-                scope.foreclosureFormData = {
-                    transactionDate: dateFilter(this.formData.transactionDate, scope.df),
-                    locale:  scope.optlang.code,
-                    dateFormat: scope.df,
-                    note: this.formData.note
-                };
-                resourceFactory.loanTrxnsResource.save({loanId: routeParams.id, command: 'foreclosure'}, scope.foreclosureFormData, function(data) {
-                    location.path('/viewloanaccount/' + scope.accountId);
+
+                var fundTransferData = {
+                     dateFormat: scope.df,
+                     fromAccountId: this.formData.savingsAccountId,
+                     fromAccountType: 2,
+                     fromClientId: scope.loandetails.clientId,
+                     fromOfficeId: scope.loandetails.clientOfficeId,
+                     locale: scope.optlang.code,
+                     toAccountId: scope.loandetails.id,
+                     toAccountType: 1,
+                     toClientId: scope.loandetails.clientId,
+                     toOfficeId: scope.loandetails.clientOfficeId,
+                     transferAmount: this.formData.transactionAmount,
+                     transferDate: dateFilter(this.formData.transactionDate, scope.df),
+                     transferDescription: "Foreclosure"
+                   };
+                resourceFactory.accountTransferResource.save(fundTransferData, function (accData) {
+                 console.log(accData);
+                 location.path('/viewloanaccount/' + scope.accountId);
+//                    scope.foreclosureFormData = {
+//                                     transactionDate: dateFilter(transactionDateChanges, scope.df),
+//                                     locale:  scope.optlang.code,
+//                                     dateFormat: scope.df,
+//                                     note: note
+//                                 };
+//                                 resourceFactory.loanTrxnsResource.save({loanId: routeParams.id, command: 'foreclosure'}, scope.foreclosureFormData, function(data) {
+//                                     location.path('/viewloanaccount/' + scope.accountId);
+//                    });
                 });
+
             };
 
             scope.cancel = function () {
