@@ -3098,6 +3098,8 @@
   "label.heading.maximumcumulativebalance": "Maximum Cumulative Balance",
   "label.heading.maximumsinglewithdrawlimit": "Maximum Single Withdraw Limit",
   "label.heading.maximumdailywithdrawlimit": "Maximum Daily Withdraw Limit",
+  "label.heading.maximumclientspecificsinglewithdrawlimit": "Maximum Client Specific Single Withdraw Limit",
+  "label.heading.maximumclientspecificdailywithdrawlimit": "Maximum Client Specific Daily Withdraw Limit",
   "label.heading.editvalidationlimit": "Edit Validation Limit",
   "label.heading.action" : "Action",
 
@@ -3282,7 +3284,8 @@
   "label.input.maximumcumulativebalance": "Maximum Cumulative Balance",
   "label.input.maximumsinglewithdrawlimit": "Maximum Single Withdraw Limit",
   "label.input.maximumdailywithdrawlimit": "Maximum Daily Withdraw Limit",
-  "label.input.overridable": "Client specific limits can exceed?",
+  "label.input.maximumclientspecificsinglewithdrawlimit": "Maximum Client Specific Single Withdraw Limit",
+  "label.input.maximumclientspecificdailywithdrawlimit": "Maximum Client Specific Daily Withdraw Limit",
   "#Buttons": "..",
   "label.button.createcharge": "Create Charge",
   "label.button.createloanproduct": "Create Loan Product",

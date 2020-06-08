@@ -15,7 +15,8 @@
                     maximumCumulativeBalance: data.maximumCumulativeBalance,
                     maximumSingleWithdrawLimit: data.maximumSingleWithdrawLimit,
                     maximumDailyWithdrawLimit: data.maximumDailyWithdrawLimit,
-                    overridable: data.overridable
+                    maximumClientSpecificSingleWithdrawLimit: data.maximumClientSpecificSingleWithdrawLimit,
+                    maximumClientSpecificDailyWithdrawLimit: data.maximumClientSpecificDailyWithdrawLimit
                 };
             });
             scope.submit = function () {
