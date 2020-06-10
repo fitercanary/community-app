@@ -703,6 +703,8 @@
   "label.button.importcenters": "Import Centers",
   "label.button.print": "Print",
   "label.button.viewprint": "Generate Report",
+  "label.button.generatepdf": "Generate PDF",
+  "label.button.generatexls": "Generate Excel",
   "label.button.savingdetails": "Saving Details",
   "label.button.loandetails": "Loan Details",
   "label.button.upload": "Upload",
