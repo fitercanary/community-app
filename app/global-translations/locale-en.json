@@ -3347,6 +3347,7 @@
   "chargeTimeType.savingsNoActivityFee": "Saving No Activity Fee",
   "chargeTimeType.fdaPreclosureFee": "FDA Pre-closure Fee",
   "chargeTimeType.tranchedisbursement": "Tranche Disbursement",
+  "chargeTimeType.fdaPartialLiquidationFee": "FDA Partial Liquidation Fee",
   "chargeCalculationType.percent.of.amount": "% Approved Amount",
   "chargeCalculationType.percent.of.amount.and.interest": "% Loan Amount + Interest",
   "chargeCalculationType.percent.of.interest": "% Interest",
@@ -4410,7 +4411,7 @@
   "label.heading.createtransactionclassification": "Create Transaction Classification",
   "label.heading.classification": "Classification",
   "label.heading.operator": "Operator",
-  "label.input.amount": "amount",
+  "label.input.amount": "Amount",
 
   "#New Buttons": "",
   "label.button.requestauthorizationtoviewaccount": "Request Authorization To View Client",
