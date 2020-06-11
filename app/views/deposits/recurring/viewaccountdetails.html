@@ -376,6 +376,18 @@
                 <uib-tab heading="{{'label.heading.transactions' | translate}}"
                          ng-show="savingaccountdetails.transactions" select="convertDateArrayToObject('date')">
                     <br>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()" ng-click="export()">
+                        {{'label.button.export' | translate}}
+                    </button>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewJournalEntries()" style="margin-right: 8px;">
+                        {{'label.button.viewjournalentries' | translate}}
+                    </button>
+                    <div class="pull-right">
+                        <input type="checkbox" data-ng-model="hideAccrualTransactions" ng-init = "hideAccuralTransactions = true">&nbsp;
+                        <label class="control-label">{{ 'label.input.hide.accrual.transactions' | translate }}</label>&nbsp;&nbsp;
+                    </div>
+                    <br>
                     <table class="table table-bordered">
                         <colgroup span="4"></colgroup>
                         <thead>
