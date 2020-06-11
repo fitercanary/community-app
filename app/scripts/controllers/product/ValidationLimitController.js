@@ -4,7 +4,7 @@
             scope.validationLimits = [];
 
             scope.routeTo = function (id) {
-               location.path('/editvalidationlimit/' + id);
+               location.path('/viewvalidationlimit/' + id);
             };
 
             resourceFactory.validationLimitResource.getAllValidationLimit(function (data) {
