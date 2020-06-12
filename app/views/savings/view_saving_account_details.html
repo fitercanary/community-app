@@ -64,8 +64,11 @@
                 <button ng-click="viewSavingDetails()" class="btn btn-default ng-binding">{{'label.button.back' |
                     translate}}
                 </button>
-                <button ng-click="viewPrintDetails()" class="btn btn-primary ng-binding">
-                    {{'label.button.viewprint' | translate}}
+                <button ng-click="viewPrintDetails('PDF')" class="btn btn-primary ng-binding">
+                    {{'label.button.generatepdf' | translate}}
+                </button>
+                <button ng-click="viewPrintDetails('XLS')" class="btn btn-primary ng-binding">
+                    {{'label.button.generatexls' | translate}}
                 </button>
             </div>
         </div>
