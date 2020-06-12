@@ -206,6 +206,12 @@
                 case "waive":
                     scope.waiveCharge = true;
                     break;
+                case "postAccrualInterestAsOn":
+                    scope.labelName = 'label.input.transactiondate';
+                    scope.modelName = 'transactionDate';
+                    scope.showDateField = true;
+                    scope.showAccountNumber=true;
+                    break;
             }
 
             scope.cancel = function () {
@@ -311,6 +317,11 @@
                             scope.showPaymentType=true;
                             return;
                         }
+                    }else if(scope.action=="postAccrualInterestAsOn"){
+                            if (this.formData.transactionDate) {
+                                this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
+                            }
+                            this.formData.isPostInterestAsOn=true;
                     }
 
                     resourceFactory.recurringDepositAccountResource.save(params, this.formData, function (data) {

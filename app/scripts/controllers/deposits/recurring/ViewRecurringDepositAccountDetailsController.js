@@ -92,6 +92,14 @@
                             route.reload();
                         });
                         break;
+                    case "postAccrualInterest":
+                        resourceFactory.recurringDepositAccountResource.save({accountId: accountId, command: 'postAccrualInterest'}, {}, function (data) {
+                            route.reload();
+                        });
+                        break;
+                    case "postAccrualInterestAsOn":
+                        location.path('/recurringdepositaccount/' + accountId + '/postAccrualInterestAsOn');
+                    break;
                 }
             };
 
@@ -168,11 +176,19 @@
                         {
                             name: "button.calculateInterest",
                             icon: "fa fa-table"
+                        },
+                        {
+                            name: "button.postAccrualInterestAsOn",
+                            icon: "icon-arrow-right",
+                            taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
                         }
                     ],
                         options: [
                             {
                                 name: "button.postInterest"
+                            },
+                            {
+                                name: "button.postAccrualInterest"
                             },
                             {
                                 name: "button.addcharge"
