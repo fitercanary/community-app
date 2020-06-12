@@ -99,6 +99,7 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'product/ValidationLimitController',
             'product/CreateValidationLimitController',
             'product/EditValidationLimitController',
+            'product/ViewValidationLimitController',
             'user/UserController',
             'user/UserFormController',
             'user/UserSettingController',

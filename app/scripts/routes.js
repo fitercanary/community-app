@@ -689,6 +689,9 @@
             .when('/editvalidationlimit/:id', {
                  templateUrl: 'views/products/editvalidationlimit.html'
             })
+            .when('/viewvalidationlimit/:id', {
+                 templateUrl: 'views/products/viewvalidationlimit.html'
+            })
             .when('/productivesheet/:officeId/:officeName/:meetingDate/:staffId', {
                 templateUrl: 'views/collection/productivecollectionsheet.html'
             })
