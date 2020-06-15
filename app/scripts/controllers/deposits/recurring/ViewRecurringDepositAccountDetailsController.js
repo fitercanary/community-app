@@ -92,6 +92,14 @@
                             route.reload();
                         });
                         break;
+                    case "postAccrualInterest":
+                        resourceFactory.recurringDepositAccountResource.save({accountId: accountId, command: 'postAccrualInterest'}, {}, function (data) {
+                            route.reload();
+                        });
+                        break;
+                    case "postAccrualInterestAsOn":
+                        location.path('/recurringdepositaccount/' + accountId + '/postAccrualInterestAsOn');
+                    break;
                 }
             };
 
@@ -168,11 +176,19 @@
                         {
                             name: "button.calculateInterest",
                             icon: "fa fa-table"
+                        },
+                        {
+                            name: "button.postAccrualInterestAsOn",
+                            icon: "icon-arrow-right",
+                            taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
                         }
                     ],
                         options: [
                             {
                                 name: "button.postInterest"
+                            },
+                            {
+                                name: "button.postAccrualInterest"
                             },
                             {
                                 name: "button.addcharge"
@@ -403,6 +419,26 @@
                     sort.column = column;
                     sort.descending = true;
                 }
+            };
+
+            scope.checkStatus = function(){
+                if(scope.status == 'Active' || scope.status == 'Closed' || scope.status == 'Transfer in progress' ||
+                scope.status == 'Transfer on hold' || scope.status == 'Premature Closed' || scope.status == 'Matured'){
+                    return true;
+                }
+                return false;
+            };
+
+            scope.viewJournalEntries = function(){
+                location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id});
+            };
+
+            scope.export = function () {
+                scope.report = true;
+                scope.printbtn = false;
+                scope.viewReport = false;
+                scope.viewSavingReport = true;
+                scope.viewTransactionReport = false;
             };
 
         }
