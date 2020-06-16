@@ -550,34 +550,32 @@
                         }
                     }
                 }
-                     if (data.jointSavingsAccounts) {
-                            for (var i in data.jointSavingsAccounts) {
-                                if (data.jointSavingsAccounts[i].status.value == "Active") {
-                                    scope.updateDefaultSavings = true;
-                                    break;
+                if (data.jointSavingsAccounts) {
+                    for (let i in data.jointSavingsAccounts) {
+                        if (data.jointSavingsAccounts[i].status.value == "Active") {
+                            scope.updateDefaultSavings = true;
+                            break;
+                        }
+                    }
+                    for (let i in data.jointSavingsAccounts) {
+                        if (!scope.isSavingClosed(data.jointSavingsAccounts[i])) {
+                            let isNewEntryMap = true;
+                            for (let j in scope.totalAllSavingsAccountsBalanceBasedOnCurrency) {
+                                if (scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].code === data.jointSavingsAccounts[i].currency.code) {
+                                    isNewEntryMap = false;
+                                    let totalSavings = scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].totalSavings + data.jointSavingsAccounts[i].accountBalance;
+                                    scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].totalSavings = totalSavings;
                                 }
                             }
-                            //scope.totalAllSavingsAccountsBalanceBasedOnCurrency=[];
-                            for (var i in data.jointSavingsAccounts) {
-                                if (!scope.isSavingClosed(data.jointSavingsAccounts[i])) {
-                                    var isNewEntryMap = true;
-                                    for(var j in scope.totalAllSavingsAccountsBalanceBasedOnCurrency){
-                                        if(scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].code === data.jointSavingsAccounts[i].currency.code){
-                                            isNewEntryMap = false;
-                                            var totalSavings = scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].totalSavings + data.jointSavingsAccounts[i].accountBalance;
-                                            scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].totalSavings = totalSavings;
-                                        }
-                                    }
-                                    if(isNewEntryMap){
-                                        var map = {};
-                                        map.code = data.jointSavingsAccounts[i].currency.code;
-                                        map.totalSavings = data.jointSavingsAccounts[i].accountBalance;
-                                        scope.totalAllSavingsAccountsBalanceBasedOnCurrency.push(map);
-                                    }
-                                }
+                            if (isNewEntryMap) {
+                                let map = {};
+                                map.code = data.jointSavingsAccounts[i].currency.code;
+                                map.totalSavings = data.jointSavingsAccounts[i].accountBalance;
+                                scope.totalAllSavingsAccountsBalanceBasedOnCurrency.push(map);
                             }
-                  }
-
+                        }
+                    }
+                }
             });
 
             resourceFactory.clientChargesResource.getCharges({clientId: routeParams.id, pendingPayment:true}, function (data) {
