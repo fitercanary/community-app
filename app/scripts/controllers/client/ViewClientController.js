@@ -9,6 +9,7 @@
             scope.formData = {};
             scope.openLoan = true;
             scope.openSaving = true;
+            scope.openJointSaving = true;
             scope.openShares = true ;
             scope.updateDefaultSavings = false;
             scope.charges = [];
@@ -549,6 +550,34 @@
                         }
                     }
                 }
+                     if (data.jointSavingsAccounts) {
+                            for (var i in data.jointSavingsAccounts) {
+                                if (data.jointSavingsAccounts[i].status.value == "Active") {
+                                    scope.updateDefaultSavings = true;
+                                    break;
+                                }
+                            }
+                            //scope.totalAllSavingsAccountsBalanceBasedOnCurrency=[];
+                            for (var i in data.jointSavingsAccounts) {
+                                if (!scope.isSavingClosed(data.jointSavingsAccounts[i])) {
+                                    var isNewEntryMap = true;
+                                    for(var j in scope.totalAllSavingsAccountsBalanceBasedOnCurrency){
+                                        if(scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].code === data.jointSavingsAccounts[i].currency.code){
+                                            isNewEntryMap = false;
+                                            var totalSavings = scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].totalSavings + data.jointSavingsAccounts[i].accountBalance;
+                                            scope.totalAllSavingsAccountsBalanceBasedOnCurrency[j].totalSavings = totalSavings;
+                                        }
+                                    }
+                                    if(isNewEntryMap){
+                                        var map = {};
+                                        map.code = data.jointSavingsAccounts[i].currency.code;
+                                        map.totalSavings = data.jointSavingsAccounts[i].accountBalance;
+                                        scope.totalAllSavingsAccountsBalanceBasedOnCurrency.push(map);
+                                    }
+                                }
+                            }
+                  }
+
             });
 
             resourceFactory.clientChargesResource.getCharges({clientId: routeParams.id, pendingPayment:true}, function (data) {
@@ -599,6 +628,14 @@
                     scope.openSaving = true;
                 }
             };
+
+            scope.setJointSaving = function () {
+                            if (scope.openJointSaving) {
+                                scope.openJointSaving = false;
+                            } else {
+                                scope.openJointSaving = true;
+                            }
+             };
 
             scope.setShares = function () {
                 if (scope.openShares) {
