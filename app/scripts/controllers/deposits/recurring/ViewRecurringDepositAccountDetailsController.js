@@ -430,7 +430,7 @@
             };
 
             scope.viewJournalEntries = function(){
-                location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id});
+                location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id, recurringDepositId: scope.savingaccountdetails.id});
             };
 
             scope.export = function () {
