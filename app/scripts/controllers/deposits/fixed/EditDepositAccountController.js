@@ -54,6 +54,7 @@
                 scope.formData.depositPeriod = data.depositPeriod;
                 scope.formData.lockinPeriodFrequency = data.lockinPeriodFrequency;
                 scope.formData.withHoldTax = data.withHoldTax;
+                scope.formData.nickname = data.nickName;
                 /* FIX-ME: uncomment annualFeeAmount when datepicker avialable, because it depends on the date field 'annualFeeOnMonthDay'*/
                 //scope.formData.annualFeeAmount = data.annualFeeAmount;
                 //scope.formData.withdrawalFeeAmount = data.withdrawalFeeAmount;

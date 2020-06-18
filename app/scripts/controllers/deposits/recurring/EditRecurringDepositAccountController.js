@@ -51,6 +51,7 @@
                 scope.formData.depositPeriod = data.depositPeriod;
                 scope.formData.recurringDepositFrequency = data.recurringDepositFrequency;
                 scope.formData.lockinPeriodFrequency = data.lockinPeriodFrequency;
+                scope.formData.nickname = data.nickName;
                 var depositPeriodFrequencyId = (_.isNull(data.depositPeriodFrequency) || _.isUndefined(data.depositPeriodFrequency)) ? '' : data.depositPeriodFrequency.id;
                 if (data.interestCompoundingPeriodType) scope.formData.interestCompoundingPeriodType = data.interestCompoundingPeriodType.id;
                 if (data.interestPostingPeriodType) scope.formData.interestPostingPeriodType = data.interestPostingPeriodType.id;

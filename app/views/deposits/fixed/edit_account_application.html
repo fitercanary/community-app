@@ -44,6 +44,12 @@
                         <option value="">{{'label.selectfieldofficer' | translate}}</option>
                     </select>
                 </td>
+                <td class="width14">
+                    <label>{{ 'label.input.nickname' | translate }}:&nbsp;</label>
+                </td>
+                <td class="width36 paddedbottom10">
+                    <input id="nickname" ng-model="formData.nickname" class="form-control"/>
+                </td>
             </tr>
         </table>
         <hr data-ng-show="formData.productId"/>
