@@ -113,6 +113,9 @@
                     case "postAccrualInterestAsOn":
                         location.path('/fixeddepositaccount/' + accountId + '/postAccrualInterestAsOn');
                         break;
+                    case "editNickName":
+                          location.path('/savingaccount/' + accountId + '/editNickName');
+                    break;
                 }
             };
 
@@ -214,6 +217,10 @@
                             },
                             {
                                 name: "button.topUp"
+                            },
+                            {
+                                name: "button.editNickName",
+                                taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
                             }
                         ]
 

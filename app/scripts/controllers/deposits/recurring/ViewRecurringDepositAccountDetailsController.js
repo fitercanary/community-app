@@ -100,6 +100,9 @@
                     case "postAccrualInterestAsOn":
                         location.path('/recurringdepositaccount/' + accountId + '/postAccrualInterestAsOn');
                     break;
+                    case "editNickName":
+                          location.path('/savingaccount/' + accountId + '/editNickName');
+                    break;
                 }
             };
 
@@ -192,7 +195,12 @@
                             },
                             {
                                 name: "button.addcharge"
+                            },
+                            {
+                                name: "button.editNickName",
+                                taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
                             }
+
                         ]
 
                     };
