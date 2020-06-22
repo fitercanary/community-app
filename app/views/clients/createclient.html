@@ -45,9 +45,9 @@
                            <option value="">--{{'label.menu.legalForm' | translate}}--</option>
                         </select>
                      </div>
-                      <label class="control-label col-sm-2">{{'label.heading.clientLevel' | translate}}</label>
-                      <div class="col-sm-3">
-                          <select id="clientLevelId" ng-model="formData.clientLevelId"  class="form-control"
+                      <label class="control-label col-sm-2" ng-hide = "formData.legalFormId=='2'">{{'label.heading.clientLevel' | translate}}</label>
+                      <div class="col-sm-3" ng-hide = "formData.legalFormId=='2'">
+                          <select id="clientLevelId" ng-model="formData.clientLevelId"  class="form-control" ng-hide = "formData.legalFormId=='2'"
                                   ng-options="clientLevel.id as clientLevel.name for clientLevel in clientLevelOptions" value="{{clientLevel.id}}" required>
 
                           </select>
@@ -315,15 +315,15 @@
                         <input id="submittedon" type="text" name="submittedon" datepicker-pop="dd MMMM yyyy"
                            ng-model="first.submitondate" is-open="opened1" min="'2000-01-01'" max="restrictDate"  class="form-control"/>
                      </div>
-                      <label class="control-label col-sm-2">{{'label.input.dailyWithdrawLimit' | translate}}</label>
-                      <div class="col-sm-3">
-                          <input id="dailyWithdrawLimit" type="text" name="dailyWithdrawLimit" ng-model="formData.dailyWithdrawLimit"
+                      <label class="control-label col-sm-2" ng-hide = "formData.legalFormId=='2'">{{'label.input.dailyWithdrawLimit' | translate}}</label>
+                      <div class="col-sm-3" ng-hide = "formData.legalFormId=='2'">
+                          <input id="dailyWithdrawLimit" type="text" name="dailyWithdrawLimit"  ng-model="formData.dailyWithdrawLimit"
                                  class="form-control"
                                  number-format>
                       </div>
                   </div>
 
-                   <div class="form-group">
+                   <div class="form-group" ng-hide = "formData.legalFormId=='2'">
                        <label class="control-label col-sm-2"></label>
                        <div class="col-sm-3"></div>
                        <label class="control-label col-sm-2">{{'label.input.singleWithdrawLimit' | translate}}</label>
