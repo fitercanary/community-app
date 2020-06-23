@@ -52,7 +52,7 @@
                 let depositPeriod = parseFloat(scope.formData.depositPeriod);
                 let periodFrequency = scope.formData.depositPeriodFrequencyId;
                 let filteredSlabs = scope.chartSlabs.filter(function (x) {
-                    return amount >= x.amountRangeFrom && amount <= x.amountRangeTo
+                    return amount >= x.amountRangeFrom && (amount <= x.amountRangeTo || !x.amountRangeTo)
                 });
                 filteredSlabs.map(x => {
                     let period = scope.computePeriod(depositPeriod, periodFrequency, x.periodType.id);
