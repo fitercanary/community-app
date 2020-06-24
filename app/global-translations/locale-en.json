@@ -2089,6 +2089,7 @@
   "label.totalinterestpayable": "Total Interest Payable",
   "label.totalinterestposted": "Interest posted",
   "label.totalinterestaccrued": "Total Interest Accrued",
+  "label.accruedinterestcarriedfored": "Interest Accrued (carried forward)",
   "label.totaloverdraftinterestderived": "Interest on overdraft",
   "label.interestEarnedNotPosted": "Earned interest not posted",
   "label.overdraftInterestNotPosted": "Overdraft interest not posted",

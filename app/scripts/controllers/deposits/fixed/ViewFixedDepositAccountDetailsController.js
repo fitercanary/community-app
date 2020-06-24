@@ -129,11 +129,16 @@
 
             resourceFactory.fixedDepositAccountResource.get({accountId: routeParams.id, associations: 'all'}, function (data) {
                 scope.savingaccountdetails = data;
-                scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance?(scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance):scope.savingaccountdetails.summary.accountBalance;
+                scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance ? (scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance) : scope.savingaccountdetails.summary.accountBalance;
                 scope.convertDateArrayToObject('date');
                 scope.chartSlabs = scope.savingaccountdetails.accountChart.chartSlabs;
                 scope.status = data.status.value;
                 scope.heading = (!scope.savingaccountdetails.status.rejected && !scope.savingaccountdetails.status.submittedAndPendingApproval)?'label.heading.interestchart':'label.heading.summary';
+                if (scope.savingaccountdetails.accruedInterestCarriedForward) {
+                    scope.savingaccountdetails.summary.totalInterestEarned += scope.savingaccountdetails.accruedInterestCarriedForward;
+                } else {
+                    scope.savingaccountdetails.accruedInterestCarriedForward = 0;
+                }
                 if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved") {
                     scope.choice = true;
                 }
