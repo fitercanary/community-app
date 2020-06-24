@@ -21,6 +21,7 @@
             scope.savingsDetails = [];
             scope.textDetails = [];
             scope.blockNarrationTypes = [];
+            scope.accountType = "";
 
             rootScope.RequestEntities = function(entity,status,productId){
                 resourceFactory.entityDatatableChecksResource.getAll({limit:-1},function (response) {
@@ -388,6 +389,7 @@
                 case "editNickName":
                     resourceFactory.savingsResource.get({accountId: routeParams.id}, function (data) {    
                         scope.formData.nickname = data.nickname;
+                        scope.depositType = data.depositType;
                     });
                     scope.title = 'label.heading.editnicknamesavingaccount';
                     scope.labelName = 'label.input.nickname';
@@ -480,7 +482,13 @@
                     params = {accountId: routeParams.id, command: 'updateNickName' }
 
                     resourceFactory.savingsResource.update(params, this.formData, function (data) {
-                        location.path('/viewsavingaccount/' + data.savingsId);
+                        console.log(data);
+                        if(scope.depositType.id == '300'){
+                        location.path('/viewrecurringdepositaccount/' + data.savingsId);
+                        }else if(scope.depositType.id == '200'){
+                        location.path('/viewfixeddepositaccount/' + data.savingsId);
+                        }
+                        else{location.path('/viewsavingaccount/' + data.savingsId);}
                     });
                 }else {
                     params.accountId = scope.accountId;
