@@ -190,6 +190,7 @@ define(['Q', 'underscore', 'mifosX'], function (Q) {
             'reports/XBRLReportController',
             'savings/CreateSavingAccountController',
             'savings/ViewSavingDetailsController',
+            'savings/ViewSavingDepositAccrualTransactionController',
             'shares/CreateShareAccountController',
             'shares/ViewShareAccountController',
             'shares/EditShareAccountController',

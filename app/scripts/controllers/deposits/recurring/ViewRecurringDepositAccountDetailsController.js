@@ -1,6 +1,8 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         ViewRecurringDepositAccountDetailsController: function (scope, routeParams, resourceFactory, paginatorService, location, route, dateFilter,$uibModal) {
+           scope.transactionsPerPage = 15;
+
             scope.isDebit = function (savingsTransactionType) {
                 return savingsTransactionType.withdrawal == true || savingsTransactionType.feeDeduction == true || savingsTransactionType.withholdTax == true;
             };
@@ -106,17 +108,28 @@
                 }
             };
 
-            resourceFactory.recurringDepositAccountResource.get({accountId: routeParams.id, associations: 'all'}, function (data) {
+             scope.getResultsPage = function(pageNumber){
+               scope.initPage(pageNumber);
+             };
+
+            scope.initPage = function(pageNumber){
+            resourceFactory.recurringDepositAccountResource.get({accountId: routeParams.id, associations: 'all',
+             pageNumber : pageNumber, pageSize: scope.transactionsPerPage}, function (data) {
                 scope.savingaccountdetails = data;
                 scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance?(scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance):scope.savingaccountdetails.summary.accountBalance;
                 scope.convertDateArrayToObject('date');
                 scope.chartSlabs = scope.savingaccountdetails.accountChart.chartSlabs;
                 scope.isprematureAllowed = data.maturityDate != null;
                 scope.status = data.status.value;
+                if(scope.savingaccountdetails.transactions){
+                   console.log("tr", scope.savingaccountdetails.transactions);
+                   scope.totalTransactions = data.transactionCount;
+                }
                 scope.heading = (!scope.savingaccountdetails.status.rejected && !scope.savingaccountdetails.status.submittedAndPendingApproval)?'label.heading.interestchart':'label.heading.summary';
                 if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved") {
                     scope.choice = true;
                 }
+
                 scope.chargeAction = data.status.value == "Submitted and pending approval" ? true : false;
                 if (scope.savingaccountdetails.charges) {
                     scope.charges = scope.savingaccountdetails.charges;
@@ -293,6 +306,9 @@
                     scope.searchTransaction();
                 });
             });
+          }
+
+           scope.initPage(1);
 
             var fetchFunction = function (offset, limit, callback) {
                 var params = {};
@@ -439,6 +455,10 @@
 
             scope.viewJournalEntries = function(){
                 location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id, recurringDepositId: scope.savingaccountdetails.id});
+            };
+
+            scope.viewAccrualTransaction = function(){
+                 location.path("/viewaccrualtransaction/").search({recurringDepositId: scope.savingaccountdetails.id});
             };
 
             scope.export = function () {
