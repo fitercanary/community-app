@@ -86,6 +86,7 @@
                     scope.formData.preClosurePenalApplicable = data.preClosurePenalApplicable;
                     scope.formData.preClosurePenalInterest = data.preClosurePenalInterest;
                     scope.formData.preClosurePenalInterestOnTypeId = preClosurePenalInterestOnTypeId;
+                    scope.formData.preClosureChargeApplicable = data.preClosureChargeApplicable;
                     scope.formData.minDepositTerm = data.minDepositTerm;
                     scope.formData.maxDepositTerm = data.maxDepositTerm;
                     scope.formData.minDepositTermTypeId = minDepositTermTypeId;
@@ -94,7 +95,6 @@
                     scope.formData.inMultiplesOfDepositTermTypeId = inMultiplesOfDepositTermTypeId;
                     scope.formData.isMandatoryDeposit = data.isMandatoryDeposit;
                     scope.formData.allowWithdrawal = data.allowWithdrawal;
-                    //alert(data.allowWithdrawal + '='+ data.isMandatoryDeposit + '='+data.adjustAdvanceTowardsFuturePayments);
                     scope.formData.adjustAdvanceTowardsFuturePayments = data.adjustAdvanceTowardsFuturePayments;
                 });
             };

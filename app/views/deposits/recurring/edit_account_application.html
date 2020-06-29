@@ -240,6 +240,13 @@
             </div>
         </td>
     </tr>
+    <tr>
+        <td colspan="4">
+            <div class="form-inline" data-ng-show="formData.preClosureChargeApplicable">
+                <label class="control-label">{{ 'label.checkbox.applypreclosurecharge' | translate }}&nbsp;&nbsp;-&nbsp;&nbsp;{{data.preClosureCharge.name}}</label>
+            </div>
+        </td>
+    </tr>
     <tr ng-show="data.minBalanceForInterestCalculation">
         <td > {{'label.heading.minbalanceforinterestcalculation' | translate}}</td>
         <td>{{data.minBalanceForInterestCalculation | number}}</td>
