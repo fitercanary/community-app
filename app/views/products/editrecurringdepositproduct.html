@@ -256,6 +256,28 @@
     </div>
 </div>
 <div class="form-group">
+    <label class="control-label col-sm-2">&nbsp;</label>
+    <div class="col-sm-3">
+        <label class="checkbox">
+            <input id="preClosureChargeApplicable" type="checkbox"
+                   ng-model="formData.preClosureChargeApplicable">
+            {{ 'label.checkbox.applypreclosurecharge' | translate }}
+        </label>
+    </div>
+    <div class="col-sm-1">&nbsp;</div>
+    <div class="col-sm-1 col-sm-offset-1">
+        <label ng-show="formData.preClosureChargeApplicable" class="control-label">{{ 'label.input.charge' | translate }}</label>
+    </div>
+    <div class="col-sm-2">
+        <select ng-show="formData.preClosureChargeApplicable"
+                class="form-control" id="preClosureChargeId"
+                ng-model="formData.preClosureChargeId"
+                ng-options="charge.id as charge.name for charge in product.preClosureCharges"
+                value="{{formData.preClosureChargeId}}">
+        </select>
+    </div>
+</div>
+<div class="form-group">
     <label class="control-label col-sm-2">{{ 'label.input.minbalanceforinterest' | translate }}
         <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.recurringdepositproduct.balanceforcalc' | translate}}"
            tooltip-append-to-body="true"></i>

@@ -94,6 +94,8 @@
                 scope.formData.preClosurePenalApplicable = data.preClosurePenalApplicable;
                 scope.formData.preClosurePenalInterest = data.preClosurePenalInterest;
                 scope.formData.preClosurePenalInterestOnTypeId = preClosurePenalInterestOnTypeId;
+                scope.formData.preClosureChargeApplicable = data.preClosureChargeApplicable;
+                scope.formData.preClosureChargeId = data.preClosureChargeId;
                 scope.formData.minDepositTerm = data.minDepositTerm;
                 scope.formData.maxDepositTerm = data.maxDepositTerm;
                 scope.formData.minDepositTermTypeId = minDepositTermTypeId;

@@ -49,6 +49,8 @@
                     preClosurePenalApplicable: data.preClosurePenalApplicable,
                     preClosurePenalInterest: data.preClosurePenalInterest,
                     preClosurePenalInterestOnTypeId: preClosurePenalInterestOnTypeId,
+                    preClosureChargeApplicable: data.preClosureChargeApplicable,
+                    preClosureChargeId: data.preClosureChargeId,
                     minDepositTerm: data.minDepositTerm,
                     maxDepositTerm: data.maxDepositTerm,
                     minDepositTermTypeId: minDepositTermTypeId,

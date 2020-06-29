@@ -132,6 +132,11 @@
             {{depositproduct.preClosurePenalInterestOnType.value}}
         </td>
     </tr>
+    <tr ng-show="depositproduct.preClosureChargeApplicable">
+        <td>{{'label.checkbox.applypreclosurecharge' | translate}}</td>
+        <td>{{depositproduct.preClosureCharge.name}}
+        </td>
+    </tr>
     <tr ng-show="depositproduct.minBalanceForInterestCalculation">
         <td>{{'label.heading.minbalanceforinterestcalculation' | translate}}</td>
         <td>{{depositproduct.minBalanceForInterestCalculation | number}}</td>
