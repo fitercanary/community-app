@@ -35,6 +35,9 @@
             scope.viewJournalEntries = function(){
                 location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id,fixedDepositId: scope.savingaccountdetails.id});
             };
+            scope.viewAccrualTransaction = function(){
+                location.path("/viewaccrualtransaction/").search({fixedDepositId: scope.savingaccountdetails.id});
+            };
 
             scope.clickEvent = function (eventName, accountId) {
                 eventName = eventName || "";

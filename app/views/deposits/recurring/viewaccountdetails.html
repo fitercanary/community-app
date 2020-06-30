@@ -4,7 +4,7 @@
         </li>
         <li ng-if="savingaccountdetails.clientName"><a href="#/viewclient/{{savingaccountdetails.clientId}}">{{savingaccountdetails.clientName}}</a>
         </li>
-        <li class="active">{{savingaccountdetails.savingsProductName}}({{savingaccountdetails.accountNo}})</li>
+        <li class="active">{{savingaccountdetails.depositProductName}}({{savingaccountdetails.accountNo}})</li>
     </ul>
     <div class="card">
         <div class="">
@@ -383,10 +383,10 @@
                             ng-click="viewJournalEntries()" style="margin-right: 8px;">
                         {{'label.button.viewjournalentries' | translate}}
                     </button>
-                    <div class="pull-right">
-                        <input type="checkbox" data-ng-model="hideAccrualTransactions" ng-init = "hideAccuralTransactions = true">&nbsp;
-                        <label class="control-label">{{ 'label.input.hide.accrual.transactions' | translate }}</label>&nbsp;&nbsp;
-                    </div>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewAccrualTransaction()" style="margin-right: 8px;">
+                        {{'label.input.show.accrual.transactions' | translate}}
+                    </button>
                     <br>
                     <table class="table table-bordered">
                         <colgroup span="4"></colgroup>
@@ -414,7 +414,8 @@
                         </thead>
                         <tbody>
                         <tr class="pointer-main" ng-class="{strikeoff : transaction.reversed==true}"
-                            ng-repeat="transaction in savingaccountdetails.transactions | orderBy:transactionSort.column:transactionSort.descending ">
+                            dir-paginate="transaction in savingaccountdetails.transactions | itemsPerPage: transactionsPerPage " total-items="totalTransactions"
+                            pagination-id="transactions">
                             <td class="pointer"
                                 data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">
                                 {{transaction.id}}
@@ -445,6 +446,10 @@
                             </td>
                         </tbody>
                     </table>
+                    <dir-pagination-controls align="center" boundary-links="true"
+                                             template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                             on-page-change="getResultsPage(newPageNumber)" pagination-id="transactions">
+                    </dir-pagination-controls>
                 </uib-tab>
                 <uib-tab heading="{{'label.anchor.standinginstruction' | translate}}" ng-show="instructions.currentPageItems.length > 0">
                     <br>
