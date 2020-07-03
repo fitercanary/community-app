@@ -137,6 +137,13 @@
                 } else {
                     scope.chargeTableShow = false;
                 }
+                if (scope.savingaccountdetails.transactions) {
+                    scope.savingaccountdetails.transactions.map(x => {
+                        if (x.transactionType && x.transactionType.description) {
+                            x.transactionType.value = x.transactionType.description;
+                        }
+                    })
+                }
                 if (data.status.value == "Submitted and pending approval") {
                     scope.buttons = { singlebuttons: [
                         {

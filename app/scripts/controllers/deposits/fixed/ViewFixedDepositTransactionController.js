@@ -7,6 +7,9 @@
                 if (scope.transaction.transactionType.value == 'Transfer' || scope.transaction.reversed == 'true') {
                     scope.flag = true;
                 }
+                if (scope.transaction.transactionType.description) {
+                    scope.transaction.transactionType.value = scope.transaction.transactionType.description;
+                }
             });
 
             scope.undoTransaction = function (accountId, transactionId) {
