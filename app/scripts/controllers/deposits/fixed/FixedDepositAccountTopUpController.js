@@ -25,7 +25,7 @@
 
             scope.calculateNewDepositAmount = () => {
                 scope.formData.depositAmount = parseFloat(scope.data.depositAmount) + parseFloat(scope.topUpAmount);
-                scope.calculateInterestRate();
+                scope.calculateRemainingTenure();
             };
 
             scope.calculateRemainingTenure = () => {
@@ -41,7 +41,7 @@
             scope.validatePeriod = () => {
                 if (scope.origTenure && scope.origTenure > scope.formData.depositPeriod) {
                     scope.formData.depositPeriod = scope.origTenure;
-                    scope.calculateInterestRate();
+                    scope.calculateRemainingTenure();
                 }
             };
 
@@ -71,6 +71,7 @@
                 }
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+                this.formData.changeTenure = scope.changeTenure;
                 resourceFactory.fixedDepositAccountResource.save(params, this.formData, () => location.path('/viewclient/' + scope.data.clientId));
             };
 
