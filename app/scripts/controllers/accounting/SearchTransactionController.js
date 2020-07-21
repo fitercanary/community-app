@@ -148,6 +148,15 @@
                 scope.isValid = true;
                 scope.path = "#/viewfixeddepositaccount/" + scope.formData.savingsaccountId;
             }
+
+            if(location.search().recurringDepositId != null){
+                            scope.formData.savingsaccountId = location.search().savingsId;
+                            scope.displayResults = true;
+                            scope.transactions = paginatorService.paginate(fetchFunction, 14);
+                            scope.isCollapsed = false;
+                            scope.isValid = true;
+                            scope.path = "#/viewrecurringdepositaccount/" + scope.formData.savingsaccountId;
+            }
         }
     });
     mifosX.ng.application.controller('SearchTransactionController', ['$scope', 'ResourceFactory', 'PaginatorService', 'dateFilter', '$location', mifosX.controllers.SearchTransactionController]).run(function ($log) {

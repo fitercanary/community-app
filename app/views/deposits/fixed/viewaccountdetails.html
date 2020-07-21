@@ -4,13 +4,13 @@
         </li>
         <li ng-if="savingaccountdetails.clientName"><a href="#/viewclient/{{savingaccountdetails.clientId}}">{{savingaccountdetails.clientName}}</a>
         </li>
-        <li class="active">{{savingaccountdetails.savingsProductName}}({{savingaccountdetails.accountNo}})</li>
+        <li class="active">{{savingaccountdetails.depositProductName}}({{savingaccountdetails.accountNo}})</li>
     </ul>
     <div class="card well">
         <div>
             <div class="span gray-head">
             <span style="margin-left: 10px;font-size:24px">
-                <strong><i class="fa fa-stop {{savingaccountdetails.status.code | StatusLookup}}"></i>&nbsp;{{savingaccountdetails.depositProductName}}(#{{savingaccountdetails.accountNo}})</strong>
+                <strong><i class="fa fa-stop {{savingaccountdetails.status.code | StatusLookup}}"></i>&nbsp;{{savingaccountdetails.depositProductName}}(#{{savingaccountdetails.accountNo}}){{savingaccountdetails.nickname}}</strong>
             </span>
             </div>
             <br>
@@ -161,6 +161,13 @@
                             translate}}
                         </th>
                         <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalWithdrawals | number}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="savingaccountdetails.accruedInterestCarriedForward > 0">
+                        <th class="table-bold-acc fontnormal">{{'label.accruedinterestcarriedfored' |
+                            translate}}
+                        </th>
+                        <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.accruedInterestCarriedForward | number}}</span>
                         </td>
                     </tr>
                     <tr ng-show="savingaccountdetails.summary.totalInterestEarned >= 0">
@@ -321,10 +328,10 @@
                             ng-click="viewJournalEntries()" style="margin-right: 8px;">
                         {{'label.button.viewjournalentries' | translate}}
                     </button>
-                    <div class="pull-right">
-                        <input type="checkbox" data-ng-model="hideAccrualTransactions" ng-init = "hideAccuralTransactions = true">&nbsp;
-                        <label class="control-label">{{ 'label.input.hide.accrual.transactions' | translate }}</label>&nbsp;&nbsp;
-                    </div>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewAccrualTransaction()" style="margin-right: 8px;">
+                        {{'label.input.show.accrual.transactions' | translate}}
+                    </button>
                     <br>
                     <table class="table table-bordered">
                         <colgroup span="4"></colgroup>

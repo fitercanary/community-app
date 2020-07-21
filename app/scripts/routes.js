@@ -359,6 +359,9 @@
             .when('/searchtransaction', {
                 templateUrl: 'views/accounting/search_transaction.html'
             })
+            .when('/viewaccrualtransaction', {
+                templateUrl: 'views/savings/view_savings_account_accruals.html'
+            })
             .when('/accounts_closure', {
                 templateUrl: 'views/accounting/accounts_closure.html'
             })
@@ -689,6 +692,9 @@
             .when('/editvalidationlimit/:id', {
                  templateUrl: 'views/products/editvalidationlimit.html'
             })
+            .when('/viewvalidationlimit/:id', {
+                 templateUrl: 'views/products/viewvalidationlimit.html'
+            })
             .when('/productivesheet/:officeId/:officeName/:meetingDate/:staffId', {
                 templateUrl: 'views/collection/productivecollectionsheet.html'
             })
@@ -911,7 +917,7 @@
             .when('/shareproduct/:productId/:dividendId/:action', {
                 templateUrl: 'views/products/shareproductactions.html'
             })
-            .when('/loanforeclosure/:id', {
+            .when('/loanforeclosure/:id/:clientId', {
                 templateUrl: 'views/loans/loanforeclosure.html'
             })
             .when('/address/:id', {

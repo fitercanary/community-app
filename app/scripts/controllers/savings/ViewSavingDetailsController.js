@@ -673,6 +673,10 @@
                 location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id});
             };
 
+            scope.viewAccrualTransaction = function(){
+                 location.path("/viewaccrualtransaction/").search({savingsId: scope.savingaccountdetails.id});
+            };
+
             scope.viewDataTable = function (registeredTableName,data){
                 if (scope.datatabledetails.isMultirow) {
                     location.path("/viewdatatableentry/"+registeredTableName+"/"+scope.savingaccountdetails.id+"/"+data.row[0]);
@@ -689,15 +693,25 @@
 
             };
 
-            scope.viewPrintDetails = function () {
+            scope.viewPrintDetails = function (selectedOutputType) {
                 //scope.printbtn = true;
+
                 scope.report = true;
                 scope.viewTransactionReport = false;
                 scope.viewReport = true;
                 scope.hidePentahoReport = true;
-                scope.formData.outputType = 'PDF';
-                scope.baseURL = $rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent("Client Saving Transactions");
-                scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + $rootScope.tenantIdentifier+"&locale="+scope.optlang.code;
+
+                if(selectedOutputType === 'XLS'){
+                       scope.formData.outputType = selectedOutputType;
+                       scope.reportName = 'Client Saving Transactions excel';
+                }
+                else if(selectedOutputType === 'PDF'){
+                        scope.formData.outputType = selectedOutputType;
+                        scope.reportName = 'Client Saving Transactions pdf';
+                 }
+
+                scope.baseURL = $rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent(scope.reportName);
+                scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + $rootScope.tenantIdentifier+"&locale="+scope.optlang.code + "&dateFormat=" + scope.df;
 
                 var reportParams = "";
                 scope.startDate = dateFilter(scope.date.fromDate, 'yyyy-MM-dd');
@@ -713,7 +727,7 @@
                 }
 
                 // allow untrusted urls for iframe http://docs.angularjs.org/error/$sce/insecurl
-                scope.viewReportDetails = $sce.trustAsResourceUrl(scope.baseURL);
+                scope.viewReportResult = $sce.trustAsResourceUrl(scope.baseURL);
 
             };
 

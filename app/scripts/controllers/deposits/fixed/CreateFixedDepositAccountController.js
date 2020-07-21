@@ -79,8 +79,6 @@
                         scope.endDate.date = new Date(endDate);
                     }
 
-
-
                     var interestFreePeriodFrequencyTypeId = (_.isNull(data.interestFreePeriodFrequencyType) || _.isUndefined(data.interestFreePeriodFrequencyType)) ? '' : data.interestFreePeriodFrequencyType.id;
                     var preClosurePenalInterestOnTypeId = (_.isNull(data.preClosurePenalInterestOnType) || _.isUndefined(data.preClosurePenalInterestOnType)) ? '' : data.preClosurePenalInterestOnType.id;
                     var minDepositTermTypeId = (_.isNull(data.minDepositTermType) || _.isUndefined(data.minDepositTermType)) ? '' : data.minDepositTermType.id;
@@ -94,6 +92,7 @@
                     scope.formData.preClosurePenalApplicable = data.preClosurePenalApplicable;
                     scope.formData.preClosurePenalInterest = data.preClosurePenalInterest;
                     scope.formData.preClosurePenalInterestOnTypeId = preClosurePenalInterestOnTypeId;
+                    scope.formData.preClosureChargeApplicable = data.preClosureChargeApplicable;
                     scope.formData.minDepositTerm = data.minDepositTerm;
                     scope.formData.maxDepositTerm = data.maxDepositTerm;
                     scope.formData.minDepositTermTypeId = minDepositTermTypeId;

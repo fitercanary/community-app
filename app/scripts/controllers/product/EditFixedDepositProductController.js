@@ -53,6 +53,8 @@
 //                    interestFreePeriodFrequencyTypeId: interestFreePeriodFrequencyTypeId,
                     preClosurePenalApplicable: data.preClosurePenalApplicable,
                     preClosurePenalInterest: data.preClosurePenalInterest,
+                    preClosureChargeApplicable: data.preClosureChargeApplicable,
+                    preClosureChargeId: data.preClosureChargeId,
                     preClosurePenalInterestOnTypeId: preClosurePenalInterestOnTypeId,
                     minDepositTerm: data.minDepositTerm,
                     maxDepositTerm: data.maxDepositTerm,

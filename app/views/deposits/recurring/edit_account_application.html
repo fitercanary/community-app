@@ -43,6 +43,12 @@
                 <option value="">{{'label.selectfieldofficer' | translate}}</option>
             </select>
         </td>
+        <td class="width14">
+            <label>{{ 'label.input.nickname' | translate }}:&nbsp;</label>
+        </td>
+        <td class="width36 paddedbottom10">
+            <input id="nickname" ng-model="formData.nickname" class="form-control"/>
+        </td>
     </tr>
 </table>
 
@@ -231,6 +237,13 @@
             <div class="form-inline" data-ng-show="formData.preClosurePenalApplicable">
                 <label class="control-label">{{ 'label.checkbox.applypreclosurepenalinterest' |
                     translate }}&nbsp;&nbsp;{{formData.preClosurePenalInterest | number}}&nbsp;&nbsp;-&nbsp;&nbsp;On&nbsp;&nbsp;{{data.preClosurePenalInterestOnType.value}}</label>
+            </div>
+        </td>
+    </tr>
+    <tr>
+        <td colspan="4">
+            <div class="form-inline" data-ng-show="formData.preClosureChargeApplicable">
+                <label class="control-label">{{ 'label.checkbox.applypreclosurecharge' | translate }}&nbsp;&nbsp;-&nbsp;&nbsp;{{data.preClosureCharge.name}}</label>
             </div>
         </td>
     </tr>

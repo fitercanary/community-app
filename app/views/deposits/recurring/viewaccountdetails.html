@@ -4,14 +4,14 @@
         </li>
         <li ng-if="savingaccountdetails.clientName"><a href="#/viewclient/{{savingaccountdetails.clientId}}">{{savingaccountdetails.clientName}}</a>
         </li>
-        <li class="active">{{savingaccountdetails.savingsProductName}}({{savingaccountdetails.accountNo}})</li>
+        <li class="active">{{savingaccountdetails.depositProductName}}({{savingaccountdetails.accountNo}})</li>
     </ul>
     <div class="card">
         <div class="">
             <br>
             <div class="span gray-head">
           <span style="margin-left: 10px;font-size:24px">
-                <strong><i class="fa fa-stop {{savingaccountdetails.status.code | StatusLookup}}"></i>&nbsp;{{savingaccountdetails.depositProductName}}(#{{savingaccountdetails.accountNo}})</strong>
+                <strong><i class="fa fa-stop {{savingaccountdetails.status.code | StatusLookup}}"></i>&nbsp;{{savingaccountdetails.depositProductName}}(#{{savingaccountdetails.accountNo}}) {{savingaccountdetails.nickname}}</strong>
           </span>
             </div>
             <div class="col-md-12 primarydiv">
@@ -150,13 +150,13 @@
                         <th class="active fontnormal col-md-3">{{'label.account.deposit.target.amount' |
                             translate}}
                         </th>
-                        <td class="col-md-3"><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.depositAmount}}</span>
+                        <td class="col-md-3"><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.targetAmount | number}}</span>
                         </td>
                     </tr>
                     <tr>
                         <th class="active fontnormal">{{'label.account.target.maturity.amount' | translate}}
                         </th>
-                        <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.maturityAmount | number}}</span>
+                        <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.targetMaturityAmount | number}}</span>
                         </td>
                     </tr>
                     <tr>
@@ -376,6 +376,18 @@
                 <uib-tab heading="{{'label.heading.transactions' | translate}}"
                          ng-show="savingaccountdetails.transactions" select="convertDateArrayToObject('date')">
                     <br>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()" ng-click="export()">
+                        {{'label.button.export' | translate}}
+                    </button>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewJournalEntries()" style="margin-right: 8px;">
+                        {{'label.button.viewjournalentries' | translate}}
+                    </button>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewAccrualTransaction()" style="margin-right: 8px;">
+                        {{'label.input.show.accrual.transactions' | translate}}
+                    </button>
+                    <br>
                     <table class="table table-bordered">
                         <colgroup span="4"></colgroup>
                         <thead>
@@ -402,7 +414,8 @@
                         </thead>
                         <tbody>
                         <tr class="pointer-main" ng-class="{strikeoff : transaction.reversed==true}"
-                            ng-repeat="transaction in savingaccountdetails.transactions | orderBy:transactionSort.column:transactionSort.descending ">
+                            dir-paginate="transaction in savingaccountdetails.transactions | itemsPerPage: transactionsPerPage " total-items="totalTransactions"
+                            pagination-id="transactions">
                             <td class="pointer"
                                 data-ng-click="routeTo(transaction.accountId,transaction.id,transaction.transfer,transaction.transfer.id)">
                                 {{transaction.id}}
@@ -433,6 +446,10 @@
                             </td>
                         </tbody>
                     </table>
+                    <dir-pagination-controls align="center" boundary-links="true"
+                                             template-url="bower_components/angular-utils-pagination/dirPagination.tpl.html"
+                                             on-page-change="getResultsPage(newPageNumber)" pagination-id="transactions">
+                    </dir-pagination-controls>
                 </uib-tab>
                 <uib-tab heading="{{'label.anchor.standinginstruction' | translate}}" ng-show="instructions.currentPageItems.length > 0">
                     <br>

@@ -1,6 +1,8 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
         ViewRecurringDepositAccountDetailsController: function (scope, routeParams, resourceFactory, paginatorService, location, route, dateFilter,$uibModal) {
+           scope.transactionsPerPage = 15;
+
             scope.isDebit = function (savingsTransactionType) {
                 return savingsTransactionType.withdrawal == true || savingsTransactionType.feeDeduction == true || savingsTransactionType.withholdTax == true;
             };
@@ -92,26 +94,55 @@
                             route.reload();
                         });
                         break;
+                    case "postAccrualInterest":
+                        resourceFactory.recurringDepositAccountResource.save({accountId: accountId, command: 'postAccrualInterest'}, {}, function (data) {
+                            route.reload();
+                        });
+                        break;
+                    case "postAccrualInterestAsOn":
+                        location.path('/recurringdepositaccount/' + accountId + '/postAccrualInterestAsOn');
+                    break;
+                    case "editNickName":
+                          location.path('/savingaccount/' + accountId + '/editNickName');
+                    break;
                 }
             };
 
-            resourceFactory.recurringDepositAccountResource.get({accountId: routeParams.id, associations: 'all'}, function (data) {
+             scope.getResultsPage = function(pageNumber){
+               scope.initPage(pageNumber);
+             };
+
+            scope.initPage = function(pageNumber){
+            resourceFactory.recurringDepositAccountResource.get({accountId: routeParams.id, associations: 'all',
+             pageNumber : pageNumber, pageSize: scope.transactionsPerPage}, function (data) {
                 scope.savingaccountdetails = data;
                 scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance?(scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance):scope.savingaccountdetails.summary.accountBalance;
                 scope.convertDateArrayToObject('date');
                 scope.chartSlabs = scope.savingaccountdetails.accountChart.chartSlabs;
                 scope.isprematureAllowed = data.maturityDate != null;
                 scope.status = data.status.value;
+                if(scope.savingaccountdetails.transactions){
+                   console.log("tr", scope.savingaccountdetails.transactions);
+                   scope.totalTransactions = data.transactionCount;
+                }
                 scope.heading = (!scope.savingaccountdetails.status.rejected && !scope.savingaccountdetails.status.submittedAndPendingApproval)?'label.heading.interestchart':'label.heading.summary';
                 if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved") {
                     scope.choice = true;
                 }
+
                 scope.chargeAction = data.status.value == "Submitted and pending approval" ? true : false;
                 if (scope.savingaccountdetails.charges) {
                     scope.charges = scope.savingaccountdetails.charges;
                     scope.chargeTableShow = true;
                 } else {
                     scope.chargeTableShow = false;
+                }
+                if (scope.savingaccountdetails.transactions) {
+                    scope.savingaccountdetails.transactions.map(x => {
+                        if (x.transactionType && x.transactionType.description) {
+                            x.transactionType.value = x.transactionType.description;
+                        }
+                    })
                 }
                 if (data.status.value == "Submitted and pending approval") {
                     scope.buttons = { singlebuttons: [
@@ -168,6 +199,11 @@
                         {
                             name: "button.calculateInterest",
                             icon: "fa fa-table"
+                        },
+                        {
+                            name: "button.postAccrualInterestAsOn",
+                            icon: "icon-arrow-right",
+                            taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
                         }
                     ],
                         options: [
@@ -175,8 +211,16 @@
                                 name: "button.postInterest"
                             },
                             {
+                                name: "button.postAccrualInterest"
+                            },
+                            {
                                 name: "button.addcharge"
+                            },
+                            {
+                                name: "button.editNickName",
+                                taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
                             }
+
                         ]
 
                     };
@@ -269,6 +313,9 @@
                     scope.searchTransaction();
                 });
             });
+          }
+
+           scope.initPage(1);
 
             var fetchFunction = function (offset, limit, callback) {
                 var params = {};
@@ -403,6 +450,30 @@
                     sort.column = column;
                     sort.descending = true;
                 }
+            };
+
+            scope.checkStatus = function(){
+                if(scope.status == 'Active' || scope.status == 'Closed' || scope.status == 'Transfer in progress' ||
+                scope.status == 'Transfer on hold' || scope.status == 'Premature Closed' || scope.status == 'Matured'){
+                    return true;
+                }
+                return false;
+            };
+
+            scope.viewJournalEntries = function(){
+                location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id, recurringDepositId: scope.savingaccountdetails.id});
+            };
+
+            scope.viewAccrualTransaction = function(){
+                 location.path("/viewaccrualtransaction/").search({recurringDepositId: scope.savingaccountdetails.id});
+            };
+
+            scope.export = function () {
+                scope.report = true;
+                scope.printbtn = false;
+                scope.viewReport = false;
+                scope.viewSavingReport = true;
+                scope.viewTransactionReport = false;
             };
 
         }

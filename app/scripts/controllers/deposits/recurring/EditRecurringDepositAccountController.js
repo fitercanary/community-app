@@ -51,6 +51,7 @@
                 scope.formData.depositPeriod = data.depositPeriod;
                 scope.formData.recurringDepositFrequency = data.recurringDepositFrequency;
                 scope.formData.lockinPeriodFrequency = data.lockinPeriodFrequency;
+                scope.formData.nickname = data.nickName;
                 var depositPeriodFrequencyId = (_.isNull(data.depositPeriodFrequency) || _.isUndefined(data.depositPeriodFrequency)) ? '' : data.depositPeriodFrequency.id;
                 if (data.interestCompoundingPeriodType) scope.formData.interestCompoundingPeriodType = data.interestCompoundingPeriodType.id;
                 if (data.interestPostingPeriodType) scope.formData.interestPostingPeriodType = data.interestPostingPeriodType.id;
@@ -85,6 +86,7 @@
                 scope.formData.preClosurePenalApplicable = data.preClosurePenalApplicable;
                 scope.formData.preClosurePenalInterest = data.preClosurePenalInterest;
                 scope.formData.preClosurePenalInterestOnTypeId = preClosurePenalInterestOnTypeId;
+                scope.formData.preClosureChargeApplicable = data.preClosureChargeApplicable;
                 scope.formData.minDepositTerm = data.minDepositTerm;
                 scope.formData.maxDepositTerm = data.maxDepositTerm;
                 scope.formData.minDepositTermTypeId = minDepositTermTypeId;

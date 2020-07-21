@@ -25,6 +25,7 @@
 
             scope.calculateNewDepositAmount = () => {
                 scope.formData.depositAmount = parseFloat(scope.data.depositAmount) + parseFloat(scope.topUpAmount);
+                scope.calculateRemainingTenure();
             };
 
             scope.calculateRemainingTenure = () => {
@@ -40,7 +41,7 @@
             scope.validatePeriod = () => {
                 if (scope.origTenure && scope.origTenure > scope.formData.depositPeriod) {
                     scope.formData.depositPeriod = scope.origTenure;
-                    scope.calculateInterestRate();
+                    scope.calculateRemainingTenure();
                 }
             };
 
@@ -49,7 +50,7 @@
                 let depositPeriod = parseFloat(scope.formData.depositPeriod);
                 let periodFrequency = scope.formData.depositPeriodFrequencyId;
                 let filteredSlabs = scope.chartSlabs.filter(function (x) {
-                    return amount >= x.amountRangeFrom && amount <= x.amountRangeTo
+                    return amount >= x.amountRangeFrom && (amount <= x.amountRangeTo || !x.amountRangeTo)
                 });
                 filteredSlabs.map(x => {
                     let period = scope.computePeriod(depositPeriod, periodFrequency, x.periodType.id);
@@ -70,6 +71,7 @@
                 }
                 this.formData.locale = scope.optlang.code;
                 this.formData.dateFormat = scope.df;
+                this.formData.changeTenure = scope.changeTenure;
                 resourceFactory.fixedDepositAccountResource.save(params, this.formData, () => location.path('/viewclient/' + scope.data.clientId));
             };
 
