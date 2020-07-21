@@ -4432,5 +4432,6 @@
   "#New Menus": "",
   "label.menu.selectdurationtype": "Select Duration Types",
   "label.heading.user.has.pending.authorization.request": "Your Authorization Request has been sent and is Pending Approval",
+  "label.heading.user.has.no.access.to.client": "You have no access to this client",
   "----End---": "--End of file--- "
 }

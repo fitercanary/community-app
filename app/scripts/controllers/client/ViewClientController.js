@@ -23,22 +23,23 @@
             formdata={};
             scope.showRequestAuthorizationToViewClientButton = true;
             scope.showPendingRequestMessage = false;
+            scope.showHaveNoAccessToClientMessage = false;
+
+            resourceFactory.clientResource.checkClientRequiresAuthorization({clientId: routeParams.id, anotherresource: "requiresauthorization" }, function(data){
+                        
+                if(data.requireAuthorizationToView == false){
+                    scope.showRequestAuthorizationToViewClientButton = false;
+                    scope.showHaveNoAccessToClientMessage = true;
+                }
+            });
 
             resourceFactory.userAuthorizationListResource.getUsersClientAuthorizationRequests({clientId: routeParams.id, status:100}, function(requestData) {
                     scope.authorizationRequests = requestData;
                     if(requestData.length > 0){
                         scope.showRequestAuthorizationToViewClientButton = false;
                         scope.showPendingRequestMessage = true;
+                        scope.showHaveNoAccessToClientMessage = false;
                     }
-            });
-
-            resourceFactory.clientResource.checkClientRequiresAuthorization({clientId: routeParams.id, anotherresource: "requiresauthorization" }, function(data){
-                        
-                        if(data.requireAuthorizationToView == true){
-                            scope.showRequestAuthorizationToViewClientButton = true;
-                        }else{
-                            scope.showRequestAuthorizationToViewClientButton = false;
-                        }
             });
 
             resourceFactory.clientTemplateResource.get(function(data)
@@ -194,6 +195,7 @@
 
                 if(data.id){
                     scope.showRequestAuthorizationToViewClientButton = false;
+                    scope.showHaveNoAccessToClientMessage = false;
                 }
 
                 if (data.imagePresent) {
