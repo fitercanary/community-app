@@ -53,7 +53,8 @@
                         getAllClientsWithoutLimit: {method: 'GET', params: {}},
                         getClientClosureReasons: {method: 'GET', params: {}},
                         getAllClientDocuments: {method: 'GET', params: {}, isArray: true},
-                        update: { method: 'PUT'}
+                        update: { method: 'PUT'},
+                        checkClientRequiresAuthorization: {method: 'GET', params: {}}
                     }),
                     clientSearchSummaryResource: defineResource(apiVer + "/clients/summaries", {clientId: '@clientId', anotherresource: '@anotherresource', sqlSearch: '@sqlSearch'}, {
                         get: {method: 'GET', params: {}}

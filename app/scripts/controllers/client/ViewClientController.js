@@ -24,13 +24,21 @@
             scope.showRequestAuthorizationToViewClientButton = true;
             scope.showPendingRequestMessage = false;
 
-
             resourceFactory.userAuthorizationListResource.getUsersClientAuthorizationRequests({clientId: routeParams.id, status:100}, function(requestData) {
                     scope.authorizationRequests = requestData;
                     if(requestData.length > 0){
                         scope.showRequestAuthorizationToViewClientButton = false;
                         scope.showPendingRequestMessage = true;
                     }
+            });
+
+            resourceFactory.clientResource.checkClientRequiresAuthorization({clientId: routeParams.id, anotherresource: "requiresauthorization" }, function(data){
+                        
+                        if(data.requireAuthorizationToView == true){
+                            scope.showRequestAuthorizationToViewClientButton = true;
+                        }else{
+                            scope.showRequestAuthorizationToViewClientButton = false;
+                        }
             });
 
             resourceFactory.clientTemplateResource.get(function(data)
