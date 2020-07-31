@@ -19,6 +19,9 @@
                 scope.incomeAccountOptions = scope.product.accountingMappingOptions.incomeAccountOptions || [];
                 scope.expenseAccountOptions = scope.product.accountingMappingOptions.expenseAccountOptions || [];
 
+                scope.assetLiabilityAccountOptions = scope.assetAccountOptions;
+                scope.assetLiabilityAccountOptions = scope.assetLiabilityAccountOptions.concat(scope.liabilityAccountOptions);
+
                 scope.formData.currencyCode = data.currencyOptions[0].code;
                 scope.formData.digitsAfterDecimal = data.currencyOptions[0].decimalPlaces;
                 scope.formData.interestCompoundingPeriodType = data.interestCompoundingPeriodType.id;
@@ -78,12 +81,12 @@
 
             scope.addConfigureFundSource = function () {
                 if (scope.product.paymentTypeOptions && scope.product.paymentTypeOptions.length > 0 &&
-                    scope.assetAccountOptions && scope.assetAccountOptions.length > 0) {
+                    scope.assetLiabilityAccountOptions && scope.assetLiabilityAccountOptions.length > 0) {
                     scope.configureFundOptions.push({
                         paymentTypeId: scope.product.paymentTypeOptions[0].id,
-                        fundSourceAccountId: scope.assetAccountOptions[0].id,
+                        fundSourceAccountId: scope.assetLiabilityAccountOptions[0].id,
                         paymentTypeOptions: scope.product.paymentTypeOptions,
-                        assetAccountOptions: scope.assetAccountOptions
+                        assetAccountOptions: scope.assetLiabilityAccountOptions
                     });
                 }
                 ;

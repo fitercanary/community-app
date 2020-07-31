@@ -17,6 +17,8 @@
                 scope.incomeAccountOptions = scope.product.accountingMappingOptions.incomeAccountOptions || [];
                 scope.expenseAccountOptions = scope.product.accountingMappingOptions.expenseAccountOptions || [];
                 scope.formData.isDormancyTrackingActive = false;
+                scope.assetLiabilityAccountOptions = scope.assetAccountOptions;
+                scope.assetLiabilityAccountOptions = scope.assetLiabilityAccountOptions.concat(scope.liabilityAccountOptions);
                 if(data.isDormancyTrackingActive){
                     scope.formData.isDormancyTrackingActive =  data.isDormancyTrackingActive == true ? 'true':'false';
                 }
@@ -87,7 +89,7 @@
                         paymentTypeId: fundSource.paymentType.id,
                         fundSourceAccountId: fundSource.fundSourceAccount.id,
                         paymentTypeOptions: scope.product.paymentTypeOptions,
-                        assetAccountOptions: scope.assetAccountOptions
+                        assetAccountOptions: scope.assetLiabilityAccountOptions
                     })
                 });
 
@@ -139,12 +141,12 @@
 
             scope.addConfigureFundSource = function () {
                 if (scope.product.paymentTypeOptions && scope.product.paymentTypeOptions.length > 0 &&
-                    scope.assetAccountOptions && scope.assetAccountOptions.length > 0) {
+                    scope.assetLiabilityAccountOptions && scope.assetLiabilityAccountOptions.length > 0) {
                     scope.configureFundOptions.push({
                         paymentTypeId: scope.product.paymentTypeOptions[0].id,
-                        fundSourceAccountId: scope.assetAccountOptions[0].id,
+                        fundSourceAccountId: scope.assetLiabilityAccountOptions[0].id,
                         paymentTypeOptions: scope.product.paymentTypeOptions,
-                        assetAccountOptions: scope.assetAccountOptions
+                        assetAccountOptions: scope.assetLiabilityAccountOptions
                     });
                 }
             }
