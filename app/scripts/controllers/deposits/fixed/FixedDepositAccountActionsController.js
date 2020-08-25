@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        FixedDepositAccountActionsController: function (scope, resourceFactory, location, routeParams, dateFilter) {
+        FixedDepositAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter) {
 
             scope.action = routeParams.action || "";
             scope.accountId = routeParams.id;
@@ -14,6 +14,7 @@
             scope.activationChargeAmount = 0;
             scope.totalAmountIncludingActivationCharge = 0;
             scope.depositAmount = 0;
+            scope.showBlock = false;
             if(scope.action=='activate'){
                 resourceFactory.fixedDepositAccountResource.get({accountId: scope.savingAccountId, associations:'charges'}, function (data) {
                         scope.totalAmountIncludingActivationCharge = data.depositAmount+parseFloat(data.activationCharge);
@@ -160,7 +161,57 @@
                     break;
                 case "waive":
                     scope.waiveCharge = true;
-                    break;
+                break;
+                case "freeze":
+                    scope.showBlock = true;
+                    console.log(scope.showBlock);
+                    resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all'
+                                           }, function (data) {
+                    scope.savingsDetails = data;
+                    scope.blockNarrationTypes = data.blockNarrationOptions;
+                    scope.blockNarration = data.blockNarration;
+                    console.log(data);
+                        if(!data.subStatus.block){
+                         if(data.subStatus.blockDebit ){
+                          if(rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                          scope.debitStatus = true;
+                           scope.buttonTextDebit = "label.button.unblockDebit";
+                           scope.taskPermissionNameDebit = 'UNBLOCKDEBIT_SAVINGSACCOUNT';
+                          }
+                         }else{
+                          if(rootScope.hasPermission("BLOCKDEBIT_SAVINGSACCOUNT")){
+                           scope.debitStatus = true;
+                           scope.buttonTextDebit = "label.button.blockDebit";
+                           scope.taskPermissionNameDebit = 'BLOCKDEBIT_SAVINGSACCOUNT';
+                           }
+                          }
+                         if(data.subStatus.blockCredit){
+                         if(rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                          scope.creditStatus = true;
+                           scope.buttonTextCredit = "label.button.unblockCredit";
+                          scope.taskPermissionNameCredit = 'UNBLOCKCREDIT_SAVINGSACCOUNT';}
+                         }else{
+                         if(rootScope.hasPermission("BLOCKCREDIT_SAVINGSACCOUNT")){
+                         scope.creditStatus = true;
+                            scope.buttonTextCredit = "label.button.blockCredit";
+                            scope.taskPermissionNameCredit = 'BLOCKCREDIT_SAVINGSACCOUNT';
+                            }
+                         }}
+                         else{
+                         if(rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                              scope.debitStatus = true;
+                               scope.buttonTextDebit = "label.button.unblockDebit";
+                               scope.taskPermissionNameDebit = 'UNBLOCKDEBIT_SAVINGSACCOUNT';
+                           }
+                         if(rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                               scope.creditStatus = true;
+                               scope.buttonTextCredit = "label.button.unblockCredit";
+                               scope.taskPermissionNameCredit = 'UNBLOCKCREDIT_SAVINGSACCOUNT';
+                         }
+                       }
+
+                    });
+                break;
             }
 
             scope.cancel = function () {
@@ -277,9 +328,51 @@
                     });
                 }
             };
+                scope.blockUnblockDebit = function(permission){
+                    console.log(permission);
+                    if(scope.action == "freeze"){
+                         if (permission == "BLOCKDEBIT_SAVINGSACCOUNT") {
+                                    console.log(permission, "1");
+                                      this.formData = {
+                                        narrationId: this.formData.narrationId
+                                      }
+                                      scope.action = "blockDebit";
+                           }
+                         if (permission == "UNBLOCKDEBIT_SAVINGSACCOUNT"){
+                          console.log(permission, "2");
+                                          this.formData = {
+                                            narrationId: this.formData.narrationId
+                                          }
+                                          scope.action = "unblockDebit";
+                         }
+                         if (permission == "BLOCKCREDIT_SAVINGSACCOUNT") {
+                          console.log(permission, "3");
+                                                           this.formData = {
+                                                            narrationId: this.formData.narrationId
+                                                           }
+                                                           scope.action = "blockCredit";
+                                                }
+                         if (permission == "UNBLOCKCREDIT_SAVINGSACCOUNT"){
+                          console.log(permission, "4");
+                                                               this.formData = {
+                                                                narrationId: this.formData.narrationId
+                                                               }
+                                                               scope.action = "unblockCredit";
+                         }
+
+
+                    }
+                    var params = {command: scope.action, accountId : scope.accountId};
+
+                     resourceFactory.savingsResource.save(params, this.formData, function (data) {
+                        location.path('/viewfixeddepositaccount/' + data.savingsId);
+                        console.log(data);
+                     });
+               }
+
         }
     });
-    mifosX.ng.application.controller('FixedDepositAccountActionsController', ['$scope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.FixedDepositAccountActionsController]).run(function ($log) {
+    mifosX.ng.application.controller('FixedDepositAccountActionsController', ['$scope', '$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.FixedDepositAccountActionsController]).run(function ($log) {
         $log.info("FixedDepositAccountActionsController initialized");
     });
 }(mifosX.controllers || {}));

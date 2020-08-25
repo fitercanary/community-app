@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        ViewFixedDepositAccountDetailsController: function (scope, routeParams, resourceFactory, paginatorService, location, route, dateFilter,$uibModal) {
+        ViewFixedDepositAccountDetailsController: function (scope, rootScope, routeParams, resourceFactory, paginatorService, location, route, dateFilter,$uibModal) {
             scope.isDebit = function (savingsTransactionType) {
                 return savingsTransactionType.withdrawal == true || savingsTransactionType.feeDeduction == true || savingsTransactionType.withholdTax == true;
             };
@@ -119,6 +119,9 @@
                     case "editNickName":
                           location.path('/savingaccount/' + accountId + '/editNickName');
                     break;
+                    case "freeze" :
+                          location.path('/fixeddepositaccount/' + accountId + '/freeze');
+                    break;
                 }
             };
 
@@ -216,8 +219,8 @@
                             icon: "icon-arrow-right",
                             taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
                         }
-                    ],
-                        options: [
+                    ]};
+                    var buttonOptions = [
                             {
                                 name: "button.postInterest"
                             },
@@ -236,10 +239,41 @@
                             {
                                 name: "button.editNickName",
                                 taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
+                            },
+                            {
+                                name: "button.freeze",
+                                taskPermissionName : ""
                             }
                         ]
 
-                    };
+                       if(rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                           buttonOptions.forEach(function(v) {
+                             if(v.name == "button.freeze") {
+                             v.taskPermissionName = 'UNBLOCKDEBIT_SAVINGSACCOUNT';}
+                           });
+                       }
+                       if(rootScope.hasPermission("BLOCKDEBIT_SAVINGSACCOUNT")) {
+                             buttonOptions.forEach(function(v) {
+                               if(v.name == "button.freeze") {
+                               v.taskPermissionName = 'BLOCKDEBIT_SAVINGSACCOUNT';}
+                             });
+                       }
+                       if (rootScope.hasPermission("BLOCKCREDIT_SAVINGSACCOUNT")) {
+                             buttonOptions.forEach(function(v) {
+                              if(v.name == "button.freeze") {
+                              v.taskPermissionName = 'BLOCKCREDIT_SAVINGSACCOUNT';}
+                             });
+                       }
+                       if(rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                           buttonOptions.forEach(function(v) {
+                           if(v.name == "button.freeze") {
+                           v.taskPermissionName = 'UNBLOCKCREDIT_SAVINGSACCOUNT';}
+                       });
+                    }
+                    scope.buttons = {
+                             singlebuttons: scope.buttons.singlebuttons,
+                             options: buttonOptions
+                    }
                     if(data.taxGroup){
                         if(data.withHoldTax){
                             scope.buttons.options.push({
@@ -408,7 +442,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('ViewFixedDepositAccountDetailsController', ['$scope', '$routeParams', 'ResourceFactory', 'PaginatorService', '$location', '$route', 'dateFilter','$uibModal', mifosX.controllers.ViewFixedDepositAccountDetailsController]).run(function ($log) {
+    mifosX.ng.application.controller('ViewFixedDepositAccountDetailsController', ['$scope', '$rootScope', '$routeParams', 'ResourceFactory', 'PaginatorService', '$location', '$route', 'dateFilter','$uibModal', mifosX.controllers.ViewFixedDepositAccountDetailsController]).run(function ($log) {
         $log.info("ViewFixedDepositAccountDetailsController initialized");
     });
 }(mifosX.controllers || {}));
