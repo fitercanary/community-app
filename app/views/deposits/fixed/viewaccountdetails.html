@@ -80,6 +80,18 @@
                         <th class="active fontnormal"> {{'label.heading.withholdtaxgroup' | translate}}</th>
                         <td><span class="padded-td">{{savingaccountdetails.taxGroup.name}}</span></td>
                     </tr>
+                    <tr ng-hide="savingaccountdetails.subStatus.id==0">
+                        <th class="table-bold-acc fontnormal">{{'label.subStatus' | translate}}
+                        </th>
+                        <td><span class="padded-td">{{savingaccountdetails.subStatus.value}}</span>
+                        </td>
+                    </tr>
+                    <tr >
+                        <th class="table-bold-acc fontnormal">{{'label.blockNarration' | translate}}
+                        </th>
+                        <td><span class="padded-td">{{savingaccountdetails.blockNarration.name}}</span>
+                        </td>
+                    </tr>
                     <tr>
                         <td>{{ 'label.input.applywithdrawalfeefortransfers' | translate }}</td>
                         <td colspan="6">{{savingaccountdetails.withdrawalFeeForTransfers}}</td>
