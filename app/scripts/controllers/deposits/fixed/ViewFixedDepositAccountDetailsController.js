@@ -146,8 +146,8 @@
                     scope.savingaccountdetails.accruedInterestCarriedForward = 0;
                 }
                 scope.isNameDefined = false;
-                if(angular.isDefined(scope.savingaccountdetails.blockNarration.name) && scope.savingaccountdetails.subStatus.id != 0){
-                scope.isNameDefined = true;
+                if (scope.savingaccountdetails.subStatus.id != 0 && scope.savingaccountdetails.blockNarration && scope.savingaccountdetails.blockNarration.name) {
+                    scope.isNameDefined = true;
                 }
                 if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved") {
                     scope.choice = true;
