@@ -164,6 +164,11 @@
                             if(angular.isUndefined(data.onHoldFunds)){
                                 scope.showonhold = false;
                             }
+
+                            scope.isNameDefined = false;
+                            if(angular.isDefined(scope.savingaccountdetails.blockNarration.name)){
+                            scope.isNameDefined = true;
+                            }
                             scope.staffData.staffId = data.staffId;
                             scope.date.toDate = new Date();
                             scope.date.fromDate = new Date(data.timeline.activatedOnDate);
@@ -384,6 +389,10 @@
                         scope.groupLevel = data.groupLevel;
                     });
                 }
+                scope.isNameDefined = false;
+                 if(angular.isDefined(scope.savingaccountdetails.blockNarration.name) && scope.savingaccountdetails.subStatus.id != 0){
+                 scope.isNameDefined = true;
+                 }
                 scope.showonhold = true;
                 if(angular.isUndefined(data.onHoldFunds)){
                     scope.showonhold = false;
