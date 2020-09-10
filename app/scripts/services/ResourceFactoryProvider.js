@@ -2,6 +2,7 @@
     mifosX.services = _.extend(module, {
         ResourceFactoryProvider: function () {
             var baseUrl = "" , apiVer = "/fineract-provider/api/v1", tenantIdentifier = "";
+            const reportsUrl = "https://demo.fiter.io:9061"; //PoC: test report instance for VFD
             this.setBaseUrl = function (url) {
                 baseUrl = url;
                 console.log(baseUrl);
@@ -14,6 +15,7 @@
                 var defineResource = function (url, paramDefaults, actions) {
                     var tempUrl = baseUrl;
                     $rootScope.hostUrl = tempUrl;
+                    $rootScope.reportsUrl = reportsUrl;
                     $rootScope.tenantIdentifier = tenantIdentifier;
                     return resource(baseUrl + url, paramDefaults, actions);
                 };
