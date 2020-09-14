@@ -57,7 +57,7 @@ jobs:
           echo "$TEST_SERVER_SSH_KEY" > key.pem
           chmod 400 key.pem
           echo "Restart docker container...!!!"
-          echo "ssh -i key.pem -o StrictHostKeyChecking=no $TEST_SERVER_URL 'sudo /root/deploy-fineract.sh'""
+          echo "ssh -i key.pem -o StrictHostKeyChecking=no $TEST_SERVER_URL 'sudo /root/deploy-fineract.sh'"
         env:
           TEST_SERVER_SSH_KEY: ${{secrets.TEST_SERVER_SSH_KEY}}
           TEST_SERVER_URL: ${{secrets.TEST_SERVER_URL}}
