@@ -22,6 +22,8 @@
             scope.textDetails = [];
             scope.blockNarrationTypes = [];
             scope.accountType = "";
+            scope.nominalAnnualInterestRate = {};
+            scope.showNominalAnnualInterestRateField = false;
 
             rootScope.RequestEntities = function(entity,status,productId){
                 resourceFactory.entityDatatableChecksResource.getAll({limit:-1},function (response) {
@@ -400,6 +402,17 @@
                     scope.taskPermissionName = 'UPDATENICKNAME_SAVINGSACCOUNT';
                     scope.fetchEntities('m_savings_account','UPDATENICKNAME');
                     break;
+                case "updateInterestRate":
+                    resourceFactory.savingsResource.get({accountId: routeParams.id}, function (accountData) {
+                        scope.nominalAnnualInterestRate = accountData.nominalAnnualInterestRate;
+                    });
+                    scope.title = 'label.heading.updateinterestrate';
+                    scope.labelName = 'label.input.updatedOnDate';
+                    scope.modelName = 'updatedOnDate';
+                    scope.showDateField = true;
+                    scope.showNominalAnnualInterestRateField = true;
+                    scope.taskPermissionName = 'UPDATEINTERESTRATE_SAVINGSACCOUNT';
+                    break;
             }
 
             scope.cancel = function () {
@@ -489,6 +502,15 @@
                         location.path('/viewfixeddepositaccount/' + data.savingsId);
                         }
                         else{location.path('/viewsavingaccount/' + data.savingsId);}
+                    });
+                }else if (scope.action == "updateInterestRate") {
+                    params.accountId = scope.accountId;
+                    params = {accountId: routeParams.id, command: 'updateInterestRate'};
+                    if (this.formData.updatedOnDate) {
+                        this.formData.updatedOnDate = dateFilter(this.formData.updatedOnDate, scope.df);
+                    }
+                    resourceFactory.savingsResource.update(params, this.formData, function (data) {
+                        location.path('/viewsavingaccount/' + data.savingsId);
                     });
                 }else {
                     params.accountId = scope.accountId;

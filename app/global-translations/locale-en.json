@@ -4433,5 +4433,10 @@
   "label.menu.selectdurationtype": "Select Duration Types",
   "label.heading.user.has.pending.authorization.request": "Your Authorization Request has been sent and is Pending Approval",
   "label.heading.user.has.no.access.to.client": "You have no access to this client",
+
+  "label.button.updateInterestRate": "Update Interest Rate",
+  "label.heading.updateinterestrate": "Update Interest Rate",
+  "label.input.updatedOnDate": "Updated On Date",
+  
   "----End---": "--End of file--- "
 }

@@ -145,6 +145,9 @@
                     case "editNickName":
                         location.path('/savingaccount/' + accountId + '/editNickName');
                         break;
+                    case "updateInterestRate":
+                        location.path('/savingaccount/' + accountId + '/updateInterestRate');
+                        break;
 
                 }
             };
@@ -292,6 +295,10 @@
                                         {
                                             name: "button.editNickName",
                                             taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                            name: "button.updateInterestRate",
+                                            taskPermissionName:"UPDATEINTERESTRATE_SAVINGSACCOUNT"
                                         }
 
                                     ]
@@ -520,6 +527,10 @@
                             {
                                 name: "button.editNickName",
                                 taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
+                            },
+                            {
+                                name: "button.updateInterestRate",
+                                taskPermissionName:"UPDATEINTERESTRATE_SAVINGSACCOUNT"
                             }
                         ]
 
