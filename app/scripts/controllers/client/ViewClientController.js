@@ -21,11 +21,11 @@
            // scope.families=[];
             var entityname="ADDRESS";
             formdata={};
-            scope.showRequestAuthorizationToViewClientButton = true;
+            scope.showRequestAuthorizationToViewClientButton = false;//scope.showRequestAuthorizationToViewClientButton = true;
             scope.showPendingRequestMessage = false;
             scope.showHaveNoAccessToClientMessage = false;
 
-            resourceFactory.clientResource.checkClientRequiresAuthorization({clientId: routeParams.id, anotherresource: "requiresauthorization" }, function(data){
+            /*resourceFactory.clientResource.checkClientRequiresAuthorization({clientId: routeParams.id, anotherresource: "requiresauthorization" }, function(data){
                         
                 if(data.requireAuthorizationToView == false){
                     scope.showRequestAuthorizationToViewClientButton = false;
@@ -40,7 +40,7 @@
                         scope.showPendingRequestMessage = true;
                         scope.showHaveNoAccessToClientMessage = false;
                     }
-            });
+            });*/
 
             resourceFactory.clientTemplateResource.get(function(data)
             {
