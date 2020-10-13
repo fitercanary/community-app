@@ -3356,6 +3356,7 @@
   "chargeCalculationType.percent.of.amount.and.interest": "% Loan Amount + Interest",
   "chargeCalculationType.percent.of.interest": "% Interest",
   "chargeCalculationType.percent.of.disbursement.amount": "% Disbursement Amount",
+  "chargeCalculationType.percent.of.amount.and.interest.and.fees.and.penalties": "% Loan Amount + Interest + Fees + Penalty",
   "chargepaymentmode.regular": "Regular Mode",
   "chargepaymentmode.accounttransfer": "Account Transfer Mode",
   "validation.msg.charge.name.cannot.be.blank": "Name cannot be blank.",
