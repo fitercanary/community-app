@@ -184,6 +184,13 @@
                         <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.accruedInterestCarriedForward | number}}</span>
                         </td>
                     </tr>
+                    <tr ng-show="savingaccountdetails.summary.totalInterestEarned > 0">
+                        <th class="table-bold-acc fontnormal">{{'label.totalinterestearned' |
+                            translate}}
+                        </th>
+                        <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.summary.totalInterestEarned| number}}</span>
+                        </td>
+                    </tr>
                     <tr ng-show="savingaccountdetails.summary.totalInterestEarned >= 0">
                         <th class="table-bold-acc fontnormal">{{'label.totalinterestaccrued' |
                             translate}}
