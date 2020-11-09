@@ -17,7 +17,6 @@
                 scope.data = data;
                 scope.chart = data.accountChart;
                 scope.chartSlabs = scope.chart.chartSlabs;
-                scope.calculateRemainingTenure();
                 scope.fetchMaturityAmount();
             });
 
@@ -39,7 +38,6 @@
                     let maturityDate = new Date(dateFilter(scope.data.maturityDate, scope.df));
                     scope.formData.depositPeriod = Math.floor((maturityDate - today) / (1000 * 60 * 60 * 24));
                 }
-                scope.fetchMaturityAmount();
                 scope.calculateInterestRate();
                 scope.calculateInterest();
             };
