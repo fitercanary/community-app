@@ -5,7 +5,7 @@
             scope.data = {};
             scope.accountId = routeParams.id;
             scope.savingAccountId = routeParams.id;
-            scope.formData = {depositAmount: 0, depositPeriodFrequencyId: 0};
+            scope.formData = {depositAmount: 0, depositPeriodFrequencyId: 0, interestRate: 0};
             scope.restrictDate = new Date();
             scope.changeTenure = false;
             scope.topUpAmount = 0;
@@ -55,7 +55,7 @@
                 filteredSlabs.map(x => {
                     let period = scope.computePeriod(depositPeriod, periodFrequency, x.periodType.id);
                     if (period && x.fromPeriod <= period && x.toPeriod >= period) {
-                        scope.interestRate = x.annualInterestRate;
+                        scope.formData.interestRate = x.annualInterestRate;
                     }
                 });
             };
