@@ -4438,6 +4438,8 @@
   "label.button.updateInterestRate": "Update Interest Rate",
   "label.heading.updateinterestrate": "Update Interest Rate",
   "label.input.updatedOnDate": "Updated On Date",
+
+  "label.button.changeInterestRate": "Change Interest Rate",
   
   "----End---": "--End of file--- "
 }

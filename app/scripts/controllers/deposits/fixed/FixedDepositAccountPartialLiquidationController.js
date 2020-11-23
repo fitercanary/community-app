@@ -9,6 +9,7 @@
             scope.restrictDate = new Date();
             scope.changeTenure = false;
             scope.date = {submittedOnDate: new Date()};
+            scope.changeInterestRate = false;
 
             resourceFactory.fixedDepositAccountResource.get({
                 accountId: scope.accountId,

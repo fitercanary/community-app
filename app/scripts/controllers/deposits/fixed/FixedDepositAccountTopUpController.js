@@ -11,6 +11,7 @@
             scope.topUpAmount = 0;
             scope.origTenure = null;
             scope.date = {submittedOnDate: new Date()};
+            scope.changeInterestRate = false;
 
             resourceFactory.fixedDepositAccountResource.get({
                 accountId: scope.accountId,
