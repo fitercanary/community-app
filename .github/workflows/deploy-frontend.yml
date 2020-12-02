@@ -57,8 +57,7 @@ jobs:
 
       - name: Deploy to server
         run: |
-          echo "$TEST_SERVER_SSH_KEY"
-          echo "TEST_SERVER_URL"
+          echo $TEST_SERVER_URL
           echo "$TEST_SERVER_SSH_KEY" > key.pem
           chmod 400 key.pem
           echo "Restart docker container...!!!"
