@@ -4,6 +4,7 @@ on:
   push:
     branches:
       - canary-dev
+      - canary-prod
 
 jobs:
   build:
@@ -66,7 +67,7 @@ jobs:
         env:
           TEST_SERVER_SSH_KEY: ${{secrets.TEST_SERVER_SSH_KEY}}
           TEST_SERVER_URL: ${{secrets.TEST_SERVER_URL}}
-          
+
       - name: Deploy to production server 
         if: endsWith(github.ref, '/canary-prod')
         run: |
