@@ -56,7 +56,7 @@ jobs:
           repository: fiter1/community-app/canary-community-app
           tags: latest
 
-      - name: Deploy to server
+      - name: Deploy to demo server
         if: endsWith(github.ref, '/canary-dev')
         run: |
           echo $TEST_SERVER_URL
