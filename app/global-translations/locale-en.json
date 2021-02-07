@@ -4441,5 +4441,12 @@
 
   "label.button.changeInterestRate": "Change Interest Rate",
   
+  "#Deposit Category": "-----------",
+  "label.input.deposit.category": "Deposit Category",
+  "label.tooltip.deposit.category": "Category of deposit for CBN report",
+  "label.heading.deposit.category": "Deposit Category",
+  
+  "label.input.staffCategory": "Staff Category",
+  "label.heading.gender": "Gender",
   "----End---": "--End of file--- "
 }

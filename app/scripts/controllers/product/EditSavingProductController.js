@@ -51,6 +51,10 @@
                     daysToEscheat: data.daysToEscheat
                 }
 
+                if(data.savingsProductDepositCategory){
+                    scope.formData.savingsProductDepositCategory = data.savingsProductDepositCategory.id;
+                }
+                
                 if(data.withHoldTax){
                     scope.formData.taxGroupId = data.taxGroup.id;
                 }
