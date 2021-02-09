@@ -25,6 +25,7 @@
                 scope.liabilityAccountOptions = scope.product.accountingMappingOptions.liabilityAccountOptions || [];
                 scope.incomeAccountOptions = scope.product.accountingMappingOptions.incomeAccountOptions || [];
                 scope.expenseAccountOptions = scope.product.accountingMappingOptions.expenseAccountOptions || [];
+                scope.product.savingsProductDepositCategoryOptions = scope.product.savingsProductDepositCategoryOptions || [];
 
                 scope.formData.currencyCode = data.currencyOptions[0].code;
                 scope.formData.digitsAfterDecimal = data.currencyOptions[0].decimalPlaces;

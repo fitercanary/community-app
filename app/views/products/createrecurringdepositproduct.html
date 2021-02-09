@@ -38,6 +38,14 @@
                             <textarea rows="2" id="description" name="description" ng-model="formData.description"
                                       class="form-control"></textarea>
                         </div>
+                        <label class="control-label col-sm-2 col-sm-offset-2">{{ 'label.input.deposit.category' | translate }}</label>
+                        <div class="col-sm-2">
+                            <select id="savingsProductDepositCategory" ng-model="formData.savingsProductDepositCategory" class="form-control"
+                                    ng-options="savingsProductDepositCategory.id as savingsProductDepositCategory.name for savingsProductDepositCategory in product.savingsProductDepositCategoryOptions"
+                                    ng-change="savingproduct.savingsProductDepositCategory.name = formValue(product.savingsProductDepositCategoryOptions,formData.savingsProductDepositCategory,'id','name')"
+                                    value="{{savingsProductDepositCategory.id}}">
+                            </select>
+                        </div>
                     </div>
                     <hr>
                     <button class="btn btn-default pull-left" wz-previous disabled><i class="fa fa-arrow-left"></i>&nbsp;&nbsp;Previous

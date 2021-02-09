@@ -61,7 +61,8 @@
                     allowWithdrawal:data.allowWithdrawal,
                     adjustAdvanceTowardsFuturePayments:data.adjustAdvanceTowardsFuturePayments,
                     minBalanceForInterestCalculation:data.minBalanceForInterestCalculation,
-                    withHoldTax: data.withHoldTax == true ? 'true' : 'false'
+                    withHoldTax: data.withHoldTax == true ? 'true' : 'false',
+                    savingsProductDepositCategory: data.savingsProductDepositCategory.id
                 }
 
                 if(data.withHoldTax){

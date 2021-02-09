@@ -38,6 +38,14 @@
         <form-validate valattributeform="editfixeddepositproductform" valattribute="description"/>
     </div>
 </div>
+<div class="form-group">
+    <label class="control-label col-sm-2">{{ 'label.input.deposit.category' | translate }}</label>
+    <div class="col-sm-3">
+        <select id="savingsProductDepositCategory" ng-model="formData.savingsProductDepositCategory" class="form-control"
+                   ng-options="savingsProductDepositCategory.id as savingsProductDepositCategory.name for savingsProductDepositCategory in product.savingsProductDepositCategoryOptions"
+                   value="{{savingsProductDepositCategory.id}}"/>
+    </div>
+</div>
 <h3>{{ 'label.heading.currency' | translate }}</h3>
 <hr>
 <div class="form-group">
