@@ -4,6 +4,9 @@
             scope.offices = [];
             scope.restrictDate = new Date();
 
+            scope.genderOptions = [];
+            scope.staffCategoryOptions = [];
+
             resourceFactory.employeeResource.get({staffId: routeParams.id, template: 'true'}, function (data) {
                 scope.offices = data.allowedOffices;
                 scope.staffId = data.id;
@@ -11,6 +14,8 @@
                     var editDate = dateFilter(data.joiningDate, scope.df);
                     data.joiningDate = new Date(editDate);
                 }
+                scope.genderOptions = data.genderOptions;
+                scope.staffCategoryOptions = data.staffCategoryOptions;
                 scope.formData = {
                     firstname: data.firstname,
                     lastname: data.lastname,
@@ -18,7 +23,9 @@
                     officeId: data.officeId,
                     mobileNo: data.mobileNo,
                     isActive: data.isActive,
-                    joiningDate: data.joiningDate
+                    joiningDate: data.joiningDate,
+                    genderId: data.gender.id,
+                    staffCategoryId: data.staffCategory.id
                 };
 
             });

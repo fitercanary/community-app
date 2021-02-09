@@ -3,6 +3,8 @@
         CreateEmployeeController: function (scope, resourceFactory, location, dateFilter) {
             scope.offices = [];
             scope.restrictDate = new Date();
+            scope.genderOptions = [];
+            scope.staffCategoryOptions = [];
             resourceFactory.officeResource.getAllOfficesInAlphabeticalOrder(function (data) {
                 scope.offices = data;
                 scope.formData = {
@@ -11,6 +13,11 @@
                 };
             });
 
+            resourceFactory.employeeTemplateResource.get(function (data){
+                scope.genderOptions = data.genderOptions;
+                scope.staffCategoryOptions = data.staffCategoryOptions;
+            });
+            
              scope.minDat = function() {
                  for(var i=0;i<scope.offices.length;i++) {
                      if ((scope.offices[i].id) === (scope.formData.officeId)) {

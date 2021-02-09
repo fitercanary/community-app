@@ -247,6 +247,9 @@
                         getAllEmployees: {method: 'GET', params: {}, isArray: true},
                         update: { method: 'PUT' }
                     }),
+                    employeeTemplateResource: defineResource(apiVer + "/staff/template", {}, {
+                        get: {method: 'GET', params: {}}
+                    }),
                     globalSearch: defineResource(apiVer + "/search", {query: '@query', resource: '@resource'}, {
                         search: { method: 'GET',
                             params: { query: '@query' , resource: '@resource'},
