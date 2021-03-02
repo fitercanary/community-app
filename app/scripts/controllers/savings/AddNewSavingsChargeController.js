@@ -39,6 +39,7 @@
                         } else {
                             this.formData.feeOnMonthDay = "";
                         }
+                        
                     } else {
                         this.formData.dateFormat = scope.df;
                         if (scope.date.specificduedate) {
@@ -47,6 +48,11 @@
                             this.formData.dueDate = "";
                         }
                     }
+                }
+                // FIXME Added to send due date for percentage monthly withdraw charges
+                if(scope.chargeCalculationType == 7){
+                    this.formData.dateFormat = scope.df;
+                    this.formData.dueDate = dateFilter(scope.date.due, 'dd MMMM yyyy');
                 }
                 resourceFactory.savingsChargeResource.save({accountId: routeParams.id}, this.formData, function (data) {
                     location.path('/viewsavingaccount/' + routeParams.id);
