@@ -187,6 +187,7 @@
                     scope.showDateField = true;
                     scope.showNoteField = true;
                     scope.isTransaction = true;
+                    scope.loadDifferentPostingDate = true;
                     scope.transactionAmountField = true;
                     scope.showPaymentDetails = false;
                     scope.taskPermissionName = 'DEPOSIT_SAVINGSACCOUNT';
@@ -217,6 +218,7 @@
                     scope.labelName = 'label.input.transactiondate';
                     scope.modelName = 'transactionDate';
                     scope.showDateField = true;
+                    scope.loadDifferentPostingDate = true;
                     scope.showNoteField = true;
                     scope.isTransaction = true;
                     scope.transactionAmountField = true;
@@ -438,10 +440,19 @@
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
                         }
+
+                        if (this.formData.postingDate) {
+                            this.formData.postingDate = dateFilter(this.formData.postingDate, scope.df);
+                        }
+
                     } else if (scope.action == "deposit") {
                         this.formData.remarks = this.formData.note;
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
+                        }
+
+                        if (this.formData.postingDate) {
+                            this.formData.postingDate = dateFilter(this.formData.postingDate, scope.df);
                         }
                     }
                     if (scope.action == "modifytransaction") {
