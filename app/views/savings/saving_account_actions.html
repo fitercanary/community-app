@@ -53,6 +53,28 @@
 
 
             </div>
+
+
+            <div class="form-group" data-ng-show="loadDifferentPostingDate">
+                <label class="control-label col-sm-2" for="isPostingDateNotTransactionDate">Add posting date</label>
+
+                <div class="col-sm-3">
+                    <input id="isPostingDateNotTransactionDate" type="checkbox" name="Validation"
+                           ng-model="showPostingDateField" ng-checked="false"/>
+                </div>
+            </div>
+
+            <div class="form-group" ng-show="showPostingDateField">
+                <label class="control-label col-sm-2" for="modelName">Posting Date<span
+                        class="required">*</span></label>
+
+                <div class="col-sm-3">
+                    <input id="postingDate" type="text" sort datepicker-pop="dd MMMM yyyy"
+                           ng-model="formData.postingDate" is-open="opened" min="minDate" max="restrictDate" class="form-control"/>
+                </div>
+            </div>
+
+
             <div ng-show="isTransaction">
                 <div class="form-group" data-ng-show="transactionAmountField">
                     <label class="control-label col-sm-2" for="transactionAmount">{{ 'label.input.transactionamount' |
