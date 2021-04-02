@@ -50,8 +50,8 @@ jobs:
       - name: Docker publish
         uses: docker/build-push-action@v1
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
+          username: ${{ secrets.FITER_DOCKER_USERNAME }}
+          password: ${{ secrets.FITER_DOCKER_PASSWORD }}
           registry: docker.pkg.github.com
           repository: fiter1/community-app/canary-community-app
           tags: latest
