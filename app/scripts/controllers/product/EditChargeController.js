@@ -70,7 +70,9 @@
                 // 'annual fee' or 'monthly fee'
                 if (scope.formData.chargeAppliesTo === 2) {
                     if (data.chargeTimeType.value === "Annual Fee" || data.chargeTimeType.value === "Monthly Fee") {
-                        scope.showdatefield = true;
+                        if(this.formData.chargeCalculationType !== 7){
+                            scope.showdatefield = true;
+                        }
                         if (data.feeOnMonthDay) {
                             data.feeOnMonthDay.push(2013);
                             var actDate = dateFilter(data.feeOnMonthDay, 'dd MMMM');
@@ -135,6 +137,16 @@
                     return true;
                 };
             };
+
+            //when chargeCalculationType is % Total withdraws and the charge time type
+            //is Monthly Fee
+            scope.chargeCalculationType = function (chargeChargeCalculationType) {
+                if(chargeChargeCalculationType == 7){
+                    scope.showdatefield = false;
+                }else{
+                    scope.showdatefield = true;
+                }
+            }
 
             scope.submit = function () {
                 if (scope.formData.chargeAppliesTo === 2) {

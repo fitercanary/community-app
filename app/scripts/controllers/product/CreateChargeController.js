@@ -67,7 +67,10 @@
                     for (var i in scope.chargeTimeTypeOptions) {
                         if (chargeTimeType === scope.chargeTimeTypeOptions[i].id) {
                             if (scope.chargeTimeTypeOptions[i].value == "Annual Fee" || scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
-                                scope.showdatefield = true;
+                                if(this.formData.chargeCalculationType !== 7){
+                                    scope.showdatefield = true;
+                                }
+
                                 scope.repeatsEveryLabel = 'label.input.months';
                                 //to show 'repeats every' field for monthly fee
                                 if (scope.chargeTimeTypeOptions[i].value == "Monthly Fee") {
@@ -90,6 +93,16 @@
                 }
             }
 
+            //when chargeCalculationType is % Total withdraws and the charge time type
+            //is Monthly Fee
+            scope.chargeCalculationType = function (chargeChargeCalculationType) {
+                if(chargeChargeCalculationType == 7){
+                    scope.showdatefield = false;
+                }else{
+                    scope.showdatefield = true;
+                }
+            }
+
             scope.setChoice = function () {
                 if (this.formData.active) {
                     scope.choice = 1;
@@ -99,20 +112,20 @@
                 }
             };
 
-	    scope.filterChargeCalculations = function(chargeTimeType) {
+            scope.filterChargeCalculations = function(chargeTimeType) {
 
-		    return function (item) {
-			    if (chargeTimeType == 12 && ((item.id == 3) || (item.id == 4)))
-			    {
-				    return false;
-			    }
-                if (chargeTimeType != 12 && item.id == 5)
-                {
-                    return false;
-                }
-			    return true;
-		    };
-	    };
+                return function (item) {
+                    if (chargeTimeType == 12 && ((item.id == 3) || (item.id == 4)))
+                    {
+                        return false;
+                    }
+                    if (chargeTimeType != 12 && item.id == 5)
+                    {
+                        return false;
+                    }
+                    return true;
+                };
+            };
             scope.submit = function () {
                 //when chargeTimeType is 'annual' or 'monthly fee' then feeOnMonthDay added to
                 //the formData

@@ -164,7 +164,13 @@
                             }
                         }
                         scope.charges.push(data);
+
+
+                        if(data.chargeCalculationType.id === 7){
+                            scope.charges[scope.chargeId].dueDate.readonly = true;
+                        }
                         scope.chargeId = undefined;
+
                     });
                 } else {
                     scope.errorchargeevent = true;
