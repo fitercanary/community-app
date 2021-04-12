@@ -74,6 +74,7 @@
                         <select id="chargeCalculationType" name="chargecalculation"
                                 ng-model="formData.chargeCalculationType"
                                 ng-options="chargecalculation.id as chargecalculation.code | translate for chargecalculation in chargeCalculationTypeOptions | filter:filterChargeCalculations(formData.chargeTimeType)"
+                                ng-change="chargeCalculationType(formData.chargeCalculationType)"
                                 value="{{chargecalculation.id}}" class="form-control" required>
                             <option value="">{{'label.selectone' | translate}}</option>
                         </select>

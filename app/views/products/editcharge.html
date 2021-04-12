@@ -58,7 +58,9 @@
                 <div class="col-sm-3">
                     <select id="chargeCalculationType" ng-model="formData.chargeCalculationType"
                             data-ng-options="chargecalculation.id as chargecalculation.value for chargecalculation in template.chargeCalculationTypeOptions | filter:filterChargeCalculations(formData.chargeTimeType)"
-                            value="{{chargecalculation.id}}" class="form-control">
+                            value="{{chargecalculation.id}}"
+                            ng-change="chargeCalculationType(formData.chargeCalculationType)"
+                            class="form-control">
                     </select>
                 </div>
             </div>
