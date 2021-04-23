@@ -180,14 +180,30 @@
                 <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.repaymentsStartingFromDate == true"><label>{{ 'label.input.firstrepaymenton' | translate }}</label></td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.repaymentsStartingFromDate == true">
                     <input id="repaymentsStartingFromDate" type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
-                           ng-model="formData.repaymentsStartingFromDate" is-open="opened3" min="minDate"
+                           ng-model="formData.repaymentsStartingFromDate" is-open="opened3" min="minDate" ng-disabled="formData.specificGraceOnInterestPaymentPeriod"
                            />
                 </td>
+
+
+                <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.repaymentEvery == true">
+                    <label>{{ 'label.input.moritoriumSpecificPeriod' | translate }}</label>
+                </td>
+                <td class="paddedbottom20" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.repaymentEvery == true">
+                    <input id="specificGraceOnInterestPaymentPeriod" class="form-control" type="text" name="specificGraceOnInterestPaymentPeriod" ng-model="formData.specificGraceOnInterestPaymentPeriod" ng-disabled="date.interestChargedFromDate"
+                           late-Validate />
+                    <select id="specificGraceOnInterestPaymentPeriodType" class="form-control" ng-model="formData.specificGraceOnInterestPaymentPeriodType" ng-change="loandetails.specificGraceOnInterestPaymentPeriodValue = formValue(loanaccountinfo.termFrequencyTypeOptions,formData.specificGraceOnInterestPaymentPeriodType)"
+                            ng-options="repaymentFrequencyType.id as repaymentFrequencyType.value for repaymentFrequencyType in loanaccountinfo.termFrequencyTypeOptions"
+                            value="{{repaymentFrequencyType.id}}"></select>&nbsp;
+
+                </td>
+            </tr>
+
+            <tr>
                 <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestChargedFromDate == true"><label class="control-label">{{ 'label.input.interestchargedfrom' | translate }}:</label></td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestChargedFromDate == true">
                     <input id="interestChargedFromDate" type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
-                           ng-model="formData.interestChargedFromDate" is-open="opened2" min="minDate"
-                           />
+                           ng-model="formData.interestChargedFromDate" is-open="opened2" min="minDate" ng-disabled="formData.specificGraceOnInterestPaymentPeriod"
+                    />
                 </td>
             </tr>
 
@@ -260,7 +276,7 @@
                 </td>
                 <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestCharged == true"><label>{{ 'label.input.interestfreeperiod' | translate }}</label></td>
                 <td class="paddedbottom10" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestCharged == true">
-                    <input id="graceOnInterestCharged" type="text" class="form-control" ng-model="formData.graceOnInterestCharged">
+                    <input id="graceOnInterestCharged" type="text" class="form-control" ng-model="formData.graceOnInterestCharged" ng-disabled="formData.specificGraceOnInterestPaymentPeriod">
                 </td>
             </tr>
             <tr>
@@ -272,13 +288,22 @@
                             value="{{transactionProcessingStrategy.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.transactionProcessingStrategyId"/>
                 </td>
                 <td colspan=2 class="paddedbottom10">
-                    <label>{{ 'label.input.grace' | translate }}&nbsp;{{'label.input.onprincipalpayment' | translate}}</label>&nbsp;<input
+                    <label>{{ 'label.input.grace' | translate }}&nbsp;{{'label.input.onprincipalpayment' |
+                        translate}}</label>&nbsp;
+                    <input
                             id="graceOnPrincipalPayment" class="input-mini-small" type="text"
                             ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment"
-                            ng-model="formData.graceOnPrincipalPayment">&nbsp;<label ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestPayment == true">{{'label.input.oninterestpayment' |
-                        translate}}</label>&nbsp;<input ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestPayment == true" id="graceOnInterestPayment" type="text" class="input-mini-small"
-                                                        ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment"
-                                                        ng-model="formData.graceOnInterestPayment"></label>
+                            ng-disabled="formData.specificGraceOnInterestPaymentPeriod"
+                            ng-model="formData.graceOnPrincipalPayment">&nbsp;<label
+                        ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestPayment == true">{{'label.input.oninterestpayment'
+                    |
+                    translate}}</label>&nbsp;
+                    <input class="input-mini-small"
+                           id="graceOnInterestPayment" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment"
+                           ng-disabled="formData.specificGraceOnInterestPaymentPeriod"
+                           ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestPayment == true"
+                           ng-model="formData.graceOnInterestPayment"
+                           type="text"></label>
                 </td>
             </tr>
             <tr>

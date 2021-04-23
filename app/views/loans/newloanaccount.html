@@ -250,16 +250,19 @@
                             </td>
                             <td class="paddedbottom20" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.repaymentsStartingFromDate == true">
                                 <input id="repaymentsStartingFromDate" type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.fourth" is-open="opened3"
-                                    min="minDate"  class="form-control" />
+                                    min="minDate"  class="form-control" ng-disabled="formData.specificGraceOnInterestPaymentPeriod"/>
                             </td>
-                            <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestChargedFromDate == true">
-                                <label class="control-label">{{ 'label.input.interestchargedfrom' | translate }}:
-                                </label>
-                                <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.interestchargedfrom' | translate}}"></i>
+
+                            <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.repaymentEvery == true">
+                                <label>{{ 'label.input.moritoriumSpecificPeriod' | translate }}</label>
                             </td>
-                            <td class="paddedbottom20" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestChargedFromDate == true">
-                                <input id="interestChargedFromDate" type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.third" is-open="opened2" min="minDate"
-                                     class="form-control" />
+                            <td class="paddedbottom20" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.repaymentEvery == true">
+                                <input id="specificGraceOnInterestPaymentPeriod" class="form-control" type="text" name="specificGraceOnInterestPaymentPeriod" ng-model="formData.specificGraceOnInterestPaymentPeriod" ng-disabled="date.fourth"
+                                       late-Validate />
+                                <select id="specificGraceOnInterestPaymentPeriodType" class="form-control" ng-model="formData.specificGraceOnInterestPaymentPeriodType" ng-change="loandetails.repaymentFrequencyValue = formValue(loanaccountinfo.termFrequencyTypeOptions,formData.specificGraceOnInterestPaymentPeriodType)"
+                                        ng-options="specificGraceOnInterestPaymentPeriodType.id as specificGraceOnInterestPaymentPeriodType.value for specificGraceOnInterestPaymentPeriodType in loanaccountinfo.termFrequencyTypeOptions"
+                                        value="{{specificGraceOnInterestPaymentPeriodType.id}}"></select>&nbsp;
+
                             </td>
                         </tr>
                         <tr ng-show="!loanaccountinfo.isLoanProductLinkedToFloatingRate">
@@ -319,6 +322,14 @@
                                     ng-options="amortizationType.id as amortizationType.value for amortizationType in loanaccountinfo.amortizationTypeOptions"
                                     value="{{amortizationType.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.amortizationType"></select>
                             </td>
+
+                            <td colspan="2" ng-disabled="formData.specificGraceOnInterestPaymentPeriod" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestCalculationPeriodType == true || formData.interestCalculationPeriodType == 0">
+                                <label>{{ 'label.input.allowpartialperiodinterestcalcualtion' | translate }}&nbsp;</label>
+                                <label class="checkbox control-label">
+                                    <input id="allowPartialPeriodInterestCalcualtion" type="checkbox" ng-model="formData.allowPartialPeriodInterestCalcualtion"
+                                           ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.interestCalculationPeriodType">
+                                </label>
+                            </td>
                         </tr>
                         <tr>
                             <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestCalculationPeriodType == true">
@@ -331,12 +342,16 @@
                                     ng-options="interestCalculationPeriodType.id as interestCalculationPeriodType.value for interestCalculationPeriodType in loanaccountinfo.interestCalculationPeriodTypeOptions"
                                     class="form-control width170px" value="{{interestCalculationPeriodType.id}}" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.interestCalculationPeriodType"></select>
                             </td>
-                            <td colspan="2" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestCalculationPeriodType == true || formData.interestCalculationPeriodType == 0">
-                                <label>{{ 'label.input.allowpartialperiodinterestcalcualtion' | translate }}&nbsp;</label>
-                                <label class="checkbox control-label">
-                                    <input id="allowPartialPeriodInterestCalcualtion" type="checkbox" ng-model="formData.allowPartialPeriodInterestCalcualtion"
-                                        ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.interestCalculationPeriodType">
+
+
+                            <td ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestChargedFromDate == true">
+                                <label class="control-label">{{ 'label.input.interestchargedfrom' | translate }}:
                                 </label>
+                                <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.interestchargedfrom' | translate}}"></i>
+                            </td>
+                            <td class="paddedbottom20" ng-disabled="formData.specificGraceOnInterestPaymentPeriod" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.interestChargedFromDate == true">
+                                <input id="interestChargedFromDate" type="text" datepicker-pop="dd MMMM yyyy" ng-model="date.third"  ng-disabled="formData.specificGraceOnInterestPaymentPeriod" is-open="opened2" min="minDate"
+                                       class="form-control" />
                             </td>
 
                         </tr>
@@ -352,7 +367,7 @@
                                 <label>{{ 'label.input.interestfreeperiod' | translate }}</label>
                             </td>
                             <td class="paddedbottom20" ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestCharged == true">
-                                <input id="graceOnInterestCharged" type="text" ng-model="formData.graceOnInterestCharged" class="form-control" />
+                                <input id="graceOnInterestCharged" type="text" ng-model="formData.graceOnInterestCharged" ng-disabled="formData.specificGraceOnInterestPaymentPeriod" class="form-control" />
                             </td>
                         </tr>
                         <tr>
@@ -371,15 +386,15 @@
                                 <lable>{{'label.input.grace' | translate }}:</lable>
                                 <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.moratorium' | translate}}"></i>
                                 <label>{{'label.input.onprincipalpayment' | translate}}</label>
-                                <input id="graceOnPrincipalPayment" type="text" class="input-mini-medium" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment"
+                                <input id="graceOnPrincipalPayment" type="text" class="input-mini-medium" ng-disabled="formData.specificGraceOnInterestPaymentPeriod" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment"
                                     ng-model="formData.graceOnPrincipalPayment">
                                 <label ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestPayment == true">{{'label.input.oninterestpayment' | translate}}</label>
                                 <input ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnInterestPayment == true" id="graceOnInterestPayment"
-                                    type="text" class="input-mini-medium" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment"
+                                    type="text" class="input-mini-medium" ng-disabled="formData.specificGraceOnInterestPaymentPeriod" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnPrincipalAndInterestPayment"
                                     ng-model="formData.graceOnInterestPayment">
                                 <label ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnArrearsAgeing == true">{{'label.input.onduedate' | translate}}</label>
                                 <input ng-hide="response.uiDisplayConfigurations.loanAccount.isHiddenField.graceOnArrearsAgeing == true" id="graceOnArrearsAgeing"
-                                    type="text" class="input-mini-medium" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnArrearsAgeing"
+                                    type="text" class="input-mini-medium" ng-disabled="formData.specificGraceOnInterestPaymentPeriod" ng-disabled="!loanaccountinfo.product.allowAttributeOverrides.graceOnArrearsAgeing"
                                     ng-model="formData.graceOnArrearsAgeing">
                             </td>
                         </tr>
@@ -618,7 +633,7 @@
                                 <td>{{charge.chargeTimeType.value}}</td>
                                 <td>
                                     <input id="charges[{{$index}}].duedate" type="text" datepicker-pop="dd MMMM yyyy" class="form-control" placeholder="{{'label.input.duedate' | translate}}"
-                                        ng-model="charge.dueDate" is-open="'openedch'+$index" min="minDate" 
+                                        ng-model="charge.dueDate" is-open="'openedch'+$index" min="minDate"
                                     />
                                 </td>
                                 <td>
@@ -968,7 +983,16 @@
                                 <strong>{{'label.input.grace' | translate }}</strong>
                             </td>
                         </tr>
+
                         <tr class="toppadding">
+                            <td colspan="6">{{'label.input.moratoriumperiod' | translate}}</td>
+                            <td>{{formData.specificGraceOnInterestPaymentPeriod}}</td>
+                        </tr>
+                        <tr>
+                            <td colspan="6">{{'label.input.moratoriumperiodtype' | translate}}</td>
+                            <td>{{formData.specificGraceOnInterestPaymentPeriodType}}</td>
+                        </tr>
+                        <tr>
                             <td colspan="6">{{'label.input.onprincipalpayment' | translate}}</td>
                             <td>{{formData.graceOnPrincipalPayment}}</td>
                         </tr>
