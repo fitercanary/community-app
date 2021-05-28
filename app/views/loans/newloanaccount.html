@@ -285,7 +285,7 @@
                                         ng-options="interestType.id as interestType.value for interestType in loanaccountinfo.interestTypeOptions"
                                         class="form-control width170px" value="{{interestType.id}}"></select>
                                     <label class="col-sm-offset-1">{{ 'label.input.isequalamortization' | translate }}</label>
-                                    <input type="checkbox" ng-model="formData.isEqualAmortization" ng-true-value="true" ng-false-value="false">
+                                    <input type="checkbox" ng-model="formData.isEqualAmortization" ng-true-value="true" ng-false-value="false" ng-disabled="formData.specificGraceOnInterestPaymentPeriod">
                                 </div>
                             </td>
                         </tr>
