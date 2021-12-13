@@ -79,6 +79,12 @@
                     case "withdraw":
                         location.path('/savingaccount/' + accountId + '/withdrawal');
                         break;
+                    case "depositFromGL":
+                        location.path('/savingaccount/' + accountId + '/depositFromGL');
+                        break;
+                    case "withdrawToGL":
+                        location.path('/savingaccount/' + accountId + '/withdrawalToGL');
+                        break;
                     case "addcharge":
                         location.path('/savingaccounts/' + accountId + '/charges');
                         break;
@@ -299,8 +305,15 @@
                                         {
                                             name: "button.updateInterestRate",
                                             taskPermissionName:"UPDATEINTERESTRATE_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                            name: "button.depositFromGL",
+                                            taskPermissionName:"DEPOSIT_GL_TO_SAVINGSACCOUNT"
+                                        },
+                                        {
+                                            name: "button.withdrawToGL",
+                                            taskPermissionName:"WITHDRAW_SAVINGSACCOUNT_TO_GL"
                                         }
-
                                     ]
 
 
@@ -531,6 +544,14 @@
                             {
                                 name: "button.updateInterestRate",
                                 taskPermissionName:"UPDATEINTERESTRATE_SAVINGSACCOUNT"
+                            },
+                            {
+                                name: "button.depositFromGL",
+                                taskPermissionName:"DEPOSIT_GL_TO_SAVINGSACCOUNT"
+                            },
+                            {
+                                name: "button.withdrawToGL",
+                                taskPermissionName:"WITHDRAW_SAVINGSACCOUNT_TO_GL"
                             }
                         ]
 

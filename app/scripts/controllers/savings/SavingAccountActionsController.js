@@ -12,9 +12,11 @@
             scope.restrictDate = new Date();
             // Transaction UI Related
             scope.isTransaction = false;
+            scope.isGLTransaction = false;
             scope.transactionAmountField = false;
             scope.showPaymentDetails = false;
             scope.paymentTypes = [];
+            scope.glAccounts = [];
             scope.submittedDatatables = [];
             scope.tf = "HH:mm";
             var submitStatus = [];
@@ -192,6 +194,23 @@
                     scope.showPaymentDetails = false;
                     scope.taskPermissionName = 'DEPOSIT_SAVINGSACCOUNT';
                     break;
+                case "depositFromGL":
+                    resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
+                        scope.glAccounts = data.glAccountOptions;
+                        console.log(data)
+                    });
+                    scope.title = 'label.heading.depositmoneyfromgltosavingaccount';
+                    scope.labelName = 'label.input.transactiondate';
+                    scope.modelName = 'transactionDate';
+                    scope.showDateField = false;
+                    scope.showNoteField = true;
+                    scope.isTransaction = true;
+                    scope.isGLTransaction = true;
+                    scope.loadDifferentPostingDate = false;
+                    scope.transactionAmountField = true;
+                    scope.showPaymentDetails = false;
+                    scope.taskPermissionName = 'DEPOSIT_GL_TO_SAVINGSACCOUNT';
+                    break;
                 case "postInterestAsOn":
                     resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
                        scope.accountnumber=data.accountNo;
@@ -224,6 +243,24 @@
                     scope.transactionAmountField = true;
                     scope.showPaymentDetails = false;
                     scope.taskPermissionName = 'WITHDRAWAL_SAVINGSACCOUNT';
+                    scope.fetchEntities('m_savings_account','WITHDRAWN');
+                    break;
+                case "withdrawalToGL":
+                    resourceFactory.savingsTrxnsTemplateResource.get({savingsId: scope.accountId}, function (data) {
+                        scope.glAccounts = data.glAccountOptions;
+                        console.log(data)
+                    });
+                    scope.title = 'label.heading.withdrawmoneyfromsavingtoglaccount';
+                    scope.labelName = 'label.input.transactiondate';
+                    scope.modelName = 'transactionDate';
+                    scope.showDateField = false;
+                    scope.loadDifferentPostingDate = false;
+                    scope.showNoteField = true;
+                    scope.isTransaction = true;
+                    scope.isGLTransaction = true;
+                    scope.transactionAmountField = true;
+                    scope.showPaymentDetails = false;
+                    scope.taskPermissionName = 'WITHDRAW_SAVINGSACCOUNT_TO_GL';
                     scope.fetchEntities('m_savings_account','WITHDRAWN');
                     break;
                 case "applyAnnualFees":
@@ -434,8 +471,8 @@
                     }
                     this.formData.isPostInterestAsOn=true;
                 }
-                if (scope.action == "deposit" || scope.action == "withdrawal" || scope.action == "modifytransaction" || scope.action=="postInterestAsOn") {
-                    if (scope.action == "withdrawal") {
+                if (scope.action == "deposit" || scope.action == "depositFromGL" || scope.action == "withdrawal" || scope.action == "withdrawalToGL" || scope.action == "modifytransaction" || scope.action=="postInterestAsOn") {
+                    if (scope.action == "withdrawal" || scope.action == "withdrawalToGL") {
                         this.formData.remarks = this.formData.note;
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
@@ -445,7 +482,7 @@
                             this.formData.postingDate = dateFilter(this.formData.postingDate, scope.df);
                         }
 
-                    } else if (scope.action == "deposit") {
+                    } else if (scope.action == "deposit" || scope.action == "depositFromGL") {
                         this.formData.remarks = this.formData.note;
                         if (this.formData.transactionDate) {
                             this.formData.transactionDate = dateFilter(this.formData.transactionDate, scope.df);
