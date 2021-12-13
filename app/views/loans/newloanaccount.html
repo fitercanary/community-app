@@ -101,8 +101,20 @@
                             <td class="paddedbottom20 width36">
                                 <input type="text" id="externalId" name="externalId" ng-model="formData.externalId" class="form-control" />
                             </td>
-                            <td></td>
-                            <td></td>
+                            <td class="width14">
+                                <label title="{{ 'label.input.repaymentinstrument' | translate }}">{{ 'label.input.repaymentinstrument' | translate }}
+                                    <span class="required">*</span>:&nbsp;
+                                </label>
+                                <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.repaymentinstrument' | translate}}"></i>
+                            </td>
+                            <td class="width36 paddedbottom20">
+                                <select id="paymentTypeId" ng-model="formData.paymentTypeId" class="form-control width170px" ng-options="paymentType.id as paymentType.name for paymentType in loanaccountinfo.paymentTypeOptions"
+                                    value="{{paymentType.id}}" ng-change="loandetails.paymentTypeValue = formValue(loanaccountinfo.paymentTypeOptions,formData.paymentTypeId,'id','value')" class="form-control width170px"
+                                    required="required">
+                                    </option>
+                                </select>
+                            </select>
+                            </td>
                         </tr>
                     </table>
                     <div ng-hide="loanaccountinfo.calendarOptions == undefined">

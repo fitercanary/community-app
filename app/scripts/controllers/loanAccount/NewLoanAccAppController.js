@@ -66,6 +66,10 @@
                 // scope.datatables = [];
                 resourceFactory.loanResource.get(scope.inparams, function (data) {
                     scope.loanaccountinfo = data;
+                    if (data.paymentTypeOptions.length > 0) {
+                        scope.formData.paymentTypeId = data.paymentTypeOptions[0].id;
+                    }
+                    console.log(data)
                     scope.previewClientLoanAccInfo();
                     scope.datatables = data.datatables;
                     scope.handleDatatables(scope.datatables);

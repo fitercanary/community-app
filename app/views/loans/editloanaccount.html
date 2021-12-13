@@ -74,8 +74,20 @@
         <td class="paddedbottom10">
             <input type="text" id="externalId" name="externalId" ng-model="formData.externalId" class="form-control"/>
         </td>
-        <td></td>
-        <td></td>
+        <td>
+            <label>{{ 'label.input.repaymentinstrument' | translate }}
+                <span class="required">*</span>:&nbsp;
+            </label>
+            <i class="fa fa-question-circle" uib-tooltip="{{'label.tooltip.repaymentinstrument' | translate}}"></i>
+        </td>
+        <td>
+            <select id="paymentTypeId" ng-model="formData.paymentTypeId" class="form-control width170px" ng-options="paymentType.id as paymentType.name for paymentType in loanaccountinfo.paymentTypeOptions"
+                value="{{paymentType.id}}" class="form-control width170px"
+                required="required">
+                </option>
+            </select>
+        </select>
+        </td>
     </tr>
 </table>
 <div ng-hide="previewRepayment">

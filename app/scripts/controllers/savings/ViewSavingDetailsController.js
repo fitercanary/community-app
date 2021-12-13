@@ -744,11 +744,11 @@
 
                 if(selectedOutputType === 'XLS'){
                        scope.formData.outputType = selectedOutputType;
-                       scope.reportName = 'Client Saving Transactions excel';
+                       scope.reportName = 'Client Saving Transactions';
                 }
                 else if(selectedOutputType === 'PDF'){
                         scope.formData.outputType = selectedOutputType;
-                        scope.reportName = 'Client Saving Transactions pdf';
+                        scope.reportName = 'Client Saving Transactions';
                  }
 
                 scope.baseURL = $rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent(scope.reportName);
