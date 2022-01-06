@@ -742,14 +742,15 @@
                 scope.viewReport = true;
                 scope.hidePentahoReport = true;
 
-                if(selectedOutputType === 'XLS'){
-                       scope.formData.outputType = selectedOutputType;
-                       scope.reportName = 'Client Saving Transactions';
+                // if(selectedOutputType === 'XLS'){
+                //        scope.formData.outputType = selectedOutputType;
+                //        scope.reportName = 'Client Saving Transactions excel';
+                // }
+                
+                if (selectedOutputType === 'PDF'){
+                    scope.formData.outputType = selectedOutputType;
+                    scope.reportName = 'Client Saving Transactions';
                 }
-                else if(selectedOutputType === 'PDF'){
-                        scope.formData.outputType = selectedOutputType;
-                        scope.reportName = 'Client Saving Transactions';
-                 }
 
                 scope.baseURL = $rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent(scope.reportName);
                 scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + $rootScope.tenantIdentifier+"&locale="+scope.optlang.code + "&dateFormat=" + scope.df;
