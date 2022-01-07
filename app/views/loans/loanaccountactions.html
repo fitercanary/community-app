@@ -116,7 +116,6 @@
                 <div class="form-group" ng-show="showAmountField">
                     <label class="control-label col-sm-2" for="transactionAmount">{{ 'label.input.transactionamount' |
                         translate}}<span class="required">*</span></label>
-
                     <div class="col-sm-3">
                         <input id="transactionAmount" type="text" name="amount" ng-model="formData.transactionAmount"
                                class="form-control"
@@ -253,6 +252,38 @@
                                 <input id="bankNumber" class="form-control" type="text" ng-model="formData.bankNumber">
                             </div>
                         </div>
+                    </div>
+                </div>
+            </div>
+            <div ng-show="isModifySchedule">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="modelName">{{ 'label.input.installmentDate' | translate}}<span
+                            class="required"></span></label>
+
+                    <div class="col-sm-3">
+                        <input id="{{modelName}}" sort type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
+                            ng-model="formData[modelName]" min="'2000-01-01'" max="restrictDate"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="principalPortion">{{ 'label.input.totalinstallmentamount' |
+                        translate}}</label>
+
+                    <div class="col-sm-3">
+                        <input id="principalPortion" type="text" name="principalPortion" ng-model="formData.principalPortion"
+                               class="form-control"
+                               number-format required late-Validate>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="interestPortion">{{ 'label.input.interest' |
+                        translate}}<span class="required"></span></label>
+
+                    <div class="col-sm-3">
+                        <input id="interestPortion" type="text" name="interest" ng-model="formData.interestPortion"
+                               class="form-control"
+                               number-format required late-Validate>
                     </div>
                 </div>
             </div>

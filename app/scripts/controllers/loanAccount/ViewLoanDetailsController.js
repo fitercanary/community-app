@@ -79,6 +79,9 @@
                     case "prepayment":
                         location.path('/loanaccount/' + accountId + '/prepayloan');
                         break;
+                    case "modifyschedule":
+                        location.path('/loanaccount/' + accountId + '/modifyschedule');
+                        break;
                     case "waiveinterest":
                         location.path('/loanaccount/' + accountId + '/waiveinterest');
                         break;
@@ -325,6 +328,10 @@
                         }
                     ],
                         options: [
+                            {
+                                name: "button.modifyschedule",
+                                taskPermissionName: 'MODIFY_SCHEDULE'
+                            },
                             {
                                 name: "button.waiveinterest",
                                 taskPermissionName: 'WAIVEINTERESTPORTION_LOAN'

@@ -10,6 +10,9 @@
             scope.showDateField = true;
             scope.showNoteField = true;
             scope.showAmountField = false;
+            scope.showInterestField = false;
+            scope.isModifySchedule = false;
+            scope.totalInstallmentsPaid = 0;
             scope.restrictDate = new Date();
             // Transaction UI Related
             scope.isTransaction = false;
@@ -244,6 +247,45 @@
                     scope.prePayAction = scope.action;
                     scope.action = 'repayment';
                     break;
+                case "modifyschedule":
+                    scope.modelName = 'expectedDisbursementDate';
+                    resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'repayment'}, function (data) {
+                        scope.formData.principalPortion = data.principalPortion;
+                        scope.formData.interestPortion = data.interestPortion;
+                        scope.formData.principal = data.outstandingLoanBalance;
+                        scope.totalInstallmentsPaid = data.installment;
+                        scope.formData[scope.modelName] = new Date(data.date) || new Date();
+                    });
+                    scope.title = 'label.heading.modifyschedule';
+                    scope.labelName = 'label.input.transactiondate';
+                    scope.showAmountField = false;
+                    scope.showNoteField = false;
+                    scope.showDateField = false;
+                    scope.isModifySchedule = true;
+                    scope.taskPermissionName = 'MODIFY_SCHEDULE';
+
+                    resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: routeParams.id, associations: 'all',
+                    exclude: 'guarantors,futureSchedule'}, function (loanData) {
+                     scope.formData.amortizationType = loanData.amortizationType.id
+                     scope.formData.interestCalculationPeriodType = loanData.interestCalculationPeriodType.id
+                     scope.formData.interestRateFrequencyType = loanData.interestRateFrequencyType.id;
+                     scope.formData.interestRatePerPeriod = loanData.interestRatePerPeriod
+                     scope.formData.loanTermFrequency = loanData.termFrequency
+                     scope.formData.loanTermFrequencyType = loanData.termPeriodFrequencyType.id
+                     scope.formData.productId = loanData.loanProductId
+                     scope.formData.repaymentFrequencyType = loanData.repaymentFrequencyType.id
+                     scope.formData.numberOfRepayments = loanData.numberOfRepayments - scope.totalInstallmentsPaid
+                     scope.formData.clientId = loanData.clientId
+                     scope.formData.loanType = loanData.loanType.value.toLowerCase()
+                     scope.formData.repaymentEvery = loanData.repaymentEvery
+                     scope.formData.interestType = loanData.interestType.id
+                     scope.formData.transactionProcessingStrategyId = loanData.transactionProcessingStrategyId
+                     scope.formData.syncDisbursementWithMeeting = false
+                     scope.formData.isEqualAmortization = false
+                     scope.formData.createStandingInstructionAtDisbursement = false
+                     scope.formData.allowPartialPeriodInterestCalcualtion = false
+                    });
+                       break;
                 case "waiveinterest":
                     scope.modelName = 'transactionDate';
                     resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'waiveinterest'}, function (data) {
@@ -523,7 +565,6 @@
                         params.command = 'modify';
                         params.transactionId = routeParams.transactionId;
                     }
-                    console.log(scope.prePayAction);
                     if(scope.prePayAction == "prepayloan"){
                     this.formData.isPrepay = true;
                     }
@@ -531,6 +572,19 @@
                     resourceFactory.loanTrxnsResource.save(params, this.formData, function (data) {
                         location.path('/viewloanaccount/' + data.loanId);
                     });
+                } else if (scope.action == "modifyschedule") {
+                    this.formData.submittedOnDate = this.formData.expectedDisbursementDate
+
+                    params.loanId = routeParams.id
+                    resourceFactory.LoanAccountResource.save(params, this.formData, function (data) {
+                        resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'repayment'}, function (data) {
+                            scope.formData.principal = data.outstandingLoanBalance;
+                            resourceFactory.LoanAccountResource.save(params, scope.formData, function(data) {
+                                location.path('/viewloanaccount/' + data.loanId);
+                            })
+                        });
+                    });
+                    
                 } else if (scope.action == "deleteloancharge") {
                     resourceFactory.LoanAccountResource.delete({loanId: routeParams.id, resourceType: 'charges', chargeId: routeParams.chargeId}, this.formData, function (data) {
                         location.path('/viewloanaccount/' + data.loanId);
@@ -593,7 +647,6 @@
                         location.path('/viewloanaccount/' + data.loanId);
                     });
                 } else {
-                    console.log("else");
                     params.loanId = scope.accountId;
                     var allCharges = [];
                 if(scope.action == "disbursetosavings"){
@@ -605,7 +658,6 @@
                     resourceFactory.LoanAccountResource.save(params, this.formData, function (data) {
                     resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: data.loanId, associations: 'all',
                        exclude: 'guarantors,futureSchedule'}, function (loanData) {
-                       console.log(loanData.charges);
                        if(angular.isDefined(loanData.charges)){
                        for (let i = 0; i < loanData.charges.length; i++) {
                            var charge = loanData.charges[i];
@@ -630,8 +682,6 @@
                                  }else{
                                    location.path('/viewloanaccount/' + data.loanId);
                                  }
-                                 console.log(fundTransferData, "fundtransfer");
-
                        }
                        fundTransferData.transferAmount = amount;
                        resourceFactory.accountTransferResource.save(fundTransferData, function (accData) {
