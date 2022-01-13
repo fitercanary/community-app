@@ -527,6 +527,10 @@
                 });
             };
 
+            scope.toggleShowInterestField = function () {
+                scope.showInterestField = !scope.showInterestField;
+            }
+
             scope.submit = function () {
                 scope.processDate = false;
                 var params = {command: scope.action};
@@ -574,6 +578,11 @@
                     });
                 } else if (scope.action == "modifyschedule") {
                     this.formData.submittedOnDate = this.formData.expectedDisbursementDate
+                    if (this.showInterestField) {
+                        this.formData.modifyInstallmentAction = "updateInterest";
+                    } else {
+                        this.formData.modifyInstallmentAction = "updatePrincipal";
+                    }
 
                     params.loanId = routeParams.id
                     resourceFactory.LoanAccountResource.save(params, this.formData, function (data) {

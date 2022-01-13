@@ -265,7 +265,7 @@
                             ng-model="formData[modelName]" min="'2000-01-01'" max="restrictDate"/>
                     </div>
                 </div>
-                <div class="form-group">
+                <div class="form-group" uib-collapse="showInterestField">
                     <label class="control-label col-sm-2" for="principalPortion">{{ 'label.input.totalinstallmentamount' |
                         translate}}</label>
 
@@ -277,14 +277,26 @@
                 </div>
 
                 <div class="form-group">
-                    <label class="control-label col-sm-2" for="interestPortion">{{ 'label.input.interest' |
-                        translate}}<span class="required"></span></label>
+                    <label class="control-label col-sm-2">{{ 'label.anchor.showinterestportion' | translate}}</label>
 
                     <div class="col-sm-3">
-                        <input id="interestPortion" type="text" name="interest" ng-model="formData.interestPortion"
-                               class="form-control"
-                               number-format required late-Validate>
+                        <a class="btn btn-primary" ng-click="toggleShowInterestField()">
+                            <i ng-show="showInterestField" class="fa fa-minus "></i>
+                            <i ng-show="!showInterestField" class="fa fa-plus "></i>
+                        </a>
                     </div>
+                </div>
+                <div uib-collapse="!showInterestField">
+                    <div class="form-group">
+                        <label class="control-label col-sm-2" for="interestPortion">{{ 'label.input.interest' |
+                            translate}}<span class="required"></span></label>
+
+                        <div class="col-sm-3">
+                            <input id="interestPortion" type="text" name="interest" ng-model="formData.interestPortion"
+                                   class="form-control"
+                                   number-format required late-Validate>
+                        </div>
+                    </div>                  
                 </div>
             </div>
             <div class="form-group" ng-show="showNoteField">
