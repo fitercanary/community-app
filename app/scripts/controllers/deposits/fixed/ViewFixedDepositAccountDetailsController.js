@@ -121,7 +121,10 @@
                     break;
                     case "freeze" :
                           location.path('/fixeddepositaccount/' + accountId + '/freeze');
-                    break;
+                          break;
+                    case "downloadInvestmentLetter":
+                        location.path('/fixeddepositaccount/' + accountId + '/downloadInvestmentLetter');
+                        break;
                 }
             };
 
@@ -247,6 +250,9 @@
                             {
                                 name: "button.freeze",
                                 taskPermissionName : ""
+                            },
+                            {
+                                name: "button.downloadInvestmentLetter"
                             }
                         ]
 

@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        FixedDepositAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter) {
+        FixedDepositAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter, $sce, API_VERSION) {
 
             scope.action = routeParams.action || "";
             scope.accountId = routeParams.id;
@@ -14,7 +14,9 @@
             scope.activationChargeAmount = 0;
             scope.totalAmountIncludingActivationCharge = 0;
             scope.depositAmount = 0;
+            scope.paramValue = 0;
             scope.showBlock = false;
+            scope.report = false;
             if(scope.action=='activate'){
                 resourceFactory.fixedDepositAccountResource.get({accountId: scope.savingAccountId, associations:'charges'}, function (data) {
                         scope.totalAmountIncludingActivationCharge = data.depositAmount+parseFloat(data.activationCharge);
@@ -161,7 +163,27 @@
                     break;
                 case "waive":
                     scope.waiveCharge = true;
-                break;
+                    break;
+                case "downloadInvestmentLetter":
+                    scope.title = 'label.heading.downloadinvestmentletter';
+
+                    resourceFactory.savingsResource.get({accountId: routeParams.id, associations: 'all'
+                    }, function (data) {
+                        scope.report = true;
+                        scope.reportName = 'Savings Investment Contract';
+        
+                        scope.baseURL = rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent(scope.reportName);
+                        scope.baseURL += "?output-type=" + encodeURIComponent('PDF') + "&tenantIdentifier=" + rootScope.tenantIdentifier+"&locale="+scope.optlang.code + "&dateFormat=" + scope.df;
+                        scope.reportParams = encodeURIComponent("R_accountno") + "=" + encodeURIComponent(data.accountNo);
+
+                        if (scope.reportParams > "") {
+                            scope.baseURL += "&" + scope.reportParams;
+                        }
+        
+                        // allow untrusted urls for iframe http://docs.angularjs.org/error/$sce/insecurl
+                        scope.viewReportResult = $sce.trustAsResourceUrl(scope.baseURL);
+                    })
+                    break;
                 case "freeze":
                     scope.showBlock = true;
                     console.log(scope.showBlock);
@@ -372,7 +394,7 @@
 
         }
     });
-    mifosX.ng.application.controller('FixedDepositAccountActionsController', ['$scope', '$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.FixedDepositAccountActionsController]).run(function ($log) {
+    mifosX.ng.application.controller('FixedDepositAccountActionsController', ['$scope', '$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', '$sce', 'API_VERSION', mifosX.controllers.FixedDepositAccountActionsController]).run(function ($log) {
         $log.info("FixedDepositAccountActionsController initialized");
     });
 }(mifosX.controllers || {}));
