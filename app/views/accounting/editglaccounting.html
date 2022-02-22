@@ -100,6 +100,7 @@
 					<select id="cbnCategoryId" ng-model="formData.cbnCategoryId" class="form-control"
 							ng-options="cbnCategory.id as cbnCategory.name for cbnCategory in cbnCategories" 
 							value="{{cbnCategory.id}}" >
+							<option value="">{{'label.selectcbncategory' | translate}}</option>
 					</select>
 				</div>
 				<label class="control-label col-sm-4" for="cbnSubCategoryId">{{'label.input.cbnsubcategory' | translate}}</label>
@@ -107,6 +108,7 @@
 					<select id="cbnSubCategoryId" ng-model="formData.cbnSubCategoryId" class="form-control"
 							ng-options="cbnSubCategory.id as cbnSubCategory.name for cbnSubCategory in cbnSubCategories"
 							value="{{cbnSubCategory.id}}">
+							<option value="">{{'label.selectcbnsubcategory' | translate}}</option>
 					</select>
 				</div>
 			</div>
