@@ -2147,6 +2147,7 @@
   "label.account.deposit.principal.amount": "Principal Amount",
   "label.account.deposit.target.amount": "Target Amount",
   "label.account.deposit.period": "Period",
+  "label.account.linkedAccount.accountNo": "Linked Savings Account",
   "label.account.maturity.date": "Maturity Date",
   "label.account.maturity.amount": "Maturity Amount",
   "label.account.target.maturity.amount": "Target Maturity Amount",

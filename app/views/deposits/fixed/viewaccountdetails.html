@@ -93,8 +93,12 @@
                         </td>
                     </tr>
                     <tr>
-                        <td>{{ 'label.input.applywithdrawalfeefortransfers' | translate }}</td>
-                        <td colspan="6">{{savingaccountdetails.withdrawalFeeForTransfers}}</td>
+                        <th class="active fontnormal">{{ 'label.input.applywithdrawalfeefortransfers' | translate }}</th>
+                        <td colspan="6"><span class="padded-td">{{savingaccountdetails.withdrawalFeeForTransfers}}</span></td>
+                    </tr>
+                    <tr>
+                        <th class="active fontnormal">{{'label.account.linkedAccount.accountNo' | translate}}</th>
+                        <td colspan="6"><span class="padded-td">{{savingaccountdetails.linkedAccount.accountNo}}</span></td>
                     </tr>
                 </table>
                 <br>
@@ -312,6 +316,10 @@
                                 <tr>
                                     <td>{{ 'label.input.applywithdrawalfeefortransfers' | translate }}</td>
                                     <td colspan="6">{{savingaccountdetails.withdrawalFeeForTransfers}}</td>
+                                </tr>
+                                <tr>
+                                    <td>{{'label.account.linkedAccount.accountNo' | translate}}</td>
+                                    <td colspan="6">{{savingaccountdetails.linkedAccount.accountNo}}</td>
                                 </tr>
                             </table>
                     <hr class="marginbottom"/>
