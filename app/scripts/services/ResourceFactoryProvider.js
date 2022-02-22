@@ -288,6 +288,7 @@
                     journalEntriesResource: defineResource(apiVer + "/journalentries/:trxid", {trxid: '@transactionId'}, {
                         get: {method: 'GET', params: {transactionId: '@transactionId'}},
                         reverse: {method: 'POST', params: {command: 'reverse'}},
+                        multipost: {method: 'POST', params: {command: 'makeMultiplePostings'}},
                         search: {method: 'GET', params: {}}
                     }),
                     accountingClosureResource: defineResource(apiVer + "/glclosures/:accId", {accId: "@accId"}, {

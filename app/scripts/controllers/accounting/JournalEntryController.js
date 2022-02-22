@@ -5,6 +5,8 @@
             scope.formData = {};
             scope.formData.crAccounts = [{}];
             scope.formData.dbAccounts = [{}];
+            scope.formData.crSavings = [{}];
+            scope.formData.dbSavings = [{}];
             scope.first = {};
             scope.errorcreditevent = false;
             scope.errordebitevent = false;
@@ -14,6 +16,10 @@
             scope.showPaymentDetails = false;
             resourceFactory.accountCoaResource.getAllAccountCoas({manualEntriesAllowed: true, usage: 1, disabled: false}, function (data) {
                 scope.glAccounts = data;
+            });
+
+            resourceFactory.savingsResource.get({}, function (data) {
+                scope.savingsAccounts = data.pageItems;
             });
 
             resourceFactory.paymentTypeResource.getAll( function (data) {
@@ -39,6 +45,14 @@
                 scope.formData.crAccounts.splice(index, 1);
             }
 
+            scope.addSavingsCredit = function () {
+                scope.formData.crSavings.push({});
+            }
+
+            scope.removeSavingsCredit = function (index) {
+                scope.formData.crSavings.splice(index, 1);
+            }
+
             //events for debits
             scope.addDebitAccount = function () {
                     scope.formData.dbAccounts.push({});
@@ -46,6 +60,14 @@
 
             scope.removeDebitAccount = function (index) {
                 scope.formData.dbAccounts.splice(index, 1);
+            }
+
+            scope.addSavingsDebit = function () {
+                scope.formData.dbSavings.push({});
+            }
+
+            scope.removeSavingsDebit = function (index) {
+                scope.formData.dbSavings.splice(index, 1);
             }
 
             scope.submit = function () {
@@ -57,6 +79,7 @@
                 jeTransaction.transactionDate = reqDate;
                 jeTransaction.referenceNumber = this.formData.referenceNumber;
                 jeTransaction.comments = this.formData.comments;
+                jeTransaction.note = this.formData.comments;
                 jeTransaction.currencyCode = this.formData.currencyCode;
                 jeTransaction.paymentTypeId = this.formData.paymentTypeId;
                 jeTransaction.accountNumber = this.formData.accountNumber;
@@ -75,6 +98,18 @@
                     temp.amount = this.formData.crAccounts[i].crAmount;
                     jeTransaction.credits.push(temp);
                 }
+                //Construct savingsCredits array
+                jeTransaction.savingsCredits = [];
+                for (var i = 0; i < this.formData.crSavings.length; i++) {
+                    var temp = new Object();
+                    if(this.formData.crSavings[i].select){
+                    	temp.savingsAccountId = this.formData.crSavings[i].select.id;
+                        temp.savingsProductId = this.formData.crSavings[i].select.savingsProductId;
+                    }
+                    temp.amount = this.formData.crSavings[i].crAmount;
+                    jeTransaction.savingsCredits.push(temp);
+                }
+
                 //construct debits array
                 jeTransaction.debits = [];
                 for (var i = 0; i < this.formData.dbAccounts.length; i++) {
@@ -85,8 +120,21 @@
                     temp.amount = this.formData.dbAccounts[i].debitAmount;
                     jeTransaction.debits.push(temp);
                 }
+                //construct savingsDebits array
+                jeTransaction.savingsDebits = [];
+                for (var i = 0; i < this.formData.dbSavings.length; i++) {
+                    var temp = new Object();
+                    if(this.formData.dbSavings[i].select){
+                    	temp.savingsAccountId = this.formData.dbSavings[i].select.id;
+                        temp.savingsProductId = this.formData.dbSavings[i].select.savingsProductId;
+                    }
+                    temp.amount = this.formData.dbSavings[i].debitAmount;
+                    jeTransaction.savingsDebits.push(temp);
+                }
+                jeTransaction.isManualTransaction = true;
+                jeTransaction.transactionAmount = 0;
 
-                resourceFactory.journalEntriesResource.save(jeTransaction, function (data) {
+                resourceFactory.journalEntriesResource.save({command: 'makeMultiplePostings'}, jeTransaction, function (data) {
                     location.path('/viewtransactions/' + data.transactionId);
                 });
             }
