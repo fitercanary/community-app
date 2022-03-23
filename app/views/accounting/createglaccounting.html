@@ -82,32 +82,22 @@
 	            </div>
 			</div>
 			<div class="form-group">
-	            <label class="control-label col-sm-2 ">{{'label.input.bankcode' | translate}}<span
-	                    class="required">*</span></label>
+	            <label class="control-label col-sm-2 ">{{'label.input.bankcode' | translate}}</label>
 	            <div class="col-sm-2">
-	                <input type="text" id="bankCode" name="bankCode" ng-autofocus="true" ng-model="formData.bankCode" class="form-control" required
-	                       late-Validate/>
+	                <input type="text" id="bankCode" name="bankCode" ng-model="formData.bankCode" class="form-control" />
 	            </div>
-	            <div class="col-sm-2 ">
-	                <form-validate valattributeform="createglaccountingform" valattribute="bankCode"/>
-	            </div>
-	            <label class="control-label col-sm-2" >{{'label.input.bankname' | translate}}<span
-						class="required">*</span></label>
+	            <label class="control-label col-sm-2" >{{'label.input.bankname' | translate}}</label>
 	            <div class="col-sm-2">
 	                <input id="bankName" type="text"  name="bankName"
-							ng-model="formData.bankName" class="form-control" required late-Validate/>
+							ng-model="formData.bankName" class="form-control"/>
 	            </div>
-				<div class="col-sm-2">
-					<form-validate valattributeform="createglaccountingform" valattribute="bankName"/>
-				</div>
 	        </div>
 			<div class="form-group">
 	            <label class="control-label col-sm-2 " for="cbnCategoryId">{{'label.input.cbncategory' | translate}}
 	                    </label>
 	            <div class="col-sm-2">
 					<select id="cbnCategory" ng-model="formData.cbnCategoryId" class="form-control"
-							ng-options="cbnCategory.id as cbnCategory.name | translate for cbnCategory in cbnCategories" value="{{cbnCategory.id}}"
-							required="required">
+							ng-options="cbnCategory.id as cbnCategory.name | translate for cbnCategory in cbnCategories" value="{{cbnCategory.id}}">
 							<option value="">{{'label.selectcbncategory' | translate}}</option>
 					</select>
 				</div>
