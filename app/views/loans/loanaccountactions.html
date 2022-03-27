@@ -119,7 +119,7 @@
                     <div class="col-sm-3">
                         <input id="transactionAmount" type="text" name="amount" ng-model="formData.transactionAmount"
                                class="form-control"
-                               number-format required late-Validate>
+                               number-format required late-Validate readonly>
                     </div>
                     <div class="col-sm-3">
                         <form-validate valattributeform="loanactionform" valattribute="amount"/>
@@ -131,9 +131,8 @@
                         translate}}</label>
 
                     <div class="col-sm-3">
-                        <input id="principalPortion" type="text" name="principa" ng-model="principalPortion"
-                               class="form-control"
-                               number-format readonly>
+                        <input id="principalPortion" type="text" name="principal" ng-model="principalPortion"
+                               class="form-control" number-format>
                     </div>
                 </div>
 
@@ -255,6 +254,46 @@
                     </div>
                 </div>
             </div>
+            <div ng-show="formData.isPartLiquidate">
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="principal">Principal</label>
+
+                    <div class="col-sm-3">
+                        <input id="principal" type="text" name="principal" ng-model="formData.principal"
+                               class="form-control"
+                               number-format>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="interestPortion">Accrued Interest</label>
+
+                    <div class="col-sm-3">
+                        <input id="interestPortion" type="text" name="interestPortion" ng-model="formData.interestPortion"
+                               class="form-control"
+                               number-format readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="totalNumberOfRepayments">{{ 'label.input.numofrepayments' |
+                        translate}}</label>
+
+                    <div class="col-sm-3">
+                        <input id="totalNumberOfRepayments" type="text" name="totalNumberOfRepayments" ng-model="totalNumberOfRepayments"
+                               class="form-control"
+                               number-format readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="control-label col-sm-2" for="numberOfRepayments">Repayments left</label>
+
+                    <div class="col-sm-3">
+                        <input id="numberOfRepayments" type="text" name="numberOfRepayments" ng-model="formData.numberOfRepayments"
+                               class="form-control"
+                               number-format>
+                    </div>
+                </div>
+
+            </div>
             <div ng-show="isModifySchedule">
                 <div class="form-group">
                     <label class="control-label col-sm-2" for="modelName">{{ 'label.input.installmentDate' | translate}}<span
@@ -322,6 +361,8 @@
                 <div class="col-sm-3">
                     <input id="{{modelName}}" class="form-control" type="text" sort datepicker-pop="dd MMMM yyyy"
                            ng-model="formData.transactionDate" is-open="opened"/>
+                           <input ng-hide="true" class="form-control" type="text" sort datepicker-pop="dd MMMM yyyy"
+                           ng-model="formData.expectedDisbursementDate" is-open="opened"/>
                 </div>
             </div>
             <div class="form-group" ng-show="showEditChargeAmount">
