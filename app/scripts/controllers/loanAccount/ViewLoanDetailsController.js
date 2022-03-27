@@ -82,6 +82,9 @@
                     case "modifyschedule":
                         location.path('/loanaccount/' + accountId + '/modifyschedule');
                         break;
+                    case "partliquidate":
+                        location.path('/loanaccount/' + accountId + '/partliquidate');
+                        break;
                     case "waiveinterest":
                         location.path('/loanaccount/' + accountId + '/waiveinterest');
                         break;
@@ -331,6 +334,10 @@
                             {
                                 name: "button.modifyschedule",
                                 taskPermissionName: 'MODIFY_SCHEDULE'
+                            },
+                            {
+                                name: "button.partliquidate",
+                                taskPermissionName: 'REPAYMENT_LOAN'
                             },
                             {
                                 name: "button.waiveinterest",

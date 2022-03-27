@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        LoanAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter) {
+        LoanAccountActionsController: function (scope, rootScope, resourceFactory, location, routeParams, dateFilter, $filter) {
 
             scope.action = routeParams.action || "";
             scope.prePayAction = false;
@@ -248,12 +248,13 @@
                     scope.action = 'repayment';
                     break;
                 case "modifyschedule":
-                    scope.modelName = 'expectedDisbursementDate';
+                    scope.modelName = 'submittedOnDate';
                     resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'repayment'}, function (data) {
                         scope.formData.principalPortion = data.principalPortion;
                         scope.formData.interestPortion = data.interestPortion;
                         scope.formData.principal = data.outstandingLoanBalance;
                         scope.totalInstallmentsPaid = data.installment;
+                        scope.formData.expectedDisbursementDate = new Date(data.date) || new Date();
                         scope.formData[scope.modelName] = new Date(data.date) || new Date();
                     });
                     scope.title = 'label.heading.modifyschedule';
@@ -285,7 +286,51 @@
                      scope.formData.createStandingInstructionAtDisbursement = false
                      scope.formData.allowPartialPeriodInterestCalcualtion = false
                     });
-                       break;
+                    break;
+                case "partliquidate":
+                    scope.modelName = 'transactionDate';
+                    scope.formData.transactionDate =  new Date();
+                    scope.formData.isPartLiquidate = true;
+                    resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'partliquidateLoan'}, function (data) {
+                        scope.paymentTypes = data.paymentTypeOptions;
+                        scope.formData.principal = data.outstandingLoanBalance
+                        if (data.paymentTypeOptions.length > 0) {
+                            scope.formData.paymentTypeId = data.paymentTypeOptions[0].id;
+                        }
+                    });
+                    resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'repayment'}, function (data) {
+                        scope.formData[scope.modelName] = new Date(data.date) || new Date();
+                        scope.formData.expectedDisbursementDate = new Date(data.date) || new Date();
+                        scope.totalInstallmentsPaid = data.installment;
+                    });
+                    resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: routeParams.id, associations: 'all',
+                    exclude: 'guarantors,futureSchedule'}, function (loanData) {
+                     scope.formData.amortizationType = loanData.amortizationType.id
+                     scope.formData.interestCalculationPeriodType = loanData.interestCalculationPeriodType.id
+                     scope.formData.interestRatePerPeriod = loanData.interestRatePerPeriod
+                     scope.formData.loanTermFrequency = loanData.termFrequency
+                     scope.formData.loanTermFrequencyType = loanData.termPeriodFrequencyType.id
+                     scope.formData.productId = loanData.loanProductId
+                     scope.formData.repaymentFrequencyType = loanData.repaymentFrequencyType.id
+                     scope.totalNumberOfRepayments = loanData.repaymentSchedule.periods.length - 1
+                     scope.formData.numberOfRepayments = scope.totalNumberOfRepayments - scope.totalInstallmentsPaid
+                     scope.formData.repaymentEvery = loanData.repaymentEvery
+                     scope.formData.interestType = loanData.interestType.id
+                     scope.formData.syncDisbursementWithMeeting = false
+
+                    scope.outstandingPrincipal = loanData.summary.principalOutstanding;
+                    scope.formData.transactionAmount = loanData.summary.principalOutstanding;
+                    scope.formData.principalPortion = loanData.summary.principalOutstanding;
+                    scope.formData.principal = loanData.summary.principalOutstanding;
+                    });
+                    scope.title = 'label.heading.partliquidate';
+                    scope.labelName = 'label.input.transactiondate';
+                    scope.isTransaction = true;
+                    scope.showAmountField = true;
+                    scope.taskPermissionName = 'REPAYMENT_LOAN';
+                    scope.prePayAction = scope.action;
+                    // scope.action = 'repayment';
+                    break;
                 case "waiveinterest":
                     scope.modelName = 'transactionDate';
                     resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'waiveinterest'}, function (data) {
@@ -559,25 +604,35 @@
                 if (this.formData[scope.modelName]) {
                     this.formData[scope.modelName] = dateFilter(this.formData[scope.modelName], scope.df);
                 }
+                if (this.formData.expectedDisbursementDate) {
+                    this.formData.expectedDisbursementDate = dateFilter(this.formData.expectedDisbursementDate, scope.df);
+                }
                 if (scope.action != "undoapproval" && scope.action != "undodisbursal" || scope.action === "paycharge") {
                     this.formData.locale = scope.optlang.code;
                     this.formData.dateFormat = scope.df;
                 }
                 if (scope.action == "repayment" || scope.action == "waiveinterest" || scope.action == "writeoff" || scope.action == "close-rescheduled"
-                    || scope.action == "close" || scope.action == "modifytransaction" || scope.action == "recoverypayment" || scope.action == "prepayloan") {
+                    || scope.action == "close" || scope.action == "modifytransaction" || scope.action == "recoverypayment" || scope.action == "prepayloan"
+                    || scope.action == "partliquidate") {
+                        params.loanId = scope.accountId;
                     if (scope.action == "modifytransaction") {
                         params.command = 'modify';
                         params.transactionId = routeParams.transactionId;
                     }
-                    if(scope.prePayAction == "prepayloan"){
-                    this.formData.isPrepay = true;
+                    if (scope.prePayAction == "prepayloan"){
+                        this.formData.isPrepay = true;
+                    } else if (scope.prePayAction == "partliquidate") {
+                        this.formData.modifyInstallmentAction = "partLiquidate";  
+                        params.command = 'repayment'                      
+                        scope.formData.transactionAmount = scope.formData.principal
+                        scope.formData.principalPortion = scope.formData.transactionAmount - scope.formData.interestPortion
+                        scope.formData.principal = scope.outstandingPrincipal - scope.formData.principalPortion
                     }
-                    params.loanId = scope.accountId;
                     resourceFactory.loanTrxnsResource.save(params, this.formData, function (data) {
                         location.path('/viewloanaccount/' + data.loanId);
                     });
                 } else if (scope.action == "modifyschedule") {
-                    this.formData.submittedOnDate = this.formData.expectedDisbursementDate
+                    this.formData.expectedDisbursementDate = this.formData.submittedOnDate;
                     if (this.showInterestField) {
                         this.formData.modifyInstallmentAction = "updateInterest";
                     } else {
@@ -754,11 +809,32 @@
                 }
             };
 
-            scope.$watch('formData.transactionDate',function(){
-                scope.onDateChange();
+             scope.$watch('formData.transactionDate',function(){
+                 if (scope.action == "prepayloan") {
+                    scope.onDateChange();
+                    return;
+                 }
+                 if (scope.action == "partliquidate") {
+                    scope.retrieveLoanForeclosureTemplate();
+                }
              });
 
+             scope.retrieveLoanForeclosureTemplate = function() {
+                resourceFactory.loanTrxnsTemplateResource.get({
+                    loanId: routeParams.id,
+                    command: 'foreclosure',
+                    transactionDate: dateFilter(this.formData.transactionDate, scope.df),
+                    dateFormat: scope.df,
+                    locale: scope.optlang.code
+                }, function (data) {
+                    scope.partLiquidateData = data
+                    scope.formData.interestPortion = scope.partLiquidateData.interestPortion;
+                });
+            }
 
+            scope.$watch('formData.principal',function(){
+                scope.formData.transactionAmount = scope.formData.principal
+            });
 
             scope.fieldType = function (type) {
                 var fieldType = "";
@@ -790,9 +866,6 @@
                     params.command = 'prepayLoan';
                     resourceFactory.loanTrxnsTemplateResource.get(params, function (data) {
                         scope.formData.transactionAmount = data.amount;
-                        if (data.penaltyChargesPortion > 0) {
-                            scope.showPenaltyPortionDisplay = true;
-                        }
                         scope.principalPortion = data.principalPortion;
                         scope.interestPortion = data.interestPortion;
                     });
@@ -800,7 +873,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('LoanAccountActionsController', ['$scope','$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', mifosX.controllers.LoanAccountActionsController]).run(function ($log) {
+    mifosX.ng.application.controller('LoanAccountActionsController', ['$scope','$rootScope', 'ResourceFactory', '$location', '$routeParams', 'dateFilter', '$filter', mifosX.controllers.LoanAccountActionsController]).run(function ($log) {
         $log.info("LoanAccountActionsController initialized");
     });
 }(mifosX.controllers || {}));
