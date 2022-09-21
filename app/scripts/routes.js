@@ -584,6 +584,9 @@
             .when('/viewfixeddepositaccount/:id', {
                 templateUrl: 'views/deposits/fixed/viewaccountdetails.html'
             })
+            .when('/viewInvestmentContract/:id', {
+                templateUrl: 'views/deposits/fixed/view_investment_contract_letter.html'
+            })
             .when('/editfixeddepositaccount/:id', {
                 templateUrl: 'views/deposits/fixed/edit_account_application.html'
             })

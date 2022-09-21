@@ -1,12 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        ViewFixedDepositAccountDetailsController: function (scope, rootScope, sce ,API_VERSION, routeParams, resourceFactory, paginatorService, location, route, dateFilter, $uibModal) {
-            scope.report = false;
-            scope.enableMaturitySmsAlerts = false;
-            scope.editNotificationSettings = false;
-            scope.hidePentahoReport = true;
-            scope.formData = {};
-
+        ViewFixedDepositAccountDetailsController: function (scope, rootScope, routeParams, resourceFactory, paginatorService, location, route, dateFilter,$uibModal) {
             scope.isDebit = function (savingsTransactionType) {
                 return savingsTransactionType.withdrawal == true || savingsTransactionType.feeDeduction == true || savingsTransactionType.withholdTax == true;
             };
@@ -16,8 +10,8 @@
              * api returns dates in array format[yyyy, mm, dd], converting the array of dates to date object
              * @param dateFieldName
              */
-            scope.convertDateArrayToObject = function (dateFieldName) {
-                for (var i in scope.savingaccountdetails.transactions) {
+            scope.convertDateArrayToObject = function(dateFieldName){
+                for(var i in scope.savingaccountdetails.transactions){
                     scope.savingaccountdetails.transactions[i][dateFieldName] = new Date(scope.savingaccountdetails.transactions[i].date);
                 }
             };
@@ -30,26 +24,22 @@
                 scope.viewTransactionReport = false;
             };
 
-            scope.checkStatus = function () {
-                if (scope.status == 'Active' || scope.status == 'Closed' || scope.status == 'Transfer in progress' ||
-                    scope.status == 'Transfer on hold' || scope.status == 'Premature Closed' || scope.status == 'Matured') {
+            scope.checkStatus = function(){
+                if(scope.status == 'Active' || scope.status == 'Closed' || scope.status == 'Transfer in progress' ||
+                    scope.status == 'Transfer on hold' || scope.status == 'Premature Closed' || scope.status == 'Matured'){
                     return true;
                 }
                 return false;
             };
 
             //view investment contract page
-            scope.viewInvestmentContract = function () {
-                location.path("/viewInvestmentContract/" + routeParams.id);
-                ``
+            scope.viewInvestmentContract = function(){
+                location.path("/viewInvestmentContract/"+routeParams.id);``
             };
-            scope.viewJournalEntries = function () {
-                location.path("/searchtransaction/").search({
-                    savingsId: scope.savingaccountdetails.id,
-                    fixedDepositId: scope.savingaccountdetails.id
-                });
+            scope.viewJournalEntries = function(){
+                location.path("/searchtransaction/").search({savingsId: scope.savingaccountdetails.id,fixedDepositId: scope.savingaccountdetails.id});
             };
-            scope.viewAccrualTransaction = function () {
+            scope.viewAccrualTransaction = function(){
                 location.path("/viewaccrualtransaction/").search({fixedDepositId: scope.savingaccountdetails.id});
             };
 
@@ -85,38 +75,17 @@
                         location.path('/fixeddepositaccount/' + accountId + '/charges');
                         break;
                     case "calculateInterest":
-                        resourceFactory.fixedDepositAccountResource.save({
-                            accountId: accountId,
-                            command: 'calculateInterest'
-                        }, {}, function (data) {
+                        resourceFactory.fixedDepositAccountResource.save({accountId: accountId, command: 'calculateInterest'}, {}, function (data) {
                             route.reload();
                         });
                         break;
                     case "postInterest":
-                        resourceFactory.fixedDepositAccountResource.save({
-                            accountId: accountId,
-                            command: 'postInterest'
-                        }, {}, function (data) {
+                        resourceFactory.fixedDepositAccountResource.save({accountId: accountId, command: 'postInterest'}, {}, function (data) {
                             route.reload();
                         });
                         break;
                     case "postAccrualInterest":
-                        resourceFactory.fixedDepositAccountResource.save({
-                            accountId: accountId,
-                            command: 'postAccrualInterest'
-                        }, {}, function (data) {
-                            route.reload();
-                        });
-                        break;
-                    case "enableMaturitySmsAlerts":
-                        var changes = {
-                            enableMaturitySmsAlerts: scope.enableMaturitySmsAlerts
-                        };
-                        resourceFactory.fixedDepositAccountResource.save({
-                            accountId: accountId,
-                            command: 'updateMaturityNotification'
-                        }, changes, function (data) {
-                            scope.editNotificationSettings=false;
+                        resourceFactory.fixedDepositAccountResource.save({accountId: accountId, command: 'postAccrualInterest'}, {}, function (data) {
                             route.reload();
                         });
                         break;
@@ -134,23 +103,17 @@
                         break;
                     case "enableWithHoldTax":
                         var changes = {
-                            withHoldTax: true
+                            withHoldTax:true
                         };
-                        resourceFactory.savingsResource.update({
-                            accountId: accountId,
-                            command: 'updateWithHoldTax'
-                        }, changes, function (data) {
+                        resourceFactory.savingsResource.update({accountId: accountId, command: 'updateWithHoldTax'}, changes, function (data) {
                             route.reload();
                         });
                         break;
                     case "disableWithHoldTax":
                         var changes = {
-                            withHoldTax: false
+                            withHoldTax:false
                         };
-                        resourceFactory.savingsResource.update({
-                            accountId: accountId,
-                            command: 'updateWithHoldTax'
-                        }, changes, function (data) {
+                        resourceFactory.savingsResource.update({accountId: accountId, command: 'updateWithHoldTax'}, changes, function (data) {
                             route.reload();
                         });
                         break;
@@ -158,11 +121,11 @@
                         location.path('/fixeddepositaccount/' + accountId + '/postAccrualInterestAsOn');
                         break;
                     case "editNickName":
-                        location.path('/savingaccount/' + accountId + '/editNickName');
-                        break;
+                          location.path('/savingaccount/' + accountId + '/editNickName');
+                    break;
                     case "freeze" :
-                        location.path('/fixeddepositaccount/' + accountId + '/freeze');
-                        break;
+                          location.path('/fixeddepositaccount/' + accountId + '/freeze');
+                          break;
                     case "downloadInvestmentLetter":
                         location.path('/fixeddepositaccount/' + accountId + '/downloadInvestmentLetter');
                         break;
@@ -177,17 +140,13 @@
                 }
             };
 
-            resourceFactory.fixedDepositAccountResource.get({
-                accountId: routeParams.id,
-                associations: 'all'
-            }, function (data) {
+            resourceFactory.fixedDepositAccountResource.get({accountId: routeParams.id, associations: 'all'}, function (data) {
                 scope.savingaccountdetails = data;
-                scope.enableMaturitySmsAlerts = scope.savingaccountdetails.enableMaturitySmsAlerts;
                 scope.savingaccountdetails.availableBalance = scope.savingaccountdetails.enforceMinRequiredBalance ? (scope.savingaccountdetails.summary.accountBalance - scope.savingaccountdetails.minRequiredOpeningBalance) : scope.savingaccountdetails.summary.accountBalance;
                 scope.convertDateArrayToObject('date');
                 scope.chartSlabs = scope.savingaccountdetails.accountChart.chartSlabs;
                 scope.status = data.status.value;
-                scope.heading = (!scope.savingaccountdetails.status.rejected && !scope.savingaccountdetails.status.submittedAndPendingApproval) ? 'label.heading.interestchart' : 'label.heading.summary';
+                scope.heading = (!scope.savingaccountdetails.status.rejected && !scope.savingaccountdetails.status.submittedAndPendingApproval)?'label.heading.interestchart':'label.heading.summary';
                 if (scope.savingaccountdetails.accruedInterestCarriedForward) {
                     scope.savingaccountdetails.summary.totalInterestEarned += scope.savingaccountdetails.accruedInterestCarriedForward;
                 } else {
@@ -215,17 +174,16 @@
                     })
                 }
                 if (data.status.value == "Submitted and pending approval") {
-                    scope.buttons = {
-                        singlebuttons: [
-                            {
-                                name: "button.modifyapplication",
-                                icon: "fa fa-pencil "
-                            },
-                            {
-                                name: "button.approve",
-                                icon: "fa fa-check"
-                            }
-                        ],
+                    scope.buttons = { singlebuttons: [
+                        {
+                            name: "button.modifyapplication",
+                            icon: "fa fa-pencil "
+                        },
+                        {
+                            name: "button.approve",
+                            icon: "fa fa-check"
+                        }
+                    ],
                         options: [
                             {
                                 name: "button.reject"
@@ -244,109 +202,102 @@
                 }
 
                 if (data.status.value == "Approved") {
-                    scope.buttons = {
-                        singlebuttons: [
-                            {
-                                name: "button.undoapproval",
-                                icon: "fa fa-undo"
-                            },
-                            {
-                                name: "button.activate",
-                                icon: "fa fa-ok-sign"
-                            }
-                        ]
+                    scope.buttons = { singlebuttons: [
+                        {
+                            name: "button.undoapproval",
+                            icon: "fa fa-undo"
+                        },
+                        {
+                            name: "button.activate",
+                            icon: "fa fa-ok-sign"
+                        }
+                    ]
                     };
                 }
 
                 if (data.status.value == "Active") {
-                    scope.buttons = {
-                        singlebuttons: [
+                    scope.buttons = { singlebuttons: [
+                        {
+                            name: "button.prematureClose",
+                            icon: "fa fa-arrow-left"
+                        },
+                        {
+                            name: "button.calculateInterest",
+                            icon: "fa fa-table"
+                        },
+                        {
+                            name: "button.postAccrualInterestAsOn",
+                            icon: "icon-arrow-right",
+                            taskPermissionName:"POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
+                        }
+                    ]};
+                    var buttonOptions = [
                             {
-                                name: "button.prematureClose",
-                                icon: "fa fa-arrow-left"
+                                name: "button.postInterest"
                             },
                             {
-                                name: "button.calculateInterest",
-                                icon: "fa fa-table"
+                                name: "button.postAccrualInterest"
                             },
                             {
-                                name: "button.postAccrualInterestAsOn",
-                                icon: "icon-arrow-right",
-                                taskPermissionName: "POSTACCRUALINTERESTASON_SAVINGSACCOUNT"
+                                name: "button.addcharge"
+                            },
+                            {
+                                name: "button.partiallyLiquidate"
+                            },
+                            {
+                                name: "button.topUp"
+                            },
+                            {
+                                name: "button.editNickName",
+                                taskPermissionName : "UPDATENICKNAME_SAVINGSACCOUNT"
+                            },
+                            {
+                                name: "button.freeze",
+                                taskPermissionName : ""
+                            },
+                            {
+                                name: "button.downloadInvestmentLetter"
                             }
                         ]
-                    };
-                    var buttonOptions = [
-                        {
-                            name: "button.postInterest"
-                        },
-                        {
-                            name: "button.postAccrualInterest"
-                        },
-                        {
-                            name: "button.addcharge"
-                        },
-                        {
-                            name: "button.partiallyLiquidate"
-                        },
-                        {
-                            name: "button.topUp"
-                        },
-                        {
-                            name: "button.editNickName",
-                            taskPermissionName: "UPDATENICKNAME_SAVINGSACCOUNT"
-                        },
-                        {
-                            name: "button.freeze",
-                            taskPermissionName: ""
-                        },
-                        {
-                            name: "button.downloadInvestmentLetter"
-                        }
-                    ]
 
-                    if (rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")) {
-                        buttonOptions.forEach(function (v) {
-                            if (v.name == "button.freeze") {
-                                v.taskPermissionName = 'UNBLOCKDEBIT_SAVINGSACCOUNT';
-                            }
-                        });
-                    }
-                    if (rootScope.hasPermission("BLOCKDEBIT_SAVINGSACCOUNT")) {
-                        buttonOptions.forEach(function (v) {
-                            if (v.name == "button.freeze") {
-                                v.taskPermissionName = 'BLOCKDEBIT_SAVINGSACCOUNT';
-                            }
-                        });
-                    }
-                    if (rootScope.hasPermission("BLOCKCREDIT_SAVINGSACCOUNT")) {
-                        buttonOptions.forEach(function (v) {
-                            if (v.name == "button.freeze") {
-                                v.taskPermissionName = 'BLOCKCREDIT_SAVINGSACCOUNT';
-                            }
-                        });
-                    }
-                    if (rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")) {
-                        buttonOptions.forEach(function (v) {
-                            if (v.name == "button.freeze") {
-                                v.taskPermissionName = 'UNBLOCKCREDIT_SAVINGSACCOUNT';
-                            }
-                        });
+                       if(rootScope.hasPermission("UNBLOCKDEBIT_SAVINGSACCOUNT")){
+                           buttonOptions.forEach(function(v) {
+                             if(v.name == "button.freeze") {
+                             v.taskPermissionName = 'UNBLOCKDEBIT_SAVINGSACCOUNT';}
+                           });
+                       }
+                       if(rootScope.hasPermission("BLOCKDEBIT_SAVINGSACCOUNT")) {
+                             buttonOptions.forEach(function(v) {
+                               if(v.name == "button.freeze") {
+                               v.taskPermissionName = 'BLOCKDEBIT_SAVINGSACCOUNT';}
+                             });
+                       }
+                       if (rootScope.hasPermission("BLOCKCREDIT_SAVINGSACCOUNT")) {
+                             buttonOptions.forEach(function(v) {
+                              if(v.name == "button.freeze") {
+                              v.taskPermissionName = 'BLOCKCREDIT_SAVINGSACCOUNT';}
+                             });
+                       }
+                       if(rootScope.hasPermission("UNBLOCKCREDIT_SAVINGSACCOUNT")){
+                           buttonOptions.forEach(function(v) {
+                           if(v.name == "button.freeze") {
+                           v.taskPermissionName = 'UNBLOCKCREDIT_SAVINGSACCOUNT';}
+                       });
                     }
                     scope.buttons = {
-                        singlebuttons: scope.buttons.singlebuttons,
-                        options: buttonOptions
+                             singlebuttons: scope.buttons.singlebuttons,
+                             options: buttonOptions
                     }
-                    if (data.taxGroup) {
-                        if (data.withHoldTax) {
+                    if(data.taxGroup){
+                        if(data.withHoldTax){
                             scope.buttons.options.push({
                                 name: "button.disableWithHoldTax",
-                                taskPermissionName: "UPDATEWITHHOLDTAX_SAVINGSACCOUNT"
+                                taskPermissionName:"UPDATEWITHHOLDTAX_SAVINGSACCOUNT"
                             });
-                        } else {
+                        }else{
                             scope.buttons.options.push({
                                 name: "button.enableWithHoldTax",
-                                taskPermissionName: "UPDATEWITHHOLDTAX_SAVINGSACCOUNT"
+                                taskPermissionName:"UPDATEWITHHOLDTAX_SAVINGSACCOUNT"
                             });
                         }
                     }
@@ -356,18 +307,17 @@
                      });
                      }*/
 
-                } else if (data.status.value == "Matured") {
-                    scope.buttons = {
-                        singlebuttons: [
-                            {
-                                name: "button.close",
-                                icon: "fa fa-arrow-right"
-                            },
-                            {
-                                name: "button.calculateInterest",
-                                icon: "fa fa-table"
-                            }
-                        ],
+                }else if (data.status.value == "Matured") {
+                    scope.buttons = { singlebuttons: [
+                        {
+                            name: "button.close",
+                            icon: "fa fa-arrow-right"
+                        },
+                        {
+                            name: "button.calculateInterest",
+                            icon: "fa fa-table"
+                        }
+                    ],
                         options: [
                             {
                                 name: "button.postInterest"
@@ -386,11 +336,7 @@
 
                 }
 
-                resourceFactory.standingInstructionTemplateResource.get({
-                    fromClientId: scope.savingaccountdetails.clientId,
-                    fromAccountType: 2,
-                    fromAccountId: routeParams.id
-                }, function (response) {
+                resourceFactory.standingInstructionTemplateResource.get({fromClientId: scope.savingaccountdetails.clientId,fromAccountType: 2,fromAccountId: routeParams.id},function (response) {
                     scope.standinginstruction = response;
                     scope.searchTransaction();
                 });
@@ -414,36 +360,6 @@
                 scope.displayResults = true;
                 scope.instructions = paginatorService.paginate(fetchFunction, 14);
                 scope.isCollapsed = false;
-            };
-
-            scope.viewContractLetterDetails = function (selectedOutputType) {
-                scope.report = true;
-                scope.viewTransactionReport = false;
-                scope.viewReport = true;
-                scope.hidePentahoReport = true;
-
-                scope.formData.outputType = selectedOutputType;
-                scope.reportName = 'Savings Investment Contract';
-
-                scope.baseURL = rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent(scope.reportName);
-                scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + rootScope.tenantIdentifier + "&locale=" + scope.optlang.code;
-
-                var reportParams = "";
-                // scope.startDate = dateFilter(scope.date.fromDate, 'yyyy-MM-dd');
-                // scope.endDate = dateFilter(scope.date.toDate, 'yyyy-MM-dd');
-                // var paramName = "R_startDate";
-                // reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.startDate) + "&";
-                // paramName = "R_endDate";
-                // reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.endDate) + "&";
-                var paramName = "R_accountno";
-                reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.savingaccountdetails.accountNo);
-                if (reportParams > "") {
-                    scope.baseURL += "&" + reportParams;
-                }
-
-                // allow untrusted urls for iframe http://docs.angularjs.org/error/$sce/insecurl
-                scope.viewReportResult = sce.trustAsResourceUrl(scope.baseURL);
-
             };
 
             scope.deletestandinginstruction = function (id) {
@@ -475,10 +391,8 @@
             });
 
             scope.dataTableChange = function (datatable) {
-                resourceFactory.DataTablesResource.getTableDetails({
-                    datatablename: datatable.registeredTableName,
-                    entityId: routeParams.id, genericResultSet: 'true'
-                }, function (data) {
+                resourceFactory.DataTablesResource.getTableDetails({datatablename: datatable.registeredTableName,
+                    entityId: routeParams.id, genericResultSet: 'true'}, function (data) {
                     scope.datatabledetails = data;
                     scope.datatabledetails.isData = data.data.length > 0 ? true : false;
                     scope.datatabledetails.isMultirow = data.columnHeaders[0].columnName == "id" ? true : false;
@@ -508,11 +422,7 @@
             };
 
             scope.deleteAll = function (apptableName, entityId) {
-                resourceFactory.DataTablesResource.delete({
-                    datatablename: apptableName,
-                    entityId: entityId,
-                    genericResultSet: 'true'
-                }, {}, function (data) {
+                resourceFactory.DataTablesResource.delete({datatablename: apptableName, entityId: entityId, genericResultSet: 'true'}, {}, function (data) {
                     route.reload();
                 });
             };
@@ -521,7 +431,7 @@
                 location.path('/fixeddepositaccount/' + accountId + '/modifytransaction?transactionId=' + transactionId);
             };
 
-            scope.incentives = function (index) {
+            scope.incentives = function(index){
                 $uibModal.open({
                     templateUrl: 'incentive.html',
                     controller: IncentiveCtrl,
@@ -536,7 +446,7 @@
             var IncentiveCtrl = function ($scope, $uibModalInstance, chartSlab) {
                 $scope.chartSlab = chartSlab;
                 _.each($scope.chartSlab.incentives, function (incentive) {
-                    if (!incentive.attributeValueDesc) {
+                    if(!incentive.attributeValueDesc){
                         incentive.attributeValueDesc = incentive.attributeValue;
                     }
                 });
@@ -546,7 +456,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('ViewFixedDepositAccountDetailsController', ['$scope', '$rootScope','$sce','API_VERSION', '$routeParams', 'ResourceFactory', 'PaginatorService', '$location', '$route', 'dateFilter', '$uibModal', mifosX.controllers.ViewFixedDepositAccountDetailsController]).run(function ($log) {
+    mifosX.ng.application.controller('ViewFixedDepositAccountDetailsController', ['$scope', '$rootScope', '$routeParams', 'ResourceFactory', 'PaginatorService', '$location', '$route', 'dateFilter','$uibModal', mifosX.controllers.ViewFixedDepositAccountDetailsController]).run(function ($log) {
         $log.info("ViewFixedDepositAccountDetailsController initialized");
     });
 }(mifosX.controllers || {}));

@@ -43,6 +43,7 @@
   "label.heading.assignstaff": "Assign Staff",
   "label.heading.general": "General",
   "label.heading.performancehistory": "Performance History",
+  "label.heading.notificationSettings": "Notification Settings",
   "label.heading.settings": "Settings",
   "label.heading.status": "Status",
   "label.heading.issuedate": "Issue date",
@@ -707,6 +708,9 @@
   "label.button.print": "Print",
   "label.button.viewprint": "Generate Report",
   "label.button.generatepdf": "Generate Client Statement",
+
+
+  "label.button.downloadLetter": "Download Contract Letter",
   "label.button.generatexls": "Generate Excel",
   "label.button.savingdetails": "Saving Details",
   "label.button.loandetails": "Loan Details",
@@ -1010,6 +1014,8 @@
   "label.heading.journalentry.created": "Journal Entry Created",
   "label.heading.viewreport": "View Report",
   "label.heading.viewjournals": "View Journal Entries",
+
+  "label.heading.investmentContract": "View Investment Contract",
   "label.heading.recreateprovisioning": "Recreate Provisioning",
   "label.heading.entryid": "Entry ID",
   "label.heading.amounttobereserved": "Amount to be Reserved",
@@ -1055,6 +1061,7 @@
   "label.anchor.editfinancialmapping": "Edit Financial Activity Mapping",
   "label.anchor.journalentries": "Journal Entries",
   "label.anchor.viewjournalentries": "View Journal Entries",
+  "label.anchor.investmentContract": "View Investment Contract",
   "#Inputs": "..",
   "label.input.accountingrulename": "Accounting rule name",
   "label.input.nickname": "Nickname",
@@ -1568,6 +1575,7 @@
   "label.button.prepayment": "Prepay Loan",
   "label.button.addTranche": "Add Tranche",
   "label.button.viewjournalentries": "View Journal Entries",
+  "label.button.investmentContract": "View Investment Contract",
   "label.button.newrepaymentschedule": "View New Repayment Schedule",
   "label.button.reschedule": "Reschedule",
   "label.button.recreate": "Recreate",
@@ -1985,6 +1993,9 @@
   "label.input.fieldofficer": "Field officer",
   "label.input.submittedon": "Submitted on",
   "label.input.nominalannualinterestrate": "Nominal annual interest",
+  "label.input.notifyBeforeFixedAssetMaturity": "Notify Client On Asset Maturity",
+  "label.input.enableSMSMaturityNotification": "Enable SMS Notification",
+  "label.input.maturityNotificationPeriod": "Notification Period (Before maturity date)",
   "label.input.interestrate": "Interest Rate",
   "label.input.repayments": "#of Repayments",
   "label.input.totalnumberofshares": "Total Number of Shares",
@@ -4478,5 +4489,9 @@
   
   "label.input.staffCategory": "Staff Category",
   "label.heading.gender": "Gender",
+
+  "label.notification.term": "Notification Period",
+  "label.heading.enableSMS": "Enable SMS",
+
   "----End---": "--End of file--- "
 }

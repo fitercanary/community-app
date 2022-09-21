@@ -55,6 +55,11 @@
                 scope.formData.lockinPeriodFrequency = data.lockinPeriodFrequency;
                 scope.formData.withHoldTax = data.withHoldTax;
                 scope.formData.nickname = data.nickName;
+
+                //preset details for notifications
+                scope.formData.notifyAssetMaturity = data.notifyAssetMaturity;
+                scope.formData.notifyMaturityPeriod = data.notifyMaturityPeriod;
+                scope.formData.enableMaturitySmsAlerts = data.enableMaturitySmsAlerts;
                 /* FIX-ME: uncomment annualFeeAmount when datepicker avialable, because it depends on the date field 'annualFeeOnMonthDay'*/
                 //scope.formData.annualFeeAmount = data.annualFeeAmount;
                 //scope.formData.withdrawalFeeAmount = data.withdrawalFeeAmount;
@@ -65,6 +70,7 @@
                 if (data.interestCalculationType) scope.formData.interestCalculationType = data.interestCalculationType.id;
                 if (data.interestCalculationDaysInYearType) scope.formData.interestCalculationDaysInYearType = data.interestCalculationDaysInYearType.id;
                 if (data.lockinPeriodFrequencyType) scope.formData.lockinPeriodFrequencyType = data.lockinPeriodFrequencyType.id;
+                if (data.notificationTerm) scope.formData.notificationTermId = data.notificationTerm.id;
                 //if (data.withdrawalFeeType) scope.formData.withdrawalFeeType = data.withdrawalFeeType.id;
 
                 scope.chart = data.accountChart;
@@ -122,12 +128,17 @@
                     scope.formData.depositPeriod = data.depositPeriod;
                     scope.formData.lockinPeriodFrequency = data.lockinPeriodFrequency;
                     scope.formData.withHoldTax = data.withHoldTax;
+                    //preset details for notifications
+                    scope.formData.notifyAssetMaturity = data.notifyAssetMaturity;
+                    scope.formData.notifyMaturityPeriod = data.notifyMaturityPeriod;
+                    scope.formData.enableMaturitySmsAlerts = data.enableMaturitySmsAlerts;
 
                     if (data.interestCompoundingPeriodType) scope.formData.interestCompoundingPeriodType = data.interestCompoundingPeriodType.id;
                     if (data.interestPostingPeriodType) scope.formData.interestPostingPeriodType = data.interestPostingPeriodType.id;
                     if (data.interestCalculationType) scope.formData.interestCalculationType = data.interestCalculationType.id;
                     if (data.interestCalculationDaysInYearType) scope.formData.interestCalculationDaysInYearType = data.interestCalculationDaysInYearType.id;
                     if (data.lockinPeriodFrequencyType) scope.formData.lockinPeriodFrequencyType = data.lockinPeriodFrequencyType.id;
+                    if (data.notificationTerm) scope.formData.notificationTermId = data.notificationTerm.id;
                     //if (data.withdrawalFeeType) scope.formData.withdrawalFeeType = data.withdrawalFeeType.id;
 
                     scope.chart = data.accountChart;
