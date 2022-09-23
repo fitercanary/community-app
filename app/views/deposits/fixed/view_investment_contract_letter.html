@@ -1,0 +1,53 @@
+<div class="content-container" ng-controller="ViewFixedDepositAccountDetailsController">
+    <ul class="breadcrumb">
+        <li ng-if="savingaccountdetails.groupName"><a
+                href="#/viewgroup/{{savingaccountdetails.groupId}}">{{savingaccountdetails.groupName}}</a>
+        </li>
+        <li ng-if="savingaccountdetails.clientName"><a
+                href="#/viewclient/{{savingaccountdetails.clientId}}">{{savingaccountdetails.clientName}}</a>
+        </li>
+        <li class="active">{{savingaccountdetails.depositProductName}}({{savingaccountdetails.accountNo}})</li>
+    </ul>
+    <div class="card well">
+<!--        <div class="center" ng-show="viewSavingReport">-->
+        <div class="center">
+            <button ng-click="viewSavingDetails()" class="btn btn-default ng-binding">{{'label.button.back' |
+            translate}}
+            </button>
+            <button ng-click="viewContractLetterDetails('PDF')" class="btn btn-primary ng-binding">
+                {{'label.button.downloadLetter' | translate}}
+            </button>
+            <!-- <button ng-click="viewPrintDetails('XLS')" class="btn btn-primary ng-binding">
+                {{'label.button.generatexls' | translate}}
+            </button> -->
+        </div>
+
+    </div>
+
+    <div ng-hide="hidePentahoReport" ng-show="report" class="alert-block span tab-content">
+        <button ng-show="printbtn" ng-click="printReport()" class="btn btn-primary">{{'label.button.print' |
+        translate}}
+        </button>
+        <div id="printcontent">
+            <iframe id="rptLoadingFrame" ng-show="viewReport" ng-src="{{viewReportResult}}" frameborder="0"
+                    width="100%" height="600px"></iframe>
+        </div>
+        <div class="col-md-13 center" ng-show="viewTransactionReport">
+            <button ng-click="viewSavingDetails()" class="btn btn-default ng-binding">{{'label.button.back' |
+            translate}}
+            </button>
+        </div>
+    </div>
+
+</div>
+<script type="text/ng-template" id="delInstruction.html">
+    <div class="modal-header silver">
+        <h3 class="bolder">{{'label.areyousure' | translate}}</h3>
+    </div>
+    <div class="modal-body">
+        <api-validate></api-validate>
+        <br>
+        <button class="btn btn-warning" ng-click="cancel()">{{'label.button.cancel' | translate}}</button>
+        <button class="btn btn-primary" ng-click="delete()">{{'label.button.confirm' | translate}}</button>
+    </div>
+</script>

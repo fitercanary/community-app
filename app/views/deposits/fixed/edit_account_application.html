@@ -159,6 +159,44 @@
                     </div>
                 </td>
             </tr>
+
+            <tr>
+                <td>
+                    <label class="control-label">{{ 'label.input.notifyBeforeFixedAssetMaturity' | translate
+                        }}</label>
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="formData.notifyAssetMaturity" ng-true-value="true"
+                           ng-false-value="false">
+                </td>
+
+                <td class="width14" ng-show="formData.notifyAssetMaturity">
+                    <label class="control-label">{{ 'label.input.maturityNotificationPeriod' | translate }}</label>
+                </td>
+                <td class="width36 paddedbottom20" ng-show="formData.notifyAssetMaturity">
+                    <div class="form-inline">
+                        <input id="maturityNotificationPeriod" type="text" class="form-control"
+                               ng-model="formData.notifyMaturityPeriod">&nbsp;
+                        <select id="maturityNotificationTerm" ng-model="formData.notificationTermId"
+                                class="form-control width170px"
+                                ng-options="type.id as type.value for type in data.lockinPeriodFrequencyTypeOptions"
+                                value="{{type.id}}">
+                            <option value="">{{'label.selectone' | translate}}</option>
+                        </select>
+                    </div>
+                </td>
+            </tr>
+
+            <tr ng-show="formData.notifyAssetMaturity">
+                <td>
+                    <label class="control-label">{{ 'label.input.enableSMSMaturityNotification' | translate
+                        }}</label>
+                </td>
+                <td>
+                    <input type="checkbox" ng-model="formData.enableMaturitySmsAlerts" ng-true-value="true"
+                           ng-false-value="false" >
+                </td>
+            </tr>
         </table>
         <hr data-ng-show="formData.productId"/>
         <label ng-show="data"><strong>{{ 'label.heading.settings' | translate }}</strong></label>

@@ -213,6 +213,48 @@
                     </tr>
                 </table>
             </div>
+            <!-- DISPLAY FOR NOTIFICATION SETTINGS TODO-ADD MODIFICATION-->
+            <div class="col-md-6" ng-show="savingaccountdetails.notifyAssetMaturity">
+
+                <table class="table table-bordered table-striped"
+                       ng-show="!savingaccountdetails.status.rejected && !savingaccountdetails.status.submittedAndPendingApproval">
+                    <tr>
+                        <th>{{'label.heading.notificationSettings' | translate}}</th>
+                        <th ng-show="!editNotificationSettings"><span class="pull-right">
+                            <i class="fa fa-edit btn btn-outline-success" ng-click="editNotificationSettings=!editNotificationSettings">
+                            </i></span></th>
+                        <th ng-show="editNotificationSettings"><span class="pull-right">
+                            <button class="fa fa-check btn btn-success" ng-click="clickEvent('enableMaturitySmsAlerts', savingaccountdetails.id)">Save</button>
+                            <button class="fa fa-times btn btn-warning" ng-click="editNotificationSettings=!editNotificationSettings">Cancel</button>
+                        </span>
+                        </th>
+                    </tr>
+                    <tr>
+                        <th class="active fontnormal col-md-3">{{'label.notification.term' | translate}}
+                        </th>
+                        <td class="col-md-3"><span class="padded-td">
+                            {{savingaccountdetails.notifyMaturityPeriod}}&nbsp;{{savingaccountdetails.notificationTerm.code | translate}}
+                            before maturity date</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="!editNotificationSettings">
+                        <th class="active fontnormal">{{'label.heading.enableSMS' | translate}}
+                        </th>
+                        <td><span class="padded-td">{{savingaccountdetails.enableMaturitySmsAlerts}}</span>
+                        </td>
+                    </tr>
+                    <tr ng-show="editNotificationSettings">
+                        <td>
+                            <label class="control-label">{{ 'label.input.enableSMSMaturityNotification' | translate
+                                }}</label>
+                        </td>
+                        <td>
+                            <input type="checkbox" ng-model="enableMaturitySmsAlerts" ng-true-value="true"
+                                   ng-false-value="false" >
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
         <br>
         <br>
@@ -220,6 +262,12 @@
             <br>
             <uib-tabset class="scrollable" tabset-name="fixedAccountDetails" scrollable>
                 <uib-tab heading="{{heading | translate}}">
+                    <br>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewInvestmentContract()" style="margin-right: 8px;">
+                        {{'label.button.investmentContract' | translate}}
+                    </button>
+                    <br>
                             <table class="table table-bordered view-table" ng-if="savingaccountdetails.status.rejected || savingaccountdetails.status.submittedAndPendingApproval">
                                 <tr>
                                     <td class="active fontnormal col-md-3">{{'label.account.deposit.date' | translate}}
@@ -247,7 +295,11 @@
                                     <td class="active fontnormal">{{'label.account.maturity.date' | translate}}
                                     </td>
                                     <td><span class="padded-td">{{savingaccountdetails.maturityDate | DateFormat}}</span>
-                                    </td>
+                           <br>
+                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
+                            ng-click="viewJournalEntries()" style="margin-right: 8px;">
+                        {{'label.button.viewjournalentries' | translate}}
+                    </button>         </td>
                                     <td class="active fontnormal">{{'label.account.maturity.amount' | translate}}
                                     </td>
                                     <td><span class="padded-td">{{savingaccountdetails.currency.displaySymbol}}&nbsp;{{savingaccountdetails.maturityAmount | number}}</span>
