@@ -64,7 +64,7 @@ jobs:
     
     - name: updating kubeconfig and helm repo      ##(edit eks cluster)
       run: |
-       aws eks --region us-east-2 update-kubeconfig --name canary-staging 
+       aws eks --region eu-west-2 update-kubeconfig --name canary-staging 
        helm repo add fiter-apps https://chartmuseum.fiter.io/ --username ${{ secrets.CHARTMUSEUM_USERNAME }} --password ${{ secrets.CHARTMUSEUM_PASSWORD }}
        
     - name: deploy frontend
