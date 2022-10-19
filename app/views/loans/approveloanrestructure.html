@@ -1,8 +1,8 @@
-<div class="content-container" ng-controller="RestructureRequestController">
+<div class="content-container" ng-controller="ApproveLoanRestructureRequestController">
     <ul class="breadcrumb">
         <li><a href="#/viewloanaccount/{{loanId}}">{{'label.anchor.viewloanaccount' | translate}}</a></li>
-        <li><a href="#/loans/{{loanId}}/viewreschedulerequest/" 
-        class="active">{{'label.anchor.reschedulerequest' | translate}}</a></li>
+        <li><a href="#/loans/{{loanId}}/restructure-payments/"
+        class="active">{{'label.anchor.restructureLoan' | translate}}</a></li>
     </ul>
     <div class="card">
         <div class="content">
@@ -20,9 +20,9 @@
                     <br>
                     <br>
                     <div style="padding-left: 100px;">
-                        <button id="cancel" ng-click="cancel()" class="btn btn-default ">{{ 'label.button.cancel' | translate }}</button>
+                        <button ng-click="cancel()" class="btn btn-default ">{{ 'label.button.cancel' | translate }}</button>
 
-                        <button id="save" ng-click="approve()" type="submit" class="btn btn-primary"  has-permission="APPROVERESCHEDULE_LOAN">
+                        <button ng-click="approve()" class="btn btn-primary"  has-permission="APPROVERESTRUCTURE_LOAN">
                             {{'label.button.save' | translate}}
 
                         </button>

@@ -476,6 +476,26 @@
                      reject:{method:'POST',params:{command:'reject'}},
                      approve:{method:'POST',params:{command:'approve'}}
                      }),
+                    loanRestructureResource: defineResource(apiVer + "/restructureloans/:loanId/:requestId",
+                        {loanId:'@loanId', requestId:'@requestId'},{
+                        get: {method: 'GET',params:{}},
+                        getAll: {method: 'GET', params: {}, isArray: true},
+                        template: {method: 'GET',params:{}},
+                        preview:{method:'GET',params:{command:'previewLoanRestructure'}},
+                        put: {method: 'POST', params: {command:'restructure'}},
+                        reject:{method:'POST',params:{command:'reject'}},
+                        approve:{method:'POST',params:{command:'approve'}}
+                    }),
+                    loanRestructureResourceTemplate: defineResource(apiVer + "/restructureloans/:loanId/template",
+                        {loanId: '@loanId'}, {
+                        get: {method: 'GET', params: {}},
+                        update: {method: 'PUT', params: {}}
+                    }),
+                    loanRestructureResourceIdTemplate: defineResource(apiVer + "/restructureloans/:loanId/:requestId",
+                        {loanId: '@loanId',requestId: '@requestId',command: 'previewRestructureRequest'}, {
+                        get: {method: 'GET', params: {}},
+                        update: {method: 'PUT', params: {}}
+                    }),
                      auditResource: defineResource(apiVer + "/audits/:templateResource", {templateResource: '@templateResource'}, {
                         get: {method: 'GET', params: {}},
                         search: {method: 'GET', params: {}, isArray: false}

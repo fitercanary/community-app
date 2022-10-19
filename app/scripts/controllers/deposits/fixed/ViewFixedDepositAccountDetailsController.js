@@ -40,8 +40,7 @@
 
             //view investment contract page
             scope.viewInvestmentContract = function () {
-                location.path("/viewInvestmentContract/" + routeParams.id);
-                ``
+                location.path('/fixeddepositaccount/' + routeParams.id + '/downloadInvestmentLetter');
             };
             scope.viewJournalEntries = function () {
                 location.path("/searchtransaction/").search({

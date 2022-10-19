@@ -1,0 +1,291 @@
+<div ng-controller="RestructureRequestController">
+    <div>
+        <ul class="breadcrumb">
+            <li><a href="#/viewloanaccount/{{loanId}}">{{'label.anchor.viewloanaccount' | translate}}</a></li>
+            <li class="active">{{'label.anchor.rescheduleLoan' | translate}}</li>
+        </ul>
+    </div>
+    <form name="createloanrescheduleform" novalidate="" class="form-horizontal well" rc-submit="submit()">
+        <api-validate></api-validate>
+        <div class="row">
+
+            <div class=" col-md-6 span gray-head" style="margin-left:0%;">
+                      <span style="margin-left: 10px;font-size:20px">
+                            <strong> <i ng-hide="loandetails.inArrears"
+                                        class="fa fa-stop {{loandetails.status.code | StatusLookup}}"></i>
+                                <i ng-show="loandetails.inArrears"
+                                   class="fa fa-stop {{loandetails.status.code | StatusLookup}}overdue"></i>&nbsp;{{loandetails.loanProductName}}(#{{loandetails.accountNo}})</strong>
+                      </span>
+            </div>
+
+            <div ng-show="loandetails.summary" class="col-md-6 text-right">
+                <div style="font-size:20px">
+                    {{'label.heading.currentBalance' | translate}}: {{loandetails.currency.displaySymbol}}
+                    {{loandetails.summary.totalOutstanding | number}}
+                </div>
+                <div style="font-size:14px">
+                    {{'label.account.maturity.date' | translate}}:
+                    {{loandetails.timeline.expectedMaturityDate | DateFormat}}
+                </div>
+
+            </div>
+
+        </div>
+        <hr/>
+        <div class="row">
+            <div class="col-sm-12 col-md-12 primarydiv">
+                <div class="pull-right btn-group">
+                    <a ng-repeat="button in buttons.singlebuttons" ng-show="button.name"
+                       ng-click="clickEvent(button.name.replace('button.',''), loandetails.id)"
+                       class="btn btn-primary" has-permission='{{button.taskPermissionName}}'><i
+                            class="{{button.icon}} "></i>&nbsp;{{'label.' + button.name |
+                    translate}}</a>
+                </div>
+            </div>
+        </div>
+
+        <fieldset>
+            <h4>{{'label.heading.restructurePayment' | translate}}</h4>
+            <br>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.heading.principal.outstanding' | translate}}: </label>
+                <div class="col-sm-3">
+                    <label class="control-label">{{loandetails.currency.code}}
+                        {{loandetails.summary.principalOutstanding | number}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.heading.interest.outstanding' | translate}}: </label>
+                <div class="col-sm-3">
+                    <label class="control-label">{{loandetails.currency.code}}
+                        {{loandetails.summary.interestOutstanding | number}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.total' | translate}}
+                    {{'label.heading.loan.balance' | translate}}: </label>
+                <div class="col-sm-3">
+                    <label class="control-label">{{loandetails.currency.code}}
+                        {{loandetails.summary.totalOutstanding | number}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.heading.repaymentsevery' | translate}}</label>
+                <div class="col-sm-3">
+                    <label class="control-label">{{loandetails.repaymentEvery}}
+                        {{loandetails.repaymentFrequencyType.value}}</label>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.total.installments' | translate}}</label>
+                <div class="col-sm-3">
+                    <label class="control-label">
+                        {{formData.totalInstallments}} {{loandetails.repaymentFrequencyType.value}}</label>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.total.paid.installments' | translate}}</label>
+                <div class="col-sm-3">
+                    <label class="control-label">{{formData.paidInstallments}}
+                        {{loandetails.repaymentFrequencyType.value}}</label>
+                </div>
+            </div>
+
+            <div class="form-group {{loandetails.inArrears?'text-danger':''}}"
+                 ng-show="formData.expectedMaturityDate && formData.startDate">
+                <label class="control-label col-sm-2">{{'label.input.max.installments' | translate}}</label>
+                <div class="col-sm-3">
+                    <label class="control-label">{{(loanRestructureRequestData.periods-2)|| monthDiff()}} {{loandetails.repaymentFrequencyType.value}}</label>
+                    <label ng-show="loandetails.inArrears" class="text-danger">
+                        {{'Can\'t restructure a loan that is in arrears already'}}</label>
+                </div>
+            </div>
+
+            <div ng-show="!requestId || editRequest">
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"
+                           for="modifyTerm">{{'label.input.reduce.term' | translate}}<span
+                            class="required"> <i class="fa fa-question btn-success"
+                                                 title="Reduce the loan term by reducing the expected maturity date."></i></span></label>
+                    <div class="col-sm-3">
+                        <input id="modifyTerm" ng-disabled="loandetails.inArrears" type="checkbox"
+                               ng-model="formData.modifyLoanTerm" ng-change="changeMaturityDate()"
+                               ng-true-value="true" ng-false-value="false">
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.restructureReasonId' | translate}}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <select chosen="codes" class="form-control ng-pristine ng-valid"
+                                value="{{rescheduleReasonCode.id}}"
+                                ng-options="rescheduleReasonCode.id as rescheduleReasonCode.name for rescheduleReasonCode in codes"
+                                ng-model="formData.rescheduleReasonId">
+                            <option style="display:none" value="">{{'label.menu.restructureReason' | translate}}
+                            </option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+
+                    <label class="control-label col-sm-2">{{ 'label.input.comments' | translate }}</label>
+                    <div class="col-sm-3">
+                    <textarea rows="2" style="width: 402px; height: 76px;" class="form-control"
+                              ng-disabled="!formData.modifyLoanTerm"
+                              ng-model="formData.rescheduleReasonComment"></textarea>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"
+                           for="transactionDate">{{'label.input.expected.next.date' | translate}}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="transactionDate" class="form-control" type="text" sort datepicker-pop="dd MMMM yyyy"
+                               ng-model="formData.transactionDate" is-open="opened" ng-disabled="true"/>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"
+                           for="reschStart">{{'label.input.reschedule.start' | translate}}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3">
+                        <input id="reschStart" class="form-control" type="text"
+                               ng-disabled="!formData.modifyLoanTerm" datepicker-pop="dd MMMM yyyy"
+                               ng-model="formData.startDate"/>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2"
+                           for="maturity">{{'label.input.expected.next.maturity' | translate}}<span
+                            class="required">*</span></label>
+
+                    <div class="col-sm-3" ng-show="formData.expectedMaturityDate">
+                        <input id="maturity" class="form-control" type="text" datepicker-pop="dd MMMM yyyy"
+                               max="{{minMaturityDate}}"
+                               ng-disabled="!formData.modifyLoanTerm"
+                               ng-model="formData.expectedMaturityDate" is-open="opened"/>
+                    </div>
+                </div>
+
+                <div align="center">
+
+                    <button type="button" data-ng-click="cancel()" class="btn btn-default">
+                        {{ 'label.button.cancel' | translate }}
+                    </button>
+                    <button type="button" ng-disabled="loandetails.inArrears || !formData.modifyLoanTerm" data-ng-click="submit()"
+                            class="btn btn-primary"
+                            has-permission='APPROVE_RESCHEDULELOAN'>
+                        {{'label.button.save' | translate}}
+
+                    </button>
+                </div>
+            </div>
+
+            <div ng-show="requestId && !editRequest">
+                <div class="paddedleft" style="margin-left:-1px;margin-top: -20px; margin-right: 1px; padding: 10px;">
+                    <hr class="marginbottom"/>
+                    <uib-tabset class = "scrollable" tabset-name="loanAccountDetails" scrollable>
+                        <uib-tab heading="{{'label.heading.repaymentschedule' | translate}}">
+
+                            <table class="table table-striped .width100">
+                                <colgroup span="4"></colgroup>
+                                <thead>
+                                <tr>
+                                    <th colspan="5" scope="colgroup"></th>
+                                    <th colspan="2" scope="colgroup">{{'label.heading.loanamountandbalance' | translate}}</th>
+                                    <th colspan="3" scope="colgroup">{{'label.heading.totalcostofloan' | translate}}</th>
+                                    <th colspan="6" scope="colgroup">{{'label.heading.installmenttotals' | translate}}</th>
+                                </tr>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">{{'label.heading.days' | translate}}</th>
+                                    <th scope="col">{{'label.heading.date' | translate}}</th>
+                                    <th scope="col">&nbsp;</th>
+
+                                    <th scope="col">{{'label.heading.principaldue' | translate}}</th>
+                                    <th scope="col">{{'label.heading.balanceofloan' | translate}}</th>
+
+                                    <th scope="col">{{'label.heading.interest' | translate}}</th>
+                                    <th scope="col">{{'label.heading.fees' | translate}}</th>
+                                    <th scope="col">{{'label.heading.penalties' | translate}}</th>
+
+                                    <th scope="col">{{'label.heading.due' | translate}}</th>
+                                    <th scope="col">{{'label.heading.paid' | translate}}</th>
+                                    <th scope="col">{{'label.heading.inadvance' | translate}}</th>
+                                    <th scope="col">{{'label.heading.late' | translate}}</th>
+                                    <th scope="col" data-ng-show="isWaived">{{'label.heading.waived' | translate}}</th>
+                                    <th scope="col">{{'label.heading.outstanding' | translate}}</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="period in loanRestructureRequestData.periods">
+                                    <td scope="row">{{period.period}}</td>
+                                    <td>{{period.daysInPeriod}}</td>
+                                    <td>{{period.dueDate | DateFormat}}</td>
+                                    <td>
+                                        <div ng-show="period.obligationsMetOnDate"><i class="fa fa-check "></i></div>
+                                    </td>
+
+                                    <td>{{period.principalDue | number}}</td>
+                                    <td>{{period.principalLoanBalanceOutstanding | number}}</td>
+                                    <td>{{period.interestOriginalDue | number}}</td>
+                                    <td>{{period.feeChargesDue | number}}</td>
+                                    <td>{{period.penaltyChargesDue | number}}</td>
+
+                                    <td>{{period.totalDueForPeriod | number}}</td>
+                                    <td>{{period.totalPaidForPeriod | number}}</td>
+                                    <td>{{period.totalPaidInAdvanceForPeriod | number}}</td>
+                                    <td>{{period.totalPaidLateForPeriod | number}}</td>
+                                    <td data-ng-show="isWaived">{{period.totalWaivedForPeriod | number}}</td>
+                                    <td>{{period.totalOutstandingForPeriod | number}}</td>
+                                </tr>
+                                </tbody>
+                                <tfoot class="ui-widget-header">
+                                <tr>
+                                    <th>&nbsp;</th>
+                                    <th>{{loanRestructureRequestData.loanTermInDays}}</th>
+                                    <th colspan="3">{{'label.heading.total' | translate}}</th>
+
+                                    <th>{{loanRestructureRequestData.totalPrincipalExpected | number}}</th>
+                                    <th>&nbsp;</th>
+                                    <th>{{loanRestructureRequestData.totalInterestCharged | number}}</th>
+                                    <th>{{loanRestructureRequestData.totalFeeChargesCharged | number}}</th>
+                                    <th>{{loanRestructureRequestData.totalPenaltyChargesCharged | number}}</th>
+
+                                    <th>{{loanRestructureRequestData.totalRepaymentExpected | number}}</th>
+                                    <th>{{loanRestructureRequestData.totalRepayment | number}}</th>
+                                    <th>{{loanRestructureRequestData.totalPaidInAdvance | number}}</th>
+                                    <th>{{loanRestructureRequestData.totalPaidLate | number}}</th>
+                                    <th data-ng-show="isWaived">{{loanRestructureRequestData.totalWaived | number}}</th>
+                                    <th>{{loanRestructureRequestData.totalOutstanding | number}}</th>
+                                </tr>
+                                </tfoot>
+                            </table>
+
+                        </uib-tab>
+                    </uib-tabset>
+                </div>
+            </div>
+
+
+        </fieldset>
+    </form>
+</div>
+
+
+
+
