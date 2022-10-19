@@ -50,9 +50,10 @@ module.exports = function(grunt) {
     connect: {
         options: {
             port:  9002,
-            hostname: 'localhost',
+            hostname: '127.0.0.1',
             livereload: 35729,
-            open:'http://<%= connect.options.hostname %>:<%= connect.options.port %>?baseApiUrl=https://demo.openmf.org'
+            /*open:'http://<%= connect.options.hostname %>:<%= connect.options.port %>?baseApiUrl=https://demo.openmf.org'*/
+            open:'http://<%= connect.options.hostname %>:<%= connect.options.port %>?baseApiUrl=https://localhost:8443&tenantIdentifier=default'
         },
         livereload: {
             options: {

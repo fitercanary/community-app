@@ -842,11 +842,17 @@
             .when('/loans/:loanId/reschedule/', {
                 templateUrl: 'views/loans/rescheduleloans.html'
             })
+            .when('/loans/:loanId/restructure-payments/', {
+                templateUrl: 'views/loans/restructurepayment.html'
+            })
             .when('/loans/:loanId/viewreschedulerequest/:requestId', {
                 templateUrl: 'views/loans/viewreschedulerequest.html'
             })
             .when('/loans/:loanId/approvereschedulerequest/:requestId', {
                 templateUrl: 'views/loans/approveloanreschedule.html'
+            })
+            .when('/loans/:loanId/approverestructurerequest/:requestId', {
+                templateUrl: 'views/loans/approveloanrestructure.html'
             })
             .when('/loans/:loanId/rejectreschedulerequest/:requestId', {
                 templateUrl: 'views/loans/rejectloanreschedule.html'
