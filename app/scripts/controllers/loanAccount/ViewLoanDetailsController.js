@@ -1,6 +1,6 @@
 (function (module) {
     mifosX.controllers = _.extend(module, {
-        ViewLoanDetailsController: function (scope, routeParams, resourceFactory,paginatorService, location, route, http, $uibModal, dateFilter, API_VERSION, $sce, $rootScope) {
+        ViewLoanDetailsController: function (scope, routeParams, resourceFactory, paginatorService, location, route, http, $uibModal, dateFilter, API_VERSION, $sce, $rootScope) {
             scope.loandocuments = [];
             scope.report = false;
             scope.hidePentahoReport = true;
@@ -15,7 +15,8 @@
                 console.log(transactionTypeId, scope.closed);
                 if ((transactionTypeId == 2 || transactionTypeId == 4 || transactionTypeId == 1) && !scope.closed) {
                     location.path('/viewloantrxn/' + loanId + '/trxnId/' + transactionId);
-                };
+                }
+                ;
             };
 
             /***
@@ -23,8 +24,8 @@
              * api returns dates in array format[yyyy, mm, dd], converting the array of dates to date object
              * @param dateFieldName
              */
-            scope.convertDateArrayToObject = function(dateFieldName){
-                for(var i in scope.loandetails.transactions){
+            scope.convertDateArrayToObject = function (dateFieldName) {
+                for (var i in scope.loandetails.transactions) {
                     scope.loandetails.transactions[i][dateFieldName] = new Date(scope.loandetails.transactions[i].date);
                 }
             };
@@ -121,11 +122,14 @@
                         location.path('/loanscreenreport/' + accountId);
                         break;
                     case "reschedule":
-                        location.path('/loans/' +accountId + '/reschedule');
+                        location.path('/loans/' + accountId + '/reschedule');
+                        break;
+                    case "restructure":
+                        location.path('/loans/' + accountId + '/restructure-payments');
                         break;
                     case "adjustrepaymentschedule":
-                        location.path('/adjustrepaymentschedule/'+accountId) ;
-                        break ;
+                        location.path('/adjustrepaymentschedule/' + accountId);
+                        break;
                     case "foreclosure":
                         location.path('loanforeclosure/' + accountId + '/' + scope.loandetails.clientId);
                         break;
@@ -146,7 +150,11 @@
 
             var DelChargeCtrl = function ($scope, $uibModalInstance, ids) {
                 $scope.delete = function () {
-                    resourceFactory.LoanAccountResource.delete({loanId: routeParams.id, resourceType: 'charges', chargeId: ids}, {}, function (data) {
+                    resourceFactory.LoanAccountResource.delete({
+                        loanId: routeParams.id,
+                        resourceType: 'charges',
+                        chargeId: ids
+                    }, {}, function (data) {
 
                         $uibModalInstance.close('delete');
                         route.reload();
@@ -157,7 +165,11 @@
                 };
             };
 
-            resourceFactory.LoanAccountResource.getLoanAccountDetails({loanId: routeParams.id, associations: 'all',exclude: 'guarantors,futureSchedule'}, function (data) {
+            resourceFactory.LoanAccountResource.getLoanAccountDetails({
+                loanId: routeParams.id,
+                associations: 'all',
+                exclude: 'guarantors,futureSchedule'
+            }, function (data) {
                 scope.loandetails = data;
                 console.log(data)
                 console.log(data.paymentTypeOptions)
@@ -171,60 +183,59 @@
                 scope.chargeAction = data.status.value == "Submitted and pending approval" ? true : false;
                 scope.decimals = data.currency.decimalPlaces;
                 if (data.status.code === "loanStatusType.closed.written.off" ||
-                                    data.status.code === "loanStatusType.closed.obligations.met" ||
-                                    data.status.code === "loanStatusType.closed.reschedule.outstanding.amount" ||
-                                    data.status.code === "loanStatusType.withdrawn.by.client" ||
-                                    data.status.code === "loanStatusType.rejected") {
-                                    scope.closed = true;
-                                } else {
-                                     scope.closed = false;
-                                }
+                    data.status.code === "loanStatusType.closed.obligations.met" ||
+                    data.status.code === "loanStatusType.closed.reschedule.outstanding.amount" ||
+                    data.status.code === "loanStatusType.withdrawn.by.client" ||
+                    data.status.code === "loanStatusType.rejected") {
+                    scope.closed = true;
+                } else {
+                    scope.closed = false;
+                }
                 if (scope.loandetails.charges) {
                     scope.charges = scope.loandetails.charges;
                     for (var i in scope.charges) {
                         if (scope.charges[i].paid || scope.charges[i].waived || scope.charges[i].chargeTimeType.value == 'Disbursement' || scope.loandetails.status.value != 'Active') {
                             var actionFlag = true;
-                        }
-                        else {
+                        } else {
                             var actionFlag = false;
                         }
                         scope.charges[i].actionFlag = actionFlag;
                     }
 
                     scope.chargeTableShow = true;
-                }
-                else {
+                } else {
                     scope.chargeTableShow = false;
                 }
                 if (scope.status == "Submitted and pending approval" || scope.status == "Active" || scope.status == "Approved") {
                     scope.choice = true;
                 }
                 if (data.status.value == "Submitted and pending approval") {
-                    scope.buttons = { singlebuttons: [
-                        {
-                            name: "button.addloancharge",
-                            icon: "fa fa-plus",
-                            taskPermissionName: 'CREATE_LOANCHARGE'
-                        },
-                        {
-                            name: "button.approve",
-                            icon: "fa fa-check",
-                            taskPermissionName: 'APPROVE_LOAN'
-                        },
-                        {
-                            name: "button.modifyapplication",
-                            icon: "fa fa-pincel-square-o",
-                            taskPermissionName: 'UPDATE_LOAN'
-                        },
-                        {
-                            name: "button.reject",
-                            icon: "fa fa-times",
-                            taskPermissionName: 'REJECT_LOAN'
-                        }
-                    ],
+                    scope.buttons = {
+                        singlebuttons: [
+                            {
+                                name: "button.addloancharge",
+                                icon: "fa fa-plus",
+                                taskPermissionName: 'CREATE_LOANCHARGE'
+                            },
+                            {
+                                name: "button.approve",
+                                icon: "fa fa-check",
+                                taskPermissionName: 'APPROVE_LOAN'
+                            },
+                            {
+                                name: "button.modifyapplication",
+                                icon: "fa fa-pincel-square-o",
+                                taskPermissionName: 'UPDATE_LOAN'
+                            },
+                            {
+                                name: "button.reject",
+                                icon: "fa fa-times",
+                                taskPermissionName: 'REJECT_LOAN'
+                            }
+                        ],
                         options: [
                             {
-                                name: (scope.loandetails.loanOfficerName?"button.changeloanofficer":"button.assignloanofficer"),
+                                name: (scope.loandetails.loanOfficerName ? "button.changeloanofficer" : "button.assignloanofficer"),
                                 taskPermissionName: 'UPDATELOANOFFICER_LOAN'
                             },
                             {
@@ -254,37 +265,38 @@
                         ]
 
                     };
-                    if(data.isVariableInstallmentsAllowed) {
+                    if (data.isVariableInstallmentsAllowed) {
                         scope.buttons.options.push({
                             name: "button.adjustrepaymentschedule",
                             taskPermissionName: 'CREATESCHEDULEEXCEPTIONS_LOAN'
-                        }) ;
+                        });
                     }
                 }
 
                 if (data.status.value == "Approved") {
-                    scope.buttons = { singlebuttons: [
-                        {
-                            name: (scope.loandetails.loanOfficerName?"button.changeloanofficer":"button.assignloanofficer"),
-                            icon: "fa fa-user",
-                            taskPermissionName: 'UPDATELOANOFFICER_LOAN'
-                        },
-                        {
-                            name: "button.disburse",
-                            icon: "fa fa-flag",
-                            taskPermissionName: 'DISBURSE_LOAN'
-                        },
-                        {
-                            name: "button.disbursetosavings",
-                            icon: "fa fa-flag",
-                            taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
-                        },
-                        {
-                            name: "button.undoapproval",
-                            icon: "fa fa-undo",
-                            taskPermissionName: 'APPROVALUNDO_LOAN'
-                        }
-                    ],
+                    scope.buttons = {
+                        singlebuttons: [
+                            {
+                                name: (scope.loandetails.loanOfficerName ? "button.changeloanofficer" : "button.assignloanofficer"),
+                                icon: "fa fa-user",
+                                taskPermissionName: 'UPDATELOANOFFICER_LOAN'
+                            },
+                            {
+                                name: "button.disburse",
+                                icon: "fa fa-flag",
+                                taskPermissionName: 'DISBURSE_LOAN'
+                            },
+                            {
+                                name: "button.disbursetosavings",
+                                icon: "fa fa-flag",
+                                taskPermissionName: 'DISBURSETOSAVINGS_LOAN'
+                            },
+                            {
+                                name: "button.undoapproval",
+                                icon: "fa fa-undo",
+                                taskPermissionName: 'APPROVALUNDO_LOAN'
+                            }
+                        ],
                         options: [
                             {
                                 name: "button.addloancharge",
@@ -308,28 +320,29 @@
                 }
 
                 if (data.status.value == "Active") {
-                    scope.buttons = { singlebuttons: [
-                        {
-                            name: "button.addloancharge",
-                            icon: "fa fa-plus",
-                            taskPermissionName: 'CREATE_LOANCHARGE'
-                        },
-                        {
-                            name: "button.foreclosure",
-                            icon: "icon-dollar",
-                            taskPermissionName: 'FORECLOSURE_LOAN'
-                        },
-                        {
-                            name: "button.makerepayment",
-                            icon: "fa fa-dollar",
-                            taskPermissionName: 'REPAYMENT_LOAN'
-                        },
-                        {
-                            name: "button.undodisbursal",
-                            icon: "fa fa-undo",
-                            taskPermissionName: 'DISBURSALUNDO_LOAN'
-                        }
-                    ],
+                    scope.buttons = {
+                        singlebuttons: [
+                            {
+                                name: "button.addloancharge",
+                                icon: "fa fa-plus",
+                                taskPermissionName: 'CREATE_LOANCHARGE'
+                            },
+                            {
+                                name: "button.foreclosure",
+                                icon: "icon-dollar",
+                                taskPermissionName: 'FORECLOSURE_LOAN'
+                            },
+                            {
+                                name: "button.makerepayment",
+                                icon: "fa fa-dollar",
+                                taskPermissionName: 'REPAYMENT_LOAN'
+                            },
+                            {
+                                name: "button.undodisbursal",
+                                icon: "fa fa-undo",
+                                taskPermissionName: 'DISBURSALUNDO_LOAN'
+                            }
+                        ],
                         options: [
                             {
                                 name: "button.modifyschedule",
@@ -345,6 +358,9 @@
                             },
                             {
                                 name: "button.reschedule",
+                                taskPermissionName: 'CREATE_RESCHEDULELOAN'
+                            }, {
+                                name: "button.restructure",
                                 taskPermissionName: 'CREATE_RESCHEDULELOAN'
                             },
                             {
@@ -401,7 +417,7 @@
                         });
                     }
 
-                    if(scope.recalculateInterest){
+                    if (scope.recalculateInterest) {
                         scope.buttons.singlebuttons.splice(1, 0, {
                             name: "button.prepayment",
                             icon: "fa fa-money",
@@ -410,27 +426,33 @@
                     }
                 }
                 if (data.status.value == "Overpaid") {
-                    scope.buttons = { singlebuttons: [
-                        {
-                            name: "button.transferFunds",
-                            icon: "fa fa-exchange",
-                            taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
-                        }
-                    ]
+                    scope.buttons = {
+                        singlebuttons: [
+                            {
+                                name: "button.transferFunds",
+                                icon: "fa fa-exchange",
+                                taskPermissionName: 'CREATE_ACCOUNTTRANSFER'
+                            }
+                        ]
                     };
                 }
                 if (data.status.value == "Closed (written off)") {
-                    scope.buttons = { singlebuttons: [
-                        {
-                            name: "button.recoverypayment",
-                            icon: "fa fa-briefcase",
-                            taskPermissionName: 'RECOVERYPAYMENT_LOAN'
-                        }
-                    ]
+                    scope.buttons = {
+                        singlebuttons: [
+                            {
+                                name: "button.recoverypayment",
+                                icon: "fa fa-briefcase",
+                                taskPermissionName: 'RECOVERYPAYMENT_LOAN'
+                            }
+                        ]
                     };
                 }
 
-                resourceFactory.standingInstructionTemplateResource.get({fromClientId: scope.loandetails.clientId,fromAccountType: 1,fromAccountId: routeParams.id},function (response) {
+                resourceFactory.standingInstructionTemplateResource.get({
+                    fromClientId: scope.loandetails.clientId,
+                    fromAccountType: 1,
+                    fromAccountId: routeParams.id
+                }, function (response) {
                     scope.standinginstruction = response;
                     scope.searchTransaction();
                 });
@@ -480,16 +502,23 @@
                 };
             };
 
-            resourceFactory.loanResource.getAllNotes({loanId: routeParams.id,resourceType:'notes'}, function (data) {
+            resourceFactory.loanResource.getAllNotes({loanId: routeParams.id, resourceType: 'notes'}, function (data) {
                 scope.loanNotes = data;
             });
 
 
-
             scope.saveNote = function () {
-                resourceFactory.loanResource.save({loanId: routeParams.id, resourceType: 'notes'}, this.formData, function (data) {
+                resourceFactory.loanResource.save({
+                    loanId: routeParams.id,
+                    resourceType: 'notes'
+                }, this.formData, function (data) {
                     var today = new Date();
-                    temp = { id: data.resourceId, note: scope.formData.note, createdByUsername: "test", createdOn: today };
+                    temp = {
+                        id: data.resourceId,
+                        note: scope.formData.note,
+                        createdByUsername: "test",
+                        createdOn: today
+                    };
                     scope.loanNotes.push(temp);
                     scope.formData.note = "";
                     scope.predicate = '-id';
@@ -506,7 +535,7 @@
                             if (data[i].fileName.toLowerCase().indexOf('.jpg') != -1 || data[i].fileName.toLowerCase().indexOf('.jpeg') != -1 || data[i].fileName.toLowerCase().indexOf('.png') != -1)
                                 data[i].fileIsImage = true;
                         if (data[i].type)
-                             if (data[i].type.toLowerCase().indexOf('image') != -1)
+                            if (data[i].type.toLowerCase().indexOf('image') != -1)
                                 data[i].fileIsImage = true;
                     }
                     scope.loandocuments = data;
@@ -519,8 +548,10 @@
             });
 
             scope.dataTableChange = function (datatable) {
-                resourceFactory.DataTablesResource.getTableDetails({datatablename: datatable.registeredTableName,
-                    entityId: routeParams.id, genericResultSet: 'true'}, function (data) {
+                resourceFactory.DataTablesResource.getTableDetails({
+                    datatablename: datatable.registeredTableName,
+                    entityId: routeParams.id, genericResultSet: 'true'
+                }, function (data) {
                     scope.datatabledetails = data;
                     console.log(data);
                     scope.datatabledetails.isData = data.data.length > 0 ? true : false;
@@ -561,7 +592,7 @@
                 scope.viewTransactionReport = false;
             };
 
-            scope.viewJournalEntries = function(){
+            scope.viewJournalEntries = function () {
                 location.path("/searchtransaction/").search({loanId: scope.loandetails.id});
             };
 
@@ -571,20 +602,20 @@
                 scope.viewReport = false;
             };
 
-            scope.viewLoanCollateral = function (collateralId){
-                location.path('/loan/'+scope.loandetails.id+'/viewcollateral/'+collateralId).search({status:scope.loandetails.status.value});
+            scope.viewLoanCollateral = function (collateralId) {
+                location.path('/loan/' + scope.loandetails.id + '/viewcollateral/' + collateralId).search({status: scope.loandetails.status.value});
             };
 
-            scope.viewDataTable = function (registeredTableName,data){
+            scope.viewDataTable = function (registeredTableName, data) {
                 if (scope.datatabledetails.isMultirow) {
-                    location.path("/viewdatatableentry/"+registeredTableName+"/"+scope.loandetails.id+"/"+data.row[0]);
-                }else{
-                    location.path("/viewsingledatatableentry/"+registeredTableName+"/"+scope.loandetails.id);
+                    location.path("/viewdatatableentry/" + registeredTableName + "/" + scope.loandetails.id + "/" + data.row[0]);
+                } else {
+                    location.path("/viewsingledatatableentry/" + registeredTableName + "/" + scope.loandetails.id);
                 }
             };
 
             scope.viewLoanChargeDetails = function (chargeId) {
-                location.path('/loan/'+scope.loandetails.id+'/viewcharge/'+chargeId).search({loanstatus:scope.loandetails.status.value});
+                location.path('/loan/' + scope.loandetails.id + '/viewcharge/' + chargeId).search({loanstatus: scope.loandetails.status.value});
             };
 
             scope.viewprintdetails = function () {
@@ -595,15 +626,15 @@
                 scope.hidePentahoReport = true;
                 scope.formData.outputType = 'PDF';
                 scope.baseURL = $rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent("Client Loan Account Schedule");
-                scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + $rootScope.tenantIdentifier+"&locale="+scope.optlang.code;
+                scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + $rootScope.tenantIdentifier + "&locale=" + scope.optlang.code;
 
                 var reportParams = "";
                 scope.startDate = dateFilter(scope.date.fromDate, 'yyyy-MM-dd');
                 scope.endDate = dateFilter(scope.date.toDate, 'yyyy-MM-dd');
                 var paramName = "R_startDate";
-                reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.startDate)+ "&";
+                reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.startDate) + "&";
                 paramName = "R_endDate";
-                reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.endDate)+ "&";
+                reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.endDate) + "&";
                 paramName = "R_selectLoan";
                 reportParams += encodeURIComponent(paramName) + "=" + encodeURIComponent(scope.loandetails.accountNo);
                 if (reportParams > "") {
@@ -623,7 +654,7 @@
                 scope.hidePentahoReport = true;
                 scope.formData.outputType = 'PDF';
                 scope.baseURL = $rootScope.hostUrl + API_VERSION + "/runreports/" + encodeURIComponent("Loan Transaction Receipt");
-                scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + $rootScope.tenantIdentifier+"&locale="+scope.optlang.code;
+                scope.baseURL += "?output-type=" + encodeURIComponent(scope.formData.outputType) + "&tenantIdentifier=" + $rootScope.tenantIdentifier + "&locale=" + scope.optlang.code;
 
                 var reportParams = "";
                 var paramName = "R_transactionId";
@@ -635,14 +666,24 @@
                 scope.viewReportDetails = $sce.trustAsResourceUrl(scope.baseURL);
 
             };
-            scope.viewloantransactionjournalentries = function(transactionId){
+            scope.viewloantransactionjournalentries = function (transactionId) {
                 var transactionId = "L" + transactionId;
-                if(scope.loandetails.clientId != null && scope.loandetails.clientId != ""){
-                    location.path('/viewtransactions/' + transactionId).search({productName: scope.loandetails.loanProductName,loanId:scope.loandetails.id,clientId: scope.loandetails.clientId,
-                        accountNo: scope.loandetails.accountNo,clientName: scope.loandetails.clientName});
-                }else{
-                    location.path('/viewtransactions/' + transactionId).search({productName: scope.loandetails.loanProductName,loanId:scope.loandetails.id,accountNo: scope.loandetails.accountNo,
-                        groupId :scope.loandetails.group.id,groupName :scope.loandetails.group.name});
+                if (scope.loandetails.clientId != null && scope.loandetails.clientId != "") {
+                    location.path('/viewtransactions/' + transactionId).search({
+                        productName: scope.loandetails.loanProductName,
+                        loanId: scope.loandetails.id,
+                        clientId: scope.loandetails.clientId,
+                        accountNo: scope.loandetails.accountNo,
+                        clientName: scope.loandetails.clientName
+                    });
+                } else {
+                    location.path('/viewtransactions/' + transactionId).search({
+                        productName: scope.loandetails.loanProductName,
+                        loanId: scope.loandetails.id,
+                        accountNo: scope.loandetails.accountNo,
+                        groupId: scope.loandetails.group.id,
+                        groupName: scope.loandetails.group.name
+                    });
 
                 }
 
@@ -654,23 +695,30 @@
             }
 
             scope.deleteAll = function (apptableName, entityId) {
-                resourceFactory.DataTablesResource.delete({datatablename: apptableName, entityId: entityId, genericResultSet: 'true'}, {}, function (data) {
+                resourceFactory.DataTablesResource.delete({
+                    datatablename: apptableName,
+                    entityId: entityId,
+                    genericResultSet: 'true'
+                }, {}, function (data) {
                     route.reload();
                 });
             };
 
             scope.deleteDocument = function (documentId, index) {
-                resourceFactory.LoanDocumentResource.delete({loanId: scope.loandetails.id, documentId: documentId}, '', function (data) {
+                resourceFactory.LoanDocumentResource.delete({
+                    loanId: scope.loandetails.id,
+                    documentId: documentId
+                }, '', function (data) {
                     scope.loandocuments.splice(index, 1);
                 });
             };
 
             scope.previewDocument = function (url, fileName) {
-                scope.preview =  true;
+                scope.preview = true;
                 scope.fileUrl = scope.hostUrl + url;
-                if(fileName.toLowerCase().indexOf('.png') != -1)
+                if (fileName.toLowerCase().indexOf('.png') != -1)
                     scope.fileType = 'image/png';
-                else if((fileName.toLowerCase().indexOf('.jpg') != -1) || (fileName.toLowerCase().indexOf('.jpeg') != -1))
+                else if ((fileName.toLowerCase().indexOf('.jpg') != -1) || (fileName.toLowerCase().indexOf('.jpeg') != -1))
                     scope.fileType = 'image/jpg';
             };
 
@@ -682,7 +730,7 @@
                 column: 'date',
                 descending: true
             };
-            scope.changeTransactionSort = function(column) {
+            scope.changeTransactionSort = function (column) {
                 var sort = scope.transactionSort;
                 if (sort.column == column) {
                     sort.descending = !sort.descending;
@@ -692,9 +740,9 @@
                 }
             };
 
-            scope.showEdit = function(disbursementDetail){
-                if((!disbursementDetail.actualDisbursementDate || disbursementDetail.actualDisbursementDate == null)
-                    && scope.status =='Approved'){
+            scope.showEdit = function (disbursementDetail) {
+                if ((!disbursementDetail.actualDisbursementDate || disbursementDetail.actualDisbursementDate == null)
+                    && scope.status == 'Approved') {
                     return true;
                 }
                 return false;
@@ -706,43 +754,42 @@
                 }
                 return true;
             };
-            scope.showDisbursedAmountBasedOnStatus = function(){
-                if(scope.status == 'Submitted and pending approval' ||scope.status == 'Withdrawn by applicant' || scope.status == 'Rejected' ||
-                    scope.status == 'Approved'){
+            scope.showDisbursedAmountBasedOnStatus = function () {
+                if (scope.status == 'Submitted and pending approval' || scope.status == 'Withdrawn by applicant' || scope.status == 'Rejected' ||
+                    scope.status == 'Approved') {
                     return false;
                 }
                 return true;
             };
 
-            scope.checkStatus = function(){
-                if(scope.status == 'Active' || scope.status == 'Closed (obligations met)' || scope.status == 'Overpaid' ||
-                    scope.status == 'Closed (rescheduled)' || scope.status == 'Closed (written off)'){
+            scope.checkStatus = function () {
+                if (scope.status == 'Active' || scope.status == 'Closed (obligations met)' || scope.status == 'Overpaid' ||
+                    scope.status == 'Closed (rescheduled)' || scope.status == 'Closed (written off)') {
                     return true;
                 }
                 return false;
             };
 
-            scope.showAddDeleteTrancheButtons = function(action){
+            scope.showAddDeleteTrancheButtons = function (action) {
                 scope.return = true;
-                if(scope.status == 'Closed (obligations met)' || scope.status == 'Overpaid' ||
+                if (scope.status == 'Closed (obligations met)' || scope.status == 'Overpaid' ||
                     scope.status == 'Closed (rescheduled)' || scope.status == 'Closed (written off)' ||
-                    scope.status =='Submitted and pending approval'){
+                    scope.status == 'Submitted and pending approval') {
                     scope.return = false;
                 }
                 scope.totalDisbursedAmount = 0;
                 scope.count = 0;
-                for(var i in scope.loandetails.disbursementDetails){
-                    if(scope.loandetails.disbursementDetails[i].actualDisbursementDate != null){
+                for (var i in scope.loandetails.disbursementDetails) {
+                    if (scope.loandetails.disbursementDetails[i].actualDisbursementDate != null) {
                         scope.totalDisbursedAmount += scope.loandetails.disbursementDetails[i].principal;
-                    }
-                    else{
-                        scope.count +=  1;
+                    } else {
+                        scope.count += 1;
                     }
                 }
-                if(scope.totalDisbursedAmount == scope.loandetails.approvedPrincipal || scope.return == false){
+                if (scope.totalDisbursedAmount == scope.loandetails.approvedPrincipal || scope.return == false) {
                     return false;
                 }
-                if(scope.count == 0 && action == 'deletedisbursedetails'){
+                if (scope.count == 0 && action == 'deletedisbursedetails') {
                     return false;
                 }
 
@@ -750,7 +797,7 @@
             };
         }
     });
-    mifosX.ng.application.controller('ViewLoanDetailsController', ['$scope', '$routeParams', 'ResourceFactory','PaginatorService', '$location', '$route', '$http', '$uibModal', 'dateFilter', 'API_VERSION', '$sce', '$rootScope', mifosX.controllers.ViewLoanDetailsController]).run(function ($log) {
+    mifosX.ng.application.controller('ViewLoanDetailsController', ['$scope', '$routeParams', 'ResourceFactory', 'PaginatorService', '$location', '$route', '$http', '$uibModal', 'dateFilter', 'API_VERSION', '$sce', '$rootScope', mifosX.controllers.ViewLoanDetailsController]).run(function ($log) {
         $log.info("ViewLoanDetailsController initialized");
     });
 }(mifosX.controllers || {}));

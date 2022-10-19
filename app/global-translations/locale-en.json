@@ -1486,6 +1486,7 @@
   "label.anchor.viewsavingsaccount": "View Savings Account",
   "label.anchor.assignsavingsofficer": "Assign Savings Officer",
   "label.anchor.unassignsavingsofficer": "Unassign Savings Officer",
+  "label.anchor.restructureLoan": "Restructure Loan",
   "label.anchor.rescheduleLoan": "Reschedule Loan",
   "label.anchor.reschedulerequest": "Reschedule Request",
   "#Inputs": "..",
