@@ -594,7 +594,6 @@
                                 loanChargeId : scope.disbursementDetails[i].loanChargeId
                             });
                         }
-                        console.log("DISBURSEMENT DATA", this.formData.expectedDisbursementDate);
                     }
                     if(scope.formData.approvedLoanAmount == null){
                         scope.formData.approvedLoanAmount = scope.showTrancheAmountTotal;

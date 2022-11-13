@@ -10,6 +10,7 @@
             if (routeParams.centerEntity) {
                 scope.centerEntity = true;
             }
+            scope.formData.enableMaturitySmsAlerts=false;
 
             //interest rate chart details
             scope.chart = {};

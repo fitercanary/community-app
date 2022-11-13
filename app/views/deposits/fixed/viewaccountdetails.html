@@ -263,11 +263,6 @@
             <uib-tabset class="scrollable" tabset-name="fixedAccountDetails" scrollable>
                 <uib-tab heading="{{heading | translate}}">
                     <br>
-                    <button class="btn btn-primary pull-right" ng-show="checkStatus()"
-                            ng-click="viewInvestmentContract()" style="margin-right: 8px;">
-                        {{'label.button.investmentContract' | translate}}
-                    </button>
-                    <br>
                             <table class="table table-bordered view-table" ng-if="savingaccountdetails.status.rejected || savingaccountdetails.status.submittedAndPendingApproval">
                                 <tr>
                                     <td class="active fontnormal col-md-3">{{'label.account.deposit.date' | translate}}
