@@ -15,8 +15,6 @@
             resourceFactory.LoanAccountResource.getLoanAccountDetails({
                 loanId: routeParams.loanId,
             }, function (data) {
-                console.log("loan data \n\n: " + JSON.stringify(data))
-
                 scope.loandetails = data;
             });
 
@@ -39,6 +37,7 @@
                 scope.formData.pendingInstallments = pendingInstallments;
                 scope.formData.totalInstallments = totalInstallments;
 
+
                 scope.formData.startDate = restructureDetails.rescheduleFromDate ? new Date(restructureDetails.rescheduleFromDate) : new Date();
                 scope.formData.transactionDate = transactionDate;
                 scope.formData.expectedMaturityDate = restructureDetails.rescheduleToDate ? new Date(restructureDetails.rescheduleToDate) :
@@ -46,7 +45,7 @@
                 scope.minMaturityDate = scope.formatMinMaxDate(scope.loandetails.timeline.expectedMaturityDate);
                 let requestId = restructureDetails.restructureRequestId;
                 scope.requestId = requestId;
-                if (requestId) {
+                if (requestId && requestId > 0) {
                     scope.getLoanRestructureDetails(resourceFactory, requestId)
                     scope.buttons = {
                         singlebuttons: [
@@ -75,6 +74,7 @@
                     loanId: routeParams.loanId,
                     requestId: requestId,
                 }, function (data) {
+                    console.log("data \n\n" + JSON.stringify(data))
                     scope.loanRestructureRequestData = data
                 });
             }
@@ -127,7 +127,8 @@
 
 
                     return Difference_in_weeks ? (Difference_in_weeks / (+scope.loandetails.repaymentEvery)) : 0
-                } else return 0;
+                } else
+                    return 0;
 
             }
 
