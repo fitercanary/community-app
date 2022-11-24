@@ -43,7 +43,8 @@
                 <div class="col-sm-3">
                     <input id="expectedDisbursementDate" sort type="text" class="form-control"
                            datepicker-pop="dd MMMM yyyy" ng-model="form.expectedDisbursementDate"
-                           min="'2000-01-01'" max="restrictDate"/>
+                           min="'2000-01-
+                           '" max="restrictDate"/>
                 </div>
             </div>
             <div class="form-group" ng-show="showApprovalAmount">
@@ -301,7 +302,7 @@
 
                     <div class="col-sm-3">
                         <input id="{{modelName}}" sort type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
-                            ng-model="formData[modelName]" min="'2000-01-01'" max="restrictDate"/>
+                            ng-model="formData[modelName]" min="minModifyDate"/>
                     </div>
                 </div>
                 <div class="form-group" uib-collapse="showInterestField">
