@@ -1882,6 +1882,8 @@
   "validation.msg.loan.groupId.not.greater.than.zero": "Group id is mandatory.",
   "validation.msg.loan.groupId.cannot.be.blank": "Group id is mandatory.",
   "validation.msg.loan.clientId.cannot.be.blank": "Client id is mandatory.",
+  "validation.msg.loan.installment.date.not.found": "Repayment schedule with given validation date `{{params[0].value}}` was not found. Please chose a valid installment date",
+  "validation.msg.loan.installment.already.paid": "Repayment schedule with given validation date `{{params[0].value}}` already has a payment on it and can not be modified",
   "error.msg.loan.application.disbursement.date.cannot.be.before.meeting.start.date": "Expected disbursement date `{{params[0].value}}` cannot be before meeting start date `{{params[1].value}}`.",
   "error.msg.loan.application.first.repayment.date.cannot.be.before.meeting.start.date": "First repayment date `{{params[0].value}}` cannot be before meeting start date `{{params[1].value}}`.",
   "error.msg.loan.application.actual.disbursement.date.cannot.be.before.meeting.start.date": "Actual disbursement date `{{params[0].value}}` cannot be before meeting start date `{{params[1].value}}`.",

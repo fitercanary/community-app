@@ -249,13 +249,15 @@
                     break;
                 case "modifyschedule":
                     scope.modelName = 'submittedOnDate';
-                    resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'repayment'}, function (data) {
+                    resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'modifyInstallment'}, function (data) {
                         scope.formData.principalPortion = data.principalPortion;
                         scope.formData.interestPortion = data.interestPortion;
                         scope.formData.principal = data.outstandingLoanBalance;
                         scope.totalInstallmentsPaid = data.installment;
-                        scope.formData.expectedDisbursementDate = new Date(data.date) || new Date();
-                        scope.formData[scope.modelName] = new Date(data.date) || new Date();
+                        let nextInstallmentDate = new Date(data.nextInstallmentDate?data.nextInstallmentDate:data.date);
+                        scope.formData.expectedDisbursementDate = nextInstallmentDate || new Date();
+                        scope.minModifyDate = nextInstallmentDate || new Date();
+                        scope.formData[scope.modelName] = nextInstallmentDate || new Date();
                     });
                     scope.title = 'label.heading.modifyschedule';
                     scope.labelName = 'label.input.transactiondate';
@@ -642,9 +644,11 @@
                     resourceFactory.LoanAccountResource.save(params, this.formData, function (data) {
                         resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'repayment'}, function (data) {
                             scope.formData.principal = data.outstandingLoanBalance;
-                            resourceFactory.LoanAccountResource.save(params, scope.formData, function(data) {
-                                location.path('/viewloanaccount/' + data.loanId);
-                            })
+                            location.path('/viewloanaccount/' + params.loanId);
+                            //
+                            // resourceFactory.LoanAccountResource.save(params, scope.formData, function(data) {
+                            //     location.path('/viewloanaccount/' + data.loanId);
+                            // })
                         });
                     });
                     
