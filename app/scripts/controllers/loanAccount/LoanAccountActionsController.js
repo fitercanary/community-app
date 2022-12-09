@@ -290,12 +290,16 @@
                     });
                     break;
                 case "partliquidate":
+                    console.log("part liquidating")
                     scope.modelName = 'transactionDate';
                     scope.formData.transactionDate =  new Date();
                     scope.formData.isPartLiquidate = true;
                     resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'partliquidateLoan'}, function (data) {
-                        scope.paymentTypes = data.paymentTypeOptions;
+
+                        console.log("part lq: data \n\n"+ JSON.stringify(data))
+                        // scope.paymentTypes = data.paymentTypeOptions;
                         scope.formData.principal = data.outstandingLoanBalance
+                        scope.formData.interestPortion = data.interestPortion
                         if (data.paymentTypeOptions.length > 0) {
                             scope.formData.paymentTypeId = data.paymentTypeOptions[0].id;
                         }
@@ -624,10 +628,10 @@
                         this.formData.isPrepay = true;
                     } else if (scope.prePayAction == "partliquidate") {
                         this.formData.modifyInstallmentAction = "partLiquidate";  
-                        params.command = 'repayment'                      
+                        params.command = 'partLiquidate'
                         scope.formData.transactionAmount = scope.formData.principal
-                        scope.formData.principalPortion = scope.formData.transactionAmount - scope.formData.interestPortion
-                        scope.formData.principal = scope.outstandingPrincipal - scope.formData.principalPortion
+                        // scope.formData.principalPortion = scope.formData.transactionAmount - scope.formData.interestPortion
+                        // scope.formData.principal = scope.outstandingPrincipal - scope.formData.principalPortion
                     }
                     resourceFactory.loanTrxnsResource.save(params, this.formData, function (data) {
                         location.path('/viewloanaccount/' + data.loanId);
@@ -818,22 +822,22 @@
                     return;
                  }
                  if (scope.action == "partliquidate") {
-                    scope.retrieveLoanForeclosureTemplate();
+                    // scope.retrieveLoanForeclosureTemplate();
                 }
              });
 
-             scope.retrieveLoanForeclosureTemplate = function() {
-                resourceFactory.loanTrxnsTemplateResource.get({
-                    loanId: routeParams.id,
-                    command: 'foreclosure',
-                    transactionDate: dateFilter(this.formData.transactionDate, scope.df),
-                    dateFormat: scope.df,
-                    locale: scope.optlang.code
-                }, function (data) {
-                    scope.partLiquidateData = data
-                    scope.formData.interestPortion = scope.partLiquidateData.interestPortion;
-                });
-            }
+            //  scope.retrieveLoanForeclosureTemplate = function() {
+            //     resourceFactory.loanTrxnsTemplateResource.get({
+            //         loanId: routeParams.id,
+            //         command: 'foreclosure',
+            //         transactionDate: dateFilter(this.formData.transactionDate, scope.df),
+            //         dateFormat: scope.df,
+            //         locale: scope.optlang.code
+            //     }, function (data) {
+            //         scope.partLiquidateData = data
+            //         scope.formData.interestPortion = scope.partLiquidateData.interestPortion;
+            //     });
+            // }
 
             scope.$watch('formData.principal',function(){
                 scope.formData.transactionAmount = scope.formData.principal

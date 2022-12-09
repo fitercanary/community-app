@@ -22,6 +22,7 @@
             resourceFactory.loanRestructureResourceTemplate.get({
                 loanId: routeParams.loanId,
             }, function (data) {
+                console.log("Template data \n\n"+ JSON.stringify(data))
                 let rescheduleReasons = data.rescheduleReasons;
                 if (rescheduleReasons && rescheduleReasons.length > 0) {
                     scope.formData.rescheduleReasonId = rescheduleReasons[0].id;
@@ -38,7 +39,18 @@
                 scope.formData.totalInstallments = totalInstallments;
 
 
-                scope.formData.startDate = restructureDetails.rescheduleFromDate ? new Date(restructureDetails.rescheduleFromDate) : new Date();
+                let rescheduleFromDate = restructureDetails.rescheduleFromDate;
+
+
+                if (rescheduleFromDate) {
+                    if (new Date(rescheduleFromDate) > new Date()){
+                        scope.formData.startDate = new Date();
+                    }else{
+                        scope.formData.startDate = new Date(rescheduleFromDate);
+                    }
+                } else {
+                    scope.formData.startDate = new Date();
+                }
                 scope.formData.transactionDate = transactionDate;
                 scope.formData.expectedMaturityDate = restructureDetails.rescheduleToDate ? new Date(restructureDetails.rescheduleToDate) :
                     new Date(scope.loandetails.timeline.expectedMaturityDate)

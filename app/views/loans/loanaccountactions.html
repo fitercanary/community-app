@@ -33,7 +33,7 @@
                         class="required">*</span></label>
 
                 <div class="col-sm-3">
-                    <input id="{{modelName}}" sort type="text" datepicker-pop="dd MMMM yyyy" class="form-control"
+                    <input id="{{modelName}}" sort type="text"  ng-disabled="formData.isPartLiquidate"  datepicker-pop="dd MMMM yyyy" class="form-control"
                            ng-model="formData[modelName]" min="'2000-01-01'" max="restrictDate"/>
                 </div>
             </div>
@@ -118,7 +118,7 @@
                     <label class="control-label col-sm-2" for="transactionAmount">{{ 'label.input.transactionamount' |
                         translate}}<span class="required">*</span></label>
                     <div class="col-sm-3">
-                        <input id="transactionAmount" type="text" name="amount" ng-model="formData.transactionAmount"
+                        <input id="transactionAmount" ng-disabled="formData.isPartLiquidate"  type="text" name="amount" ng-model="formData.transactionAmount"
                                class="form-control"
                                number-format required late-Validate>
                     </div>
@@ -185,7 +185,7 @@
                 </div>
 
                 <div ng-show="isTransaction">
-                    <div class="form-group">
+                    <div class="form-group"  ng-show="!formData.isPartLiquidate">
                         <label class="control-label col-sm-2" for="paymentTypeId">{{ 'label.input.paymenttype' |
                             translate}}</label>
 
@@ -197,7 +197,7 @@
                             </select>
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group"  ng-show="!formData.isPartLiquidate">
                         <label class="control-label col-sm-2">{{ 'label.anchor.showpaymentdetails' | translate}}</label>
 
                         <div class="col-sm-3">
@@ -261,7 +261,7 @@
 
                     <div class="col-sm-3">
                         <input id="principal" type="text" name="principal" ng-model="formData.principal"
-                               class="form-control"
+                               class="form-control" ng-disabled="true"
                                number-format>
                     </div>
                 </div>
@@ -270,7 +270,7 @@
 
                     <div class="col-sm-3">
                         <input id="interestPortion" type="text" name="interestPortion" ng-model="formData.interestPortion"
-                               class="form-control"
+                               class="form-control" ng-disabled="true"
                                number-format readonly>
                     </div>
                 </div>
@@ -280,7 +280,7 @@
 
                     <div class="col-sm-3">
                         <input id="totalNumberOfRepayments" type="text" name="totalNumberOfRepayments" ng-model="totalNumberOfRepayments"
-                               class="form-control"
+                               class="form-control" ng-disabled="true"
                                number-format readonly>
                     </div>
                 </div>
@@ -289,7 +289,7 @@
 
                     <div class="col-sm-3">
                         <input id="numberOfRepayments" type="text" name="numberOfRepayments" ng-model="formData.numberOfRepayments"
-                               class="form-control"
+                               class="form-control" ng-disabled="true"
                                number-format>
                     </div>
                 </div>

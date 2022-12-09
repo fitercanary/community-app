@@ -95,6 +95,14 @@
                 </div>
             </div>
 
+            <div class="form-group">
+                <label class="control-label col-sm-2">{{'label.input.max.installments' | translate}}</label>
+                <div class="col-sm-3">
+                    <label class="control-label">{{formData.pendingInstallments}}
+                        {{loandetails.repaymentFrequencyType.value}}</label>
+                </div>
+            </div>
+
             <div class="form-group {{loandetails.inArrears?'text-danger':''}}"
                  ng-show="monthDiff()">
                 <label class="control-label col-sm-2">{{'label.input.max.installments' | translate}}</label>
@@ -107,17 +115,17 @@
 
             <div ng-show="!requestId || editRequest">
 
-                <div class="form-group">
-                    <label class="control-label col-sm-2"
-                           for="modifyTerm">{{'label.input.reduce.term' | translate}}<span
-                            class="required"> <i class="fa fa-question btn-success"
-                                                 title="Reduce the loan term by reducing the expected maturity date."></i></span></label>
-                    <div class="col-sm-3">
-                        <input id="modifyTerm" ng-disabled="loandetails.inArrears" type="checkbox"
-                               ng-model="formData.modifyLoanTerm" ng-change="changeMaturityDate()"
-                               ng-true-value="true" ng-false-value="false">
-                    </div>
-                </div>
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label col-sm-2"-->
+<!--                           for="modifyTerm">{{'label.input.reduce.term' | translate}}<span-->
+<!--                            class="required"> <i class="fa fa-question btn-success"-->
+<!--                                                 title="Reduce the loan term by reducing the expected maturity date."></i></span></label>-->
+<!--                    <div class="col-sm-3">-->
+<!--                        <input id="modifyTerm" ng-disabled="loandetails.inArrears" type="checkbox"-->
+<!--                               ng-model="formData.modifyLoanTerm" ng-change="changeMaturityDate()"-->
+<!--                               ng-true-value="true" ng-false-value="false">-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div class="form-group">
                     <label class="control-label col-sm-2">{{'label.input.restructureReasonId' | translate}}<span
@@ -168,25 +176,25 @@
                 </div>
 
 
-                <div class="form-group">
-                    <label class="control-label col-sm-2"
-                           for="maturity">{{'label.input.expected.next.maturity' | translate}}<span
-                            class="required">*</span></label>
+<!--                <div class="form-group">-->
+<!--                    <label class="control-label col-sm-2"-->
+<!--                           for="maturity">{{'label.input.expected.next.maturity' | translate}}<span-->
+<!--                            class="required">*</span></label>-->
 
-                    <div class="col-sm-3" ng-show="formData.expectedMaturityDate">
-                        <input id="maturity" class="form-control" type="text" datepicker-pop="dd MMMM yyyy"
-                               max="{{minMaturityDate}}"
-                               ng-disabled="!formData.modifyLoanTerm"
-                               ng-model="formData.expectedMaturityDate" is-open="opened"/>
-                    </div>
-                </div>
+<!--                    <div class="col-sm-3" ng-show="formData.expectedMaturityDate">-->
+<!--                        <input id="maturity" class="form-control" type="text" datepicker-pop="dd MMMM yyyy"-->
+<!--                               max="{{minMaturityDate}}"-->
+<!--                               ng-disabled="!formData.modifyLoanTerm"-->
+<!--                               ng-model="formData.expectedMaturityDate" is-open="opened"/>-->
+<!--                    </div>-->
+<!--                </div>-->
 
                 <div align="center">
 
                     <button type="button" data-ng-click="cancel()" class="btn btn-default">
                         {{ 'label.button.cancel' | translate }}
                     </button>
-                    <button type="button" ng-disabled="loandetails.inArrears || !formData.modifyLoanTerm" data-ng-click="submit()"
+                    <button type="button" ng-disabled="loandetails.inArrears" data-ng-click="submit()"
                             class="btn btn-primary"
                             has-permission='APPROVE_RESCHEDULELOAN'>
                         {{'label.button.save' | translate}}
