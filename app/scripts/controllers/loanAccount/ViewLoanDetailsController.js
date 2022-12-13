@@ -348,10 +348,10 @@
                                 name: "button.modifyschedule",
                                 taskPermissionName: 'MODIFY_SCHEDULE'
                             },
-                            {
-                                name: "button.partliquidate",
-                                taskPermissionName: 'REPAYMENT_LOAN'
-                            },
+                            // {
+                            //     name: "button.partliquidate",
+                            //     taskPermissionName: 'REPAYMENT_LOAN'
+                            // },
                             {
                                 name: "button.waiveinterest",
                                 taskPermissionName: 'WAIVEINTERESTPORTION_LOAN'
