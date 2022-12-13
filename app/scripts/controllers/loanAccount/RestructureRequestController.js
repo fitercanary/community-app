@@ -22,7 +22,7 @@
             resourceFactory.loanRestructureResourceTemplate.get({
                 loanId: routeParams.loanId,
             }, function (data) {
-                console.log("Template data \n\n"+ JSON.stringify(data))
+                // console.log("Template data \n\n"+ JSON.stringify(data))
                 let rescheduleReasons = data.rescheduleReasons;
                 if (rescheduleReasons && rescheduleReasons.length > 0) {
                     scope.formData.rescheduleReasonId = rescheduleReasons[0].id;
@@ -55,9 +55,9 @@
                 scope.formData.expectedMaturityDate = restructureDetails.rescheduleToDate ? new Date(restructureDetails.rescheduleToDate) :
                     new Date(scope.loandetails.timeline.expectedMaturityDate)
                 scope.minMaturityDate = scope.formatMinMaxDate(scope.loandetails.timeline.expectedMaturityDate);
-                let requestId = restructureDetails.restructureRequestId;
+                let requestId = data.restructureScheduleDetails.restructureRequestId;
                 scope.requestId = requestId;
-                if (requestId && requestId > 0) {
+                if (requestId && Number(requestId) > 0) {
                     scope.getLoanRestructureDetails(resourceFactory, requestId)
                     scope.buttons = {
                         singlebuttons: [
@@ -86,7 +86,7 @@
                     loanId: routeParams.loanId,
                     requestId: requestId,
                 }, function (data) {
-                    console.log("data \n\n" + JSON.stringify(data))
+                    // console.log("data \n\n" + JSON.stringify(data))
                     scope.loanRestructureRequestData = data
                 });
             }
