@@ -52,9 +52,9 @@
                     scope.formData.startDate = new Date();
                 }
                 scope.formData.transactionDate = transactionDate;
-                scope.formData.expectedMaturityDate = restructureDetails.rescheduleToDate ? new Date(restructureDetails.rescheduleToDate) :
+                scope.formData.expectedMaturityDate = data.restructureScheduleDetails.rescheduleToDate ? new Date(data.restructureScheduleDetails.rescheduleToDate) :
                     new Date(scope.loandetails.timeline.expectedMaturityDate)
-                scope.minMaturityDate = scope.formatMinMaxDate(scope.loandetails.timeline.expectedMaturityDate);
+                // scope.minMaturityDate = scope.formatMinMaxDate(scope.loandetails.timeline.expectedMaturityDate);
                 let requestId = data.restructureScheduleDetails.restructureRequestId;
                 scope.requestId = requestId;
                 if (requestId && Number(requestId) > 0) {
