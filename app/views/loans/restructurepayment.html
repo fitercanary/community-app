@@ -45,13 +45,14 @@
         </div>
 
         <fieldset>
-            <h4>{{'label.heading.restructurePayment' | translate}}</h4>
+            <h4>{{'label.heading.partliquidate' | translate}}</h4>
             <br>
+
             <div class="form-group">
                 <label class="control-label col-sm-2">{{'label.heading.principal.outstanding' | translate}}: </label>
                 <div class="col-sm-3">
                     <label class="control-label">{{loandetails.currency.code}}
-                        {{loandetails.summary.principalOutstanding | number}}</label>
+                        {{formData.principalPortion | number}}</label>
                 </div>
             </div>
 
@@ -59,16 +60,7 @@
                 <label class="control-label col-sm-2">{{'label.heading.interest.outstanding' | translate}}: </label>
                 <div class="col-sm-3">
                     <label class="control-label">{{loandetails.currency.code}}
-                        {{loandetails.summary.interestOutstanding | number}}</label>
-                </div>
-            </div>
-
-            <div class="form-group">
-                <label class="control-label col-sm-2">{{'label.input.total' | translate}}
-                    {{'label.heading.loan.balance' | translate}}: </label>
-                <div class="col-sm-3">
-                    <label class="control-label">{{loandetails.currency.code}}
-                        {{loandetails.summary.totalOutstanding | number}}</label>
+                        {{formData.interestPortion | number}}</label>
                 </div>
             </div>
 
@@ -90,7 +82,7 @@
             <div class="form-group">
                 <label class="control-label col-sm-2">{{'label.input.total.paid.installments' | translate}}</label>
                 <div class="col-sm-3">
-                    <label class="control-label">{{formData.paidInstallments}}
+                    <label class="control-label">{{formData.totalInstallments - formData.pendingInstallments }}
                         {{loandetails.repaymentFrequencyType.value}}</label>
                 </div>
             </div>
@@ -103,29 +95,20 @@
                 </div>
             </div>
 
-            <div class="form-group {{loandetails.inArrears?'text-danger':''}}"
-                 ng-show="monthDiff()">
-                <label class="control-label col-sm-2">{{'label.input.max.installments' | translate}}</label>
-                <div class="col-sm-3">
-                    <label class="control-label">{{monthDiff()}} {{loandetails.repaymentFrequencyType.value}}</label>
-                    <label ng-show="loandetails.inArrears" class="text-danger">
-                        {{'Can\'t restructure a loan that is in arrears already'}}</label>
-                </div>
-            </div>
-
             <div ng-show="!requestId || editRequest">
 
-<!--                <div class="form-group">-->
-<!--                    <label class="control-label col-sm-2"-->
-<!--                           for="modifyTerm">{{'label.input.reduce.term' | translate}}<span-->
-<!--                            class="required"> <i class="fa fa-question btn-success"-->
-<!--                                                 title="Reduce the loan term by reducing the expected maturity date."></i></span></label>-->
-<!--                    <div class="col-sm-3">-->
-<!--                        <input id="modifyTerm" ng-disabled="loandetails.inArrears" type="checkbox"-->
-<!--                               ng-model="formData.modifyLoanTerm" ng-change="changeMaturityDate()"-->
-<!--                               ng-true-value="true" ng-false-value="false">-->
-<!--                    </div>-->
-<!--                </div>-->
+                <div class="form-group">
+                    <label class="control-label col-sm-2"
+                           for="modifyTerm">{{'label.input.reduce.term' | translate}}<span
+                            class="required"> <i class="fa fa-question btn-success"
+                                                 title="Reduce the loan term by reducing the expected maturity date."></i></span></label>
+                    <div class="col-sm-3">
+                        <input id="modifyTerm" type="checkbox"
+                               ng-model="formData.modifyLoanTerm" ng-change="changeMaturityDate()"
+                               ng-true-value="true" ng-false-value="false">
+                    </div>
+                </div>
+
 
                 <div class="form-group">
                     <label class="control-label col-sm-2">{{'label.input.restructureReasonId' | translate}}<span
@@ -154,59 +137,44 @@
 
                 <div class="form-group">
                     <label class="control-label col-sm-2"
-                           for="transactionDate">{{'label.input.expected.next.date' | translate}}<span
+                           for="transactionDate">{{'label.input.reschedule.start' | translate}}<span
                             class="required">*</span></label>
 
                     <div class="col-sm-3">
                         <input id="transactionDate" class="form-control" type="text" sort datepicker-pop="dd MMMM yyyy"
-                               ng-model="formData.transactionDate" is-open="opened" ng-disabled="true"/>
+                               ng-model="formData.rescheduleFromDate" is-open="opened"
+                               ng-disabled="!formData.modifyLoanTerm"
+                        />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label col-sm-2">{{'label.input.transactionamount' | translate}}<span
+                            class="required"> *</span></label> </label>
+                    <div class="col-sm-3">
+                        <input id="transactionAmount" class="form-control" type="text"
+                               ng-model="formData.transactionAmount"/>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="control-label col-sm-2"
-                           for="reschStart">{{'label.input.reschedule.start' | translate}}<span
-                            class="required">*</span></label>
+                           for="maturity">{{'label.input.expected.next.maturity' | translate}}</label>
 
                     <div class="col-sm-3">
-                        <input id="reschStart" class="form-control" type="text"
-                               ng-disabled="!formData.modifyLoanTerm" datepicker-pop="dd MMMM yyyy"
-                               ng-model="formData.startDate"/>
+                        <input id="maturity" class="form-control" type="text" datepicker-pop="dd MMMM yyyy"
+                               max="minMaturityDate" min="transactionDate"
+                               ng-disabled="!formData.modifyLoanTerm"
+                               ng-model="formData.expectedMaturityDate" is-open="opened"/>
                     </div>
                 </div>
 
-
-<!--                <div class="form-group">-->
-<!--                    <label class="control-label col-sm-2"-->
-<!--                           for="maturity">{{'label.input.expected.next.maturity' | translate}}<span-->
-<!--                            class="required">*</span></label>-->
-
-<!--                    <div class="col-sm-3" ng-show="formData.expectedMaturityDate">-->
-<!--                        <input id="maturity" class="form-control" type="text" datepicker-pop="dd MMMM yyyy"-->
-<!--                               max="{{minMaturityDate}}"-->
-<!--                               ng-disabled="!formData.modifyLoanTerm"-->
-<!--                               ng-model="formData.expectedMaturityDate" is-open="opened"/>-->
-<!--                    </div>-->
-<!--                </div>-->
-
-                <div align="center">
-
-                    <button type="button" data-ng-click="cancel()" class="btn btn-default">
-                        {{ 'label.button.cancel' | translate }}
-                    </button>
-                    <button type="button" ng-disabled="loandetails.inArrears" data-ng-click="submit()"
-                            class="btn btn-primary"
-                            has-permission='APPROVE_RESCHEDULELOAN'>
-                        {{'label.button.save' | translate}}
-
-                    </button>
-                </div>
             </div>
 
-            <div ng-show="requestId && !editRequest">
+            <div ng-show="isPreview">
                 <div class="paddedleft" style="margin-left:-1px;margin-top: -20px; margin-right: 1px; padding: 10px;">
                     <hr class="marginbottom"/>
-                    <uib-tabset class = "scrollable" tabset-name="loanAccountDetails" scrollable>
+                    <uib-tabset class="scrollable" tabset-name="loanAccountDetails" scrollable>
                         <uib-tab heading="{{'label.heading.repaymentschedule' | translate}}">
 
                             <table class="table table-striped .width100">
@@ -214,9 +182,13 @@
                                 <thead>
                                 <tr>
                                     <th colspan="5" scope="colgroup"></th>
-                                    <th colspan="2" scope="colgroup">{{'label.heading.loanamountandbalance' | translate}}</th>
-                                    <th colspan="3" scope="colgroup">{{'label.heading.totalcostofloan' | translate}}</th>
-                                    <th colspan="6" scope="colgroup">{{'label.heading.installmenttotals' | translate}}</th>
+                                    <th colspan="2" scope="colgroup">
+                                        {{'label.heading.loanamountandbalance' | translate}}
+                                    </th>
+                                    <th colspan="3" scope="colgroup">{{'label.heading.totalcostofloan' | translate}}
+                                    </th>
+                                    <th colspan="6" scope="colgroup">{{'label.heading.installmenttotals' | translate}}
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th scope="col">#</th>
@@ -287,6 +259,25 @@
                         </uib-tab>
                     </uib-tabset>
                 </div>
+            </div>
+            <div align="center">
+
+                <button type="button" data-ng-click="cancel()" class="btn btn-default">
+                    {{ 'label.button.cancel' | translate }}
+                </button>
+                <button ng-show="!isPreview" type="button" data-ng-click="previewPartLiquidation()"
+                        class="btn btn-primary"
+                        has-permission='APPROVE_RESCHEDULELOAN'>
+                    {{'label.heading.preview' | translate}}
+
+                </button>
+
+                <button ng-show="isPreview" type="button" data-ng-click="submit()"
+                        class="btn btn-primary"
+                        has-permission='APPROVE_RESCHEDULELOAN'>
+                    {{'label.button.save' | translate}}
+
+                </button>
             </div>
 
 

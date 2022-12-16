@@ -483,6 +483,7 @@
                         template: {method: 'GET',params:{}},
                         preview:{method:'GET',params:{command:'previewLoanRestructure'}},
                         put: {method: 'POST', params: {command:'restructure'}},
+                        partLiquidate: {method: 'POST', params: {command:'partLiquidate'}},
                         reject:{method:'POST',params:{command:'reject'}},
                         approve:{method:'POST',params:{command:'approve'}}
                     }),
@@ -495,6 +496,11 @@
                         {loanId: '@loanId',requestId: '@requestId',command: 'previewRestructureRequest'}, {
                         get: {method: 'GET', params: {}},
                         update: {method: 'PUT', params: {}}
+                    }),
+
+                    loanRestructurePreviewResource: defineResource(apiVer + "/restructureloans/:loanId/previewPartLiquidation",
+                        {loanId: '@loanId'}, {
+                        preview: {method: 'GET', params: {}}
                     }),
                      auditResource: defineResource(apiVer + "/audits/:templateResource", {templateResource: '@templateResource'}, {
                         get: {method: 'GET', params: {}},

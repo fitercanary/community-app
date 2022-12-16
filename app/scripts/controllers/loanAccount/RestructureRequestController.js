@@ -10,7 +10,8 @@
             scope.minMaturityDate = null;
             scope.codes = [];
             scope.formData.submittedOnDate = new Date();
-            scope.formData.modifyLoanTerm = false;
+            scope.formData.modifyLoanTerm = true;
+            scope.isPreview = false;
             //fetch loan details
             resourceFactory.LoanAccountResource.getLoanAccountDetails({
                 loanId: routeParams.loanId,
@@ -22,7 +23,6 @@
             resourceFactory.loanRestructureResourceTemplate.get({
                 loanId: routeParams.loanId,
             }, function (data) {
-                // console.log("Template data \n\n"+ JSON.stringify(data))
                 let rescheduleReasons = data.rescheduleReasons;
                 if (rescheduleReasons && rescheduleReasons.length > 0) {
                     scope.formData.rescheduleReasonId = rescheduleReasons[0].id;
@@ -34,10 +34,12 @@
                 let restructureDetails = data.restructureScheduleDetails;
                 let pendingInstallments = restructureDetails.pendingInstallments;
                 let totalInstallments = restructureDetails.totalInstallments;
-                scope.formData.paidInstallments = totalInstallments - pendingInstallments;
+                // scope.formData.paidInstallments = totalInstallments - pendingInstallments;
                 scope.formData.pendingInstallments = pendingInstallments;
                 scope.formData.totalInstallments = totalInstallments;
-
+                scope.formData.transactionAmount = data.loanTransactionData.interestPortion
+                scope.formData.interestPortion = data.loanTransactionData.interestPortion
+                scope.formData.principalPortion = data.loanTransactionData.principalPortion
 
                 let rescheduleFromDate = restructureDetails.rescheduleFromDate;
 
@@ -52,33 +54,40 @@
                     scope.formData.startDate = new Date();
                 }
                 scope.formData.transactionDate = transactionDate;
-                scope.formData.expectedMaturityDate = data.restructureScheduleDetails.rescheduleToDate ? new Date(data.restructureScheduleDetails.rescheduleToDate) :
-                    new Date(scope.loandetails.timeline.expectedMaturityDate)
+                scope.formData.rescheduleFromDate = transactionDate;
+                scope.transactionDate = transactionDate;
+
+                if (data.loanTransactionData.nextDate) {
+                    scope.formData.expectedMaturityDate = new Date(data.loanTransactionData.nextDate)
+                    scope.minMaturityDate = new Date(data.loanTransactionData.nextDate)
+                } else {
+                    scope.formData.expectedMaturityDate = new Date()
+                }
                 // scope.minMaturityDate = scope.formatMinMaxDate(scope.loandetails.timeline.expectedMaturityDate);
                 let requestId = data.restructureScheduleDetails.restructureRequestId;
                 scope.requestId = requestId;
-                if (requestId && Number(requestId) > 0) {
-                    scope.getLoanRestructureDetails(resourceFactory, requestId)
-                    scope.buttons = {
-                        singlebuttons: [
-                            {
-                                name: "button.approve",
-                                icon: "fa fa-check",
-                                taskPermissionName: 'APPROVE_RESTRUCTURELOAN'
-                            },
-                            {
-                                name: "button.modifyapplication",
-                                icon: "fa fa-pincel-square-o",
-                                taskPermissionName: 'CREATE_RESTRUCTURELOAN'
-                            },
-                            {
-                                name: "button.reject",
-                                icon: "fa fa-times",
-                                taskPermissionName: 'REJECT_RESTRUCTURELOAN'
-                            }
-                        ],
-                    }
-                }
+                // if (requestId && Number(requestId) > 0) {
+                //     scope.getLoanRestructureDetails(resourceFactory, requestId)
+                //     scope.buttons = {
+                //         singlebuttons: [
+                //             {
+                //                 name: "button.approve",
+                //                 icon: "fa fa-check",
+                //                 taskPermissionName: 'APPROVE_RESTRUCTURELOAN'
+                //             },
+                //             {
+                //                 name: "button.modifyapplication",
+                //                 icon: "fa fa-pincel-square-o",
+                //                 taskPermissionName: 'CREATE_RESTRUCTURELOAN'
+                //             },
+                //             {
+                //                 name: "button.reject",
+                //                 icon: "fa fa-times",
+                //                 taskPermissionName: 'REJECT_RESTRUCTURELOAN'
+                //             }
+                //         ],
+                //     }
+                // }
             });
 
             scope.getLoanRestructureDetails = function (resourceFactory, requestId) {
@@ -86,7 +95,6 @@
                     loanId: routeParams.loanId,
                     requestId: requestId,
                 }, function (data) {
-                    // console.log("data \n\n" + JSON.stringify(data))
                     scope.loanRestructureRequestData = data
                 });
             }
@@ -113,37 +121,6 @@
                 if (date) return "'" + date[0] + '-' + date[1] + '-' + date[2] + "'";
             }
 
-            /**
-             * retrieve difference between loan term periods
-             * @returns {number|number}
-             */
-            scope.monthDiff = function () {
-                let expectedMaturityDate = scope.formData.expectedMaturityDate;
-                let currentDate = scope.formData.startDate;
-                if (expectedMaturityDate && scope.loandetails && scope.loandetails.repaymentFrequencyType.value == 'Months') {
-                    let monthDifference = expectedMaturityDate.getMonth() - currentDate.getMonth();
-                    let Difference_In_Months = monthDifference +
-                        (12 * (expectedMaturityDate.getFullYear() - currentDate.getFullYear()));
-                    return expectedMaturityDate && currentDate ? (Difference_In_Months / (+scope.loandetails.repaymentEvery)) : 0
-                } else if (expectedMaturityDate && scope.loandetails && scope.loandetails.repaymentFrequencyType.value == 'Days') {
-                    let Difference_In_Time = expectedMaturityDate.getTime() - currentDate.getTime();
-                    let Difference_In_Days = Difference_In_Time / (1000 * 3600 * 24);
-                    return Difference_In_Days ? (Difference_In_Days / (+scope.loandetails.repaymentEvery)) : 0
-                } else if (expectedMaturityDate && scope.loandetails && scope.loandetails.repaymentFrequencyType.value == 'Years') {
-                    let Difference_In_Years = expectedMaturityDate.getFullYear() - currentDate.getFullYear();
-                    return Difference_In_Years ? (Difference_In_Years / (+scope.loandetails.repaymentEvery)) : 0
-                } else if (expectedMaturityDate && scope.loandetails && scope.loandetails.repaymentFrequencyType.value == 'Weeks') {
-                    const msInWeek = 1000 * 60 * 60 * 24 * 7;
-
-                    let Difference_in_weeks = Math.round(Math.abs(expectedMaturityDate - currentDate) / msInWeek);
-
-
-                    return Difference_in_weeks ? (Difference_in_weeks / (+scope.loandetails.repaymentEvery)) : 0
-                } else
-                    return 0;
-
-            }
-
 
             //BUTTON PROCESSING FUNCTIONS
             scope.cancel = function () {
@@ -164,12 +141,35 @@
                 requestData.expectedMaturityDate = dateFilter(this.formData.expectedMaturityDate, scope.df);
                 requestData.startDate = dateFilter(this.formData.startDate, scope.df);
                 requestData.submittedOnDate = dateFilter(this.formData.submittedOnDate, scope.df);
+                requestData.rescheduleFromDate = dateFilter(this.formData.rescheduleFromDate, scope.df);
 
-                resourceFactory.loanRestructureResource.put(requestData, function (data) {
-                    scope.requestId = data.resourceId;
+
+                resourceFactory.loanRestructureResource.partLiquidate(requestData, function (data) {
                     location.path('/viewloanaccount/' + scope.loanId);
                 });
             };
+
+            scope.previewPartLiquidation = function (){
+                let requestData = {...this.formData};
+                requestData.dateFormat = scope.df;
+                requestData.locale = scope.optlang.code;
+                requestData.loanId = scope.loanId;
+                requestData.expectedMaturityDate = dateFilter(this.formData.expectedMaturityDate, scope.df);
+                requestData.startDate = dateFilter(this.formData.startDate, scope.df);
+                requestData.submittedOnDate = dateFilter(this.formData.submittedOnDate, scope.df);
+                requestData.rescheduleFromDate = dateFilter(this.formData.rescheduleFromDate, scope.df);
+
+                resourceFactory.loanRestructurePreviewResource.preview({
+                    ...requestData,
+                }, function (data) {
+                    console.log("preview data \n\n"+ JSON.stringify(data))
+                    scope.loanRestructureRequestData = data
+                    scope.isPreview = true
+
+                    // scope.requestId = data.resourceId;
+                    // location.path('/viewloanaccount/' + scope.loanId);
+                });
+            }
         }
     });
     mifosX.ng.application.controller('RestructureRequestController', ['$scope', 'ResourceFactory', '$routeParams', '$location', 'dateFilter', mifosX.controllers.RestructureRequestController]).run(function ($log) {

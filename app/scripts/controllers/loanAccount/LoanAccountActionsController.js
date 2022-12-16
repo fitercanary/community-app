@@ -826,18 +826,18 @@
                 }
              });
 
-            //  scope.retrieveLoanForeclosureTemplate = function() {
-            //     resourceFactory.loanTrxnsTemplateResource.get({
-            //         loanId: routeParams.id,
-            //         command: 'foreclosure',
-            //         transactionDate: dateFilter(this.formData.transactionDate, scope.df),
-            //         dateFormat: scope.df,
-            //         locale: scope.optlang.code
-            //     }, function (data) {
-            //         scope.partLiquidateData = data
-            //         scope.formData.interestPortion = scope.partLiquidateData.interestPortion;
-            //     });
-            // }
+             scope.retrieveLoanForeclosureTemplate = function() {
+                resourceFactory.loanTrxnsTemplateResource.get({
+                    loanId: routeParams.id,
+                    command: 'foreclosure',
+                    transactionDate: dateFilter(this.formData.transactionDate, scope.df),
+                    dateFormat: scope.df,
+                    locale: scope.optlang.code
+                }, function (data) {
+                    scope.partLiquidateData = data
+                    scope.formData.interestPortion = scope.partLiquidateData.interestPortion;
+                });
+            }
 
             scope.$watch('formData.principal',function(){
                 scope.formData.transactionAmount = scope.formData.principal
