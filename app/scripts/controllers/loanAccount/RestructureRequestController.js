@@ -23,6 +23,7 @@
             resourceFactory.loanRestructureResourceTemplate.get({
                 loanId: routeParams.loanId,
             }, function (data) {
+                console.log("Request template: \n"+ JSON.stringify(data))
                 let rescheduleReasons = data.rescheduleReasons;
                 if (rescheduleReasons && rescheduleReasons.length > 0) {
                     scope.formData.rescheduleReasonId = rescheduleReasons[0].id;
@@ -144,7 +145,7 @@
                 requestData.rescheduleFromDate = dateFilter(this.formData.rescheduleFromDate, scope.df);
 
 
-                resourceFactory.loanRestructureResource.partLiquidate(requestData, function (data) {
+                resourceFactory.loanPartLiquidateResource.partLiquidate(requestData, function (data) {
                     location.path('/viewloanaccount/' + scope.loanId);
                 });
             };

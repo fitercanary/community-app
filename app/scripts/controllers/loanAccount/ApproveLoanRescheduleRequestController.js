@@ -13,6 +13,7 @@
                 this.formData.locale = scope.optlang.code;
                 this.formData.approvedOnDate = dateFilter(this.formData.approvedOnDate, scope.df);
 
+                console.log("route params: "+ JSON.stringify(routeParams))
                 resourceFactory.loanRescheduleResource.approve({scheduleId:scope.requestId},this.formData,function (data) {
                     location.path('/viewloanaccount/' + scope.loanId);
                 });
