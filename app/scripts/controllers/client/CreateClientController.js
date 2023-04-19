@@ -413,6 +413,19 @@
                     {
                         temp.firstName=scope.familyArray[i].firstName;
                     }
+                    if(scope.familyArray[i].emailAddress)
+                    {
+                        temp.emailAddress=scope.familyArray[i].emailAddress;
+                    }
+
+                    if(scope.familyArray[i].address)
+                    {
+                        temp.address=scope.familyArray[i].address;
+                    }
+                    if(scope.familyArray[i].phoneNumber)
+                    {
+                        temp.phoneNumber=scope.familyArray[i].phoneNumber;
+                    }
                     if(scope.familyArray[i].middleName)
                     {
                         temp.middleName=scope.familyArray[i].middleName;
