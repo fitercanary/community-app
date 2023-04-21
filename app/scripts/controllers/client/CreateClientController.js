@@ -35,6 +35,7 @@
             scope.step = '-';
             scope.formData.datatables = [];
             scope.formDat.datatables = [];
+            scope.formData.active = true;
             scope.tf = "HH:mm";
             scope.clientId = routeParams.clientId;
 

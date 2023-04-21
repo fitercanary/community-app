@@ -297,7 +297,7 @@
                   <div class="form-group" has-permission="ACTIVATE_CLIENT">
                      <label class="control-label col-sm-2">{{'label.input.active' | translate}}</label>
                      <div class="col-sm-3">
-                        <input id="activeCheckbox" type="checkbox" ng-model="formData.active" data-ng-change="setChoice()">
+                        <input id="activeCheckbox" disabled type="checkbox" ng-model="formData.active" data-ng-change="setChoice()">
                      </div>
                      <div data-ng-switch on="choice">
                         <div data-ng-switch-when="1">
