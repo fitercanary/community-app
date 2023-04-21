@@ -315,15 +315,15 @@
                         <input id="submittedon" type="text" name="submittedon" datepicker-pop="dd MMMM yyyy"
                            ng-model="first.submitondate" is-open="opened1" min="'2000-01-01'" max="restrictDate"  class="form-control"/>
                      </div>
-                      <label class="control-label col-sm-2" ng-hide = "formData.legalFormId=='2'">{{'label.input.dailyWithdrawLimit' | translate}}</label>
-                      <div class="col-sm-3" ng-hide = "formData.legalFormId=='2'">
+                      <label has-permission='ADD_DAILY_WITHDRAW_LIMIT' class="control-label col-sm-2" ng-if = "formData.legalFormId=='1'">{{'label.input.dailyWithdrawLimit' | translate}}</label>
+                      <div has-permission='ADD_DAILY_WITHDRAW_LIMIT' class="col-sm-3" ng-if = "formData.legalFormId=='1'">
                           <input id="dailyWithdrawLimit" type="text" name="dailyWithdrawLimit"  ng-model="formData.dailyWithdrawLimit"
                                  class="form-control"
                                  number-format>
                       </div>
                   </div>
 
-                   <div class="form-group" ng-hide = "formData.legalFormId=='2'">
+                   <div  has-permission="ADD_SINGLE_WITHDRAW_LIMIT" class="form-group" ng-if = "formData.legalFormId=='1'" >
                        <label class="control-label col-sm-2"></label>
                        <div class="col-sm-3"></div>
                        <label class="control-label col-sm-2">{{'label.input.singleWithdrawLimit' | translate}}</label>
