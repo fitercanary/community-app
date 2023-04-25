@@ -23,6 +23,7 @@
             resourceFactory.familyMember.get({clientId:clientId,clientFamilyMemberId:familyMemberId},function(data)
             {
                     scope.formData=data;
+                    scope.formData.phoneNumber=data.mobileNumber;
 
                 if (data.dateOfBirth) {
                     var dobDate = dateFilter(data.dateOfBirth, scope.df);

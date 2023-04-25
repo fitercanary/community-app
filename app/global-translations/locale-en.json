@@ -913,6 +913,8 @@
   "validation.msg.calendar.cannot.be.before.groups.activation.date": "Meeting date cannot be before group activation date",
   "error.msg.Group.close.active.clients.exist": "Cannot close. Group has active customers",
   "error.msg.group.members.count.must.be.in.permissible.range": "This action caused a group Validation Error: Number of Customers must be between `{{params[1].value}}` and `{{params[2].value}}` ",
+  "error.msg.saving.account.single.withdrawal.limit": "Single Withdraw Limit of `{{params[1].value}}` cannot be exceeded",
+  "error.msg.saving.account.daily.withdrawal.limit": "Daily Withdraw Limit of: `{{params[1].value}}` can not be exceeded. Current withdraw value: `{{params[2].value}}` ",
   "#-----------": "------------",
   "#Centers": "....",
   "#Headings": "..",
