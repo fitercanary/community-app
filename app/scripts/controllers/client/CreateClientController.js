@@ -311,6 +311,10 @@
                     reqDate = dateFilter(scope.first.submitondate, scope.df);
                     this.formData.submittedOnDate = reqDate;
                 }
+                if (scope.formData.active) {
+                    reqDate = dateFilter(scope.first.submitondate, scope.df);
+                    this.formData.activationDate = reqDate;
+                }
 
                 if (scope.first.dateOfBirth) {
                     this.formData.dateOfBirth = dateFilter(scope.first.dateOfBirth, scope.df);
