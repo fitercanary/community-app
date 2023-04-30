@@ -38,6 +38,7 @@
             scope.formData.active = true;
             scope.tf = "HH:mm";
             scope.clientId = routeParams.clientId;
+            scope.bvnEnabled = false;
 
 
             var requestParams = {staffInSelectedOfficeOnly:true};
@@ -48,6 +49,7 @@
                 requestParams.officeId = routeParams.officeId;
             }
             resourceFactory.clientTemplateResource.get(requestParams, function (data) {
+                console.log("template data: "+ JSON.stringify(data))
 
                 scope.offices = data.officeOptions;
                 scope.staffs = data.staffOptions;
@@ -61,6 +63,7 @@
                 scope.clientLegalFormOptions = data.clientLegalFormOptions;
                 scope.clientLevelOptions = data.clientLevelOptions;
                 scope.datatables = data.datatables;
+                scope.bvnEnabled = data.bvnEnabled;
                 scope.formData.clientLevelId = scope.clientLevelOptions[0].id;
                 if (!_.isUndefined(scope.datatables) && scope.datatables.length > 0) {
                     scope.noOfTabs = scope.datatables.length + 1;

@@ -286,7 +286,7 @@
                                class="required">*</span></label>
                        <div class="col-sm-3">
                            <input type="text" maxlength="11" id="externalId" name="externalId" ng-model="formData.externalId"
-                                  class="form-control" required ng-pattern="/(^[0-9])[0-9]*/" late-Validate />
+                                  class="form-control" ng-required="bvnEnabled" ng-pattern="/(^[0-9])[0-9]*/" late-Validate />
                        </div>
                        <div class="col-sm-2">
                               <span ng-show="createclientform.externalId.$invalid && createclientform.externalId.$dirty">
