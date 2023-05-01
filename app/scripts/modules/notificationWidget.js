@@ -197,6 +197,19 @@ angular.module('notificationWidget', [])
                                     errorObj.code = jsonErrors.userMessageGlobalisationCode;
                                     errorArray[arrayIndex] = errorObj;
                                     arrayIndex++;
+                                } else if (jsonErrors.exception) {
+                                    var errorObj = new Object();
+                                    errorObj.code = "err.msg.internal.server.error";
+                                    errorArray[arrayIndex] = errorObj;
+                                    if (jsonErrors.exception){
+                                        arrayIndex=arrayIndex+1;
+                                        errorArray[arrayIndex] = jsonErrors.exception;
+                                    }
+                                    if (jsonErrors.message){
+                                        arrayIndex=arrayIndex+1;
+                                        errorArray[arrayIndex] = jsonErrors.message;
+                                    }
+                                    arrayIndex++;
                                 }
                             }
                             $rootScope.errorDetails.push(errorArray);

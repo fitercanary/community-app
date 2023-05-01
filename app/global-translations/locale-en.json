@@ -381,6 +381,7 @@
   "error.msg.column.mandatory": "Mandatory field not provided.",
   "error.msg.header": "You have the following errors:",
   "validation.msg.validation.errors.exist": "Validation errors exist.",
+  "err.msg.internal.server.error": "Internal Server Error, Please contact support to help fix this.",
   "validation.msg.productivecollectionsheet.staffId.cannot.be.blank": "Account Officer is mandatory.",
   "validation.msg.domain.rule.violation": "Errors contain reason for domain rule violation.",
   "validation.msg.invalid.date.format": "Invalid date format.",
