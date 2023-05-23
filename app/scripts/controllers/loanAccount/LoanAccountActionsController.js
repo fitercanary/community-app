@@ -250,9 +250,10 @@
                 case "modifyschedule":
                     scope.modelName = 'submittedOnDate';
                     resourceFactory.loanTrxnsTemplateResource.get({loanId: scope.accountId, command: 'modifyInstallment'}, function (data) {
+                        console.log("\n\n =======>loan data<===== \n\n "+ JSON.stringify(data))
                         scope.formData.principalPortion = data.principalPortion;
                         scope.formData.interestPortion = data.interestPortion;
-                        scope.formData.principal = data.outstandingLoanBalance;
+                        scope.formData.principal = Number(data.outstandingLoanBalance)+Number(data.principalPortion);
                         scope.totalInstallmentsPaid = data.installment;
                         let nextInstallmentDate = new Date(data.nextInstallmentDate?data.nextInstallmentDate:data.date);
                         scope.formData.expectedDisbursementDate = nextInstallmentDate || new Date();
