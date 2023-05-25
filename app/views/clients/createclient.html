@@ -280,13 +280,13 @@
                      </div>
                   </div>
 
-                   <div class="form-group">
+                   <div class="form-group" ng-if="bvnEnabled">
                        <label class="control-label col-sm-2"
                               for="firstname">{{ 'label.input.bvn' | translate }}<span
                                class="required">*</span></label>
                        <div class="col-sm-3">
                            <input type="text" maxlength="11" id="externalId" name="externalId" ng-model="formData.externalId"
-                                  class="form-control" ng-required="bvnEnabled" ng-pattern="/(^[0-9])[0-9]*/" late-Validate />
+                                  class="form-control" required ng-pattern="/(^[0-9])[0-9]*/" late-Validate />
                        </div>
                        <div class="col-sm-2">
                               <span ng-show="createclientform.externalId.$invalid && createclientform.externalId.$dirty">
@@ -295,6 +295,23 @@
                                  </small>
                               </span>
                            <form-validate valattributeform="createclientform" valattribute="externalId" />
+                       </div>
+                   </div>
+
+                   <div class="form-group" ng-if="!bvnEnabled">
+                       <label class="control-label col-sm-2"
+                              for="firstname">{{ 'label.input.bvn' | translate }}</label>
+                       <div class="col-sm-3">
+                           <input type="text" maxlength="11" id="externalIdReq" name="externalId" ng-model="formData.externalId"
+                                  class="form-control" ng-pattern="/(^[0-9])[0-9]*/" />
+                       </div>
+                       <div class="col-sm-2">
+                              <span ng-show="createclientform.externalId.$invalid && createclientform.externalId.$dirty">
+                                 <small class="error required" ng-show="createclientform.externalId.$error.pattern">
+                                    {{'validation.msg.external.id.must.contain.only.numbers' | translate}}
+                                 </small>
+                              </span>
+                           <form-validate valattributeform="createclientform" valattribute="externalIdReq" />
                        </div>
                    </div>
 
