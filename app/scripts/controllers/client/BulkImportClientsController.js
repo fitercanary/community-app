@@ -57,7 +57,7 @@
                 var changedLegalForm;
                 if(scope.formData.legalForm=="Person"){
                     changedLegalForm="CLIENTS_PERSON";
-                }else if(scope.formData.legalForm=="Entity") {
+                }else if(scope.formData.legalForm=="Company") {
                     changedLegalForm = "CLIENTS_ENTTTY";
                 }
                     if (scope.first.queryParams.indexOf("legalFormType") == -1) {
