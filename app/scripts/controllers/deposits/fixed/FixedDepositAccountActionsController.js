@@ -181,7 +181,7 @@
                         }
         
                         // allow untrusted urls for iframe http://docs.angularjs.org/error/$sce/insecurl
-                        scope.viewReportResult = $sce.trustAsResourceUrl(scope.baseURL);
+                        scope.viewReportResult = $sce.trustAsResourceUrl(scope.baseURL+"&output=embed");
                     })
                     break;
                 case "freeze":
