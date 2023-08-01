@@ -47,7 +47,7 @@ fineract-ui:
 
   ingress:
     enabled: true
-    host: "mifos-dev.assetsmfb.com"  
+    host: "mifos-staging.assetsmfb.com"  
     path: "/"
     annotations:
       # nginx.ingress.kubernetes.io/ssl-redirect: "true"
@@ -56,7 +56,7 @@ fineract-ui:
       nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
     tls:
     - hosts:
-      - "mifos-dev.assetsmfb.com"  
+      - "mifos-staging.assetsmfb.com"  
       secretName: "mifos-tls-v3"
   resources:
     limits:
