@@ -30,7 +30,7 @@
                     active: data.active,
                     accountNo: data.accountNo,
                     staffId: data.staffId,
-                    externalId: data.externalId,
+                    externalId: parseInt(data.externalId),
                     referralClientId: data.referredById,
                     isStaff:data.isStaff,
                     mobileNo: data.mobileNo,

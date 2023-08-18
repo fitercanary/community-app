@@ -129,7 +129,8 @@
 			    <label class="control-label col-sm-2">{{ 'label.input.bvn' | translate }}:</label>
 			
 			    <div class="col-sm-3">
-			        <input id="externalId" type="text" ng-model="formData.externalId" class="form-control">
+					<input type="number" maxlength="11" minlength="11" id="externalId" name="externalId" ng-model="formData.externalId"
+                                  class="form-control" required ng-pattern="/\d+/" late-Validate />
 			    </div>
 				<label class="control-label col-sm-2">{{'label.heading.referredBy' | translate}}</label>
 				<div class="col-sm-3">
