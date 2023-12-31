@@ -1,4 +1,7 @@
 name: Push Temporary Canary Image
+permissions:
+  id-token: write
+  contents: read
 
 on:
  
