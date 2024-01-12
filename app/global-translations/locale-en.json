@@ -2179,7 +2179,7 @@
   "label.recurring.deposit.amount": "Recurring Deposit Amount",
   "label.recurring.deposit.every": "Recurring Deposit Frequency",
   "label.account.deposit.date": "Date of Deposit",
-  "label.account.deposit.principal.amount": "Loan Amount",
+  "label.account.deposit.principal.amount": "Principal Amount",
   "label.account.deposit.target.amount": "Target Amount",
   "label.account.deposit.period": "Period",
   "label.account.linkedAccount.accountNo": "Linked Savings Account",
