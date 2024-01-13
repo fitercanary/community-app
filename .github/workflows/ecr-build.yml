@@ -12,6 +12,7 @@ on:
 env:
   aws_region: eu-west-2
   github_deploy_role: "arn:aws:iam::814938215759:role/canary-eu-west-2-prod-ghdeploy-role-fineract-frontend"
+  commitmsg: ${{ github.event.head_commit.message }}
 
 jobs:
   build:
