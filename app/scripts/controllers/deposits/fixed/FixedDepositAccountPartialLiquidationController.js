@@ -18,6 +18,7 @@
                 scope.data = data;
                 scope.chart = data.accountChart;
                 scope.chartSlabs = scope.chart.chartSlabs;
+                scope.formData.interestRate = data.nominalAnnualInterestRate;
                 scope.fetchMaturityAmount();
             });
 
