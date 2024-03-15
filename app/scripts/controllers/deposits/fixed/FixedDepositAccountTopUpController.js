@@ -32,8 +32,13 @@
 
             scope.calculateRemainingTenure = () => {
                 if (!scope.changeTenure && scope.date.submittedOnDate) {
-          
-                    scope.formData.depositPeriod = scope.data.depositPeriod;
+                    let today = Array.isArray(scope.date.submittedOnDate) ? dateFilter(scope.date.submittedOnDate, scope.df) : scope.date.submittedOnDate;
+                    let maturityDate = new Date(dateFilter(scope.data.maturityDate, scope.df));
+
+                    today.setHours(0, 0, 0, 0);
+                    maturityDate.setHours(0, 0, 0, 0);
+
+                    scope.formData.depositPeriod = Math.floor((maturityDate - today) / (1000 * 60 * 60 * 24));
                     if (scope.origTenure === null) scope.origTenure = scope.formData.depositPeriod;
                 }
                 scope.calculateInterestRate();
