@@ -4514,5 +4514,17 @@
   "label.notification.term": "Notification Period",
   "label.heading.enableSMS": "Enable SMS",
 
+  "label.heading.credits": "Credits",
+  "label.heading.debits" : "Debits",
+  "approval.accountName": "Account Name",
+  "approval.amount": "Amount",
+  "approval.glCode": "GL Code",
+  "approval.glType": "GL Type",
+  "approval.accountType": "Account Type",
+  "approval.accountNo": "Account No",
+  "approval.clientName": "Client Name",
+  "approval.productName": "Product Name",
+  "approval.transactionDate": "Transaction Date",
+  "approval.officeName": "Office Name",
   "----End---": "--End of file--- "
 }
