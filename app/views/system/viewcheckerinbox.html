@@ -59,7 +59,62 @@
                 </table>
             </div>
             <hr/>
-            <div scroll>
+            <div ng-show="glOperation">
+                <table class="table" >
+                    <thead>
+                        <tr class="graybg">
+                            <th>{{ 'label.heading.credits' | translate }}</th>
+                            <th>{{ 'label.heading.debits' | translate }}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="width50">
+                                <div data-ng-repeat="json in creditsArray">
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>{{'label.heading.key' | translate}}</th>
+                                                <th>{{'label.heading.value' | translate}}</th>
+                                            </tr>
+                                           
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="(key, value) in json">
+                                                <td class="width30"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{key | translate }}</strong></td>
+                                                <td class="width70">{{value}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                               
+                                </div>
+                            </td>
+                            <td class="width50">
+                                <div data-ng-repeat="json in debitsArray">
+                                    <table class="table" >
+                                        <thead>
+                                            <tr>
+                                                <th>{{'label.heading.key' | translate}}</th>
+                                                <th>{{'label.heading.value' | translate}}</th>
+                                            </tr>
+                                            
+                                        </thead>
+                                        <tbody>
+                                            <tr ng-repeat="(key, value) in json">
+                                                <td class="width30"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{key | translate }}</strong></td>
+                                                <td class="width70">{{value}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+    
+            </div>
+            <div scroll >
                 <table class="table" data-ng-show="details.commandAsJson" data-anchor>
                     <thead>
                     <tr class="graybg">
@@ -69,7 +124,7 @@
                     </thead>
                     <tbody>
                     <tr data-ng-repeat="json in jsondata">
-                        <td class="width20"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{json.name}}</strong></td>
+                        <td class="width20"><strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{json.name | translate}}</strong></td>
                         <td class="width80">{{json.property}}</td>
                     </tr>
                     </tbody>
