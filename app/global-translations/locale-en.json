@@ -4526,5 +4526,6 @@
   "approval.productName": "Product Name",
   "approval.transactionDate": "Transaction Date",
   "approval.officeName": "Office Name",
+  "approval.description": "Narration",
   "----End---": "--End of file--- "
 }
