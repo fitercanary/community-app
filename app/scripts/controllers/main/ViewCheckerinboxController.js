@@ -20,6 +20,13 @@
                     case 'SAVINGSACCOUNT':
                         scope.handleSavingsEntityName(scope, data);
                         break;
+                    case 'RECURRINGDEPOSITACCOUNT':
+                        scope.handleRecurringDepositEntityName(scope, data);
+                        break;
+                    case 'FIXEDDEPOSITACCOUNT':
+                        scope.handleFixedDepositEntityName(scope, data);
+                        break;
+
                     default:
                         scope.entityName = 'Unknown';
                 }
@@ -37,6 +44,10 @@
                     glData['approval.glType'] = glAccount.type.value;
                     glData['approval.accountType'] = 'GL Account';
                     glData['approval.amount'] = data.amount;
+
+                    if(glAccount.description){
+                        glData['approval.description'] = glAccount.description;
+                    }
 
                     isCreditsArray ? scope.creditsArray.push(glData) : scope.debitsArray.push(glData);
 
@@ -60,6 +71,39 @@
                 );
             }
 
+            let savingsApprovalData = function (data) {
+
+                let commandAsJson = JSON.parse(data.commandAsJson);
+
+                scope.jsondata = []
+                if (commandAsJson.approvedOnDate) {
+                    scope.jsondata.push({ 'name': 'approval.transactionDate', 'property': commandAsJson.approvedOnDate });
+                }
+
+                if (commandAsJson.createdOnDate) {
+                    scope.jsondata.push({ 'name': 'approval.transactionDate', 'property': commandAsJson.createdOnDate });
+                }
+
+                scope.jsondata.push({ 'name': 'approval.accountName', 'property': data.clientName });
+
+                if (data.savingsAccountNo) {
+                    scope.jsondata.push({ 'name': 'approval.accountNo', 'property': data.savingsAccountNo });
+                }
+                scope.jsondata.push({ 'name': 'approval.officeName', 'property': data.officeName });
+
+            }
+
+            let savingsCreationData = function (data) {
+
+                let commandAsJson = JSON.parse(data.commandAsJson);
+                savingsApprovalData(data);
+                
+                Object.keys(commandAsJson).forEach(element => {
+                    scope.jsondata.push({ 'name': element, 'property': commandAsJson[element] });
+                });
+
+            }
+
             let handleSavingsTransactionData = function (data,commandAsJson) {
 
                     scope.jsondata =[]
@@ -78,9 +122,9 @@
                 let debits;
                 let savingsDebits;
 
-                switch(data.actionName) {
+                switch (data.actionName) {
                     case 'MULTIPLEPOSTINGS':
-                        
+
                         credits = commandAsJson.credits;
                         savingsCredits = commandAsJson.savingsCredits;
                         debits = commandAsJson.debits;
@@ -88,7 +132,7 @@
 
                         _.each(credits, function (credit) {
                             getGlAccountData(credit, true);
-                           
+
                         });
 
                         _.each(debits, function (debit) {
@@ -108,16 +152,52 @@
                         break;
                     case 'DEPOSIT':
                     case 'WITHDRAWAL':
-                      
+
                         handleSavingsTransactionData(data, commandAsJson);
                         break;
-
-
+                    case 'APPROVE':
+                        savingsApprovalData(data);
+                        break;
+                    case 'CREATE':
+                        savingsCreationData(data);
+                        break;
                     default:
                         scope.entityName = 'Unknown';
-                
+
                 }
             };
+
+            scope.handleRecurringDepositEntityName = function (scope, data) {
+
+                switch (data.actionName) {
+                    case 'APPROVE':
+                        savingsApprovalData(data);
+                    case 'CREATE':
+                        savingsCreationData(data);
+                        break;
+                    default:
+                        scope.entityName = 'Unknown';
+
+                }
+
+            }
+
+            scope.handleFixedDepositEntityName = function (scope, data) {
+
+                switch (data.actionName) {
+                    case 'APPROVE':
+                        savingsApprovalData(data);
+                        break;
+                    case 'CREATE':
+                        savingsCreationData(data);
+                        break;
+                    default:
+                        scope.entityName = 'Unknown';
+
+                }
+
+            }
+
 
 
             scope.checkerApprove = function (action) {
